@@ -66,7 +66,7 @@ public class CustomerContainer {
             System.out.println("\nError: Cannot find name!\n");
         }
         else {
-            customer.print();
+            //customer.print();
         }
     }
 

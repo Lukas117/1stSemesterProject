@@ -3,7 +3,10 @@ package View;
 public class main {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		LoginMenu loginMenu = new LoginMenu();
+		loginMenu.start();
+//		MainMenu mainMenu = new MainMenu();
+//		mainMenu.start();
 
 	}
 

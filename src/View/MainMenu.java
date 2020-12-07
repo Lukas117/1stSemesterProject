@@ -1,14 +1,28 @@
 package View;
 
 import java.util.Scanner;
+import Controller.EmployeeController;
 
 public class MainMenu {
+	private EmployeeController employeeController;
+	private EmployeeMenu employeeMenu;
+    
+    public MainMenu() {
+    	employeeController = new EmployeeController();
+    	employeeMenu = new EmployeeMenu(employeeController);
+    }
+   
+    public EmployeeMenu getEmployeeMenu() {
+    	return employeeMenu;
+    }
+    
 	public void start() {
         mainMenu();
     }
 
     private void mainMenu() {
         boolean running = true;
+        
         while (running) {
             int choice = writeMainMenu();
             switch (choice) {
@@ -19,13 +33,13 @@ public class MainMenu {
                     //lpMenu.start();
                     break;
                 case 3:
-                    //loanMenu.start();
+                    employeeMenu.start();
                     break;
                 case 4:
                     //copyMenu.start();
                     break;
                 case 0:
-                    System.out.println("Goodbye.");
+                    System.out.println("\n Goodbye.");
                     running = false;
                     break;
                 default:
@@ -34,15 +48,16 @@ public class MainMenu {
             }
         }
     }
-    private int writeMainMenu() {
+    @SuppressWarnings("resource")
+	private int writeMainMenu() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("****** Main menu ******");
-        System.out.println(" (1) Borrower menu");
-        System.out.println(" (2) LP menu");
-        System.out.println(" (3) Loan menu");
-        System.out.println(" (4) Copy menu");
+        System.out.println(" (1) Sale menu");
+        System.out.println(" (2) Product menu");
+        System.out.println(" (3) Employee menu");
+        System.out.println(" (4) Customer menu");
         System.out.println(" (0) Quit the program");
-        System.out.print("\n Choose:");
+        System.out.print("\n Choice: ");
 
         while (!keyboard.hasNextInt()) {
             System.out.println("Input must be a number - try again");
