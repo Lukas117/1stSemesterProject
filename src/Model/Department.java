@@ -45,5 +45,4 @@ public class Department {
 		this.price = price;
 	}
 	
-	
 }
