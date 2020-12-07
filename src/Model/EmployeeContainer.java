@@ -32,7 +32,7 @@ public class EmployeeContainer {
 	public void addEmployee(Employee newEmployee) {
 		employeeList.add(newEmployee);
 	}
-		
+	
 	public Employee findEmployee(String username) {
 		for (Employee _employee: employeeList) {
 			if (_employee.getUsername().equals(username)) {
@@ -53,6 +53,7 @@ public class EmployeeContainer {
 		
 	public void deleteEmployee(Employee employee) {
 		employeeList.remove(employee);
+		
 	}
 }
 
