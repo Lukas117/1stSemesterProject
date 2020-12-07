@@ -118,7 +118,6 @@ public class EmployeeMenu {
     	Employee employee = employeeController.getEmployeeContainer().findEmployee(username);    
     	
     	if (employeeController.findEmployee(username)) {
-    		System.out.println("----- Employee -----");
     		System.out.println(" Name: " + username);
     		System.out.println(" Email: " + employee.getEmail() + "\n");
     		return true;

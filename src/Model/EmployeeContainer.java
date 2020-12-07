@@ -4,14 +4,18 @@ import java.util.ArrayList;
 
 public class EmployeeContainer {
 	
-	private static ArrayList<Employee> employeeList;
+	private static EmployeeContainer instance;
+	private ArrayList<Employee> employeeList = new ArrayList<Employee>();
 		
-	public EmployeeContainer() {
-		employeeList = new ArrayList<>();
+	private EmployeeContainer() {
+		instance = new EmployeeContainer();
 	}
 		
 	public ArrayList<Employee> getEmployees() {
 		return employeeList;
+	}
+	public EmployeeContainer getEmployeeContainer() {
+		return instance;
 	}
 	
 	public Employee logIn(String username,String password) {

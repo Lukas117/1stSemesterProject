@@ -10,7 +10,7 @@ public class EmployeeController {
     private ArrayList<Employee> employees;
     
     public EmployeeController() {
-    	employeeContainer = new EmployeeContainer();
+    	employeeContainer = employeeContainer.getEmployeeContainer();
     	employees = employeeContainer.getEmployees();
     }  
     
