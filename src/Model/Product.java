@@ -1,23 +1,19 @@
 package Model;
 
-import java.util.ArrayList;
-
 public class Product {
 	private String name;
-    private ArrayList<Long> barcodes;
-   // private long barcode;
+    private long barcode;
     private String type;
     private String location;
     private double price;
 
 
-    public Product (String name, String type, String location, double price){
+    public Product (String name, long barcode, String type, String location, double price){
         this.name = name;
+        this.barcode = barcode;
         this.type = type;
         this.price = price;
         this.location = location;
-     //   this.barcode = barcode;
-        barcodes = new ArrayList<>();
     }
 
     public String getLocation() {
@@ -44,14 +40,14 @@ public class Product {
         this.name = name;
     }
 
-   /* public long getBarcode() {
+    public long getBarcode() {
         return barcode;
     }
 
     public void setBarcode(long barcode) {
         this.barcode = barcode;
     }
-   */
+   
 
     public String getType() {
         return type;
@@ -61,12 +57,5 @@ public class Product {
         this.type = type;
     }
     
-    public void addBarcodeToList(long barcode) {
-		barcodes.add(barcode);
-    }
-    
-    public ArrayList<Long> getBarcodeList() {
-    	return barcodes;
-    }
 
 }
