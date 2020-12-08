@@ -54,29 +54,6 @@ public class LoginMenu {
         return choice;
     }
 	
-//	@SuppressWarnings("resource")
-//	private void findEmployee() {
-//    	Scanner keyboard = new Scanner(System.in);
-//    	
-//    	System.out.print(" Username: ");
-//    	String username = keyboard.nextLine();
-//    	System.out.print(" Password: ");
-//    	String password = keyboard.nextLine();
-//    	
-//    	//if (mainMenu.getEmployeeMenu().getEmployeeController().findEmployee(username,password)) {
-//    			for (Employee _employee: mainMenu.getEmployeeMenu().getEmployeeController().getEmployeeContainer().getEmployees()) {
-//    				if (_employee.getUsername().equals(username)) {
-//    					if (_employee.getPassword().equals(password)) {
-//    						System.out.println(" Login succesfull!\n");
-//    						mainMenu.start();
-//    					}
-//    		        }
-//    				else {
-//    		    		System.out.println(" Wrong username or password!\n");
-//    				}
-//    			}    			
-//    }	
-	
 	private void login() {
     	if (mainMenu.getEmployeeMenu().logIn()) {
     		mainMenu.start();

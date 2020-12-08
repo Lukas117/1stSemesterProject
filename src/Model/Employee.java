@@ -4,6 +4,7 @@ public class Employee {
 	private String username;
 	private String email;
 	private String password;
+	//sale counter
 	
 	public Employee(String username,String email,String password) {
 		this.setUsername(username);

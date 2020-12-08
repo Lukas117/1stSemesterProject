@@ -3,7 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class EmployeeContainer {
-	//private static EmployeeContainer instance;
+	private static EmployeeContainer instance;
 	private ArrayList<Employee> employeeList = new ArrayList<>();
 		
 	public EmployeeContainer() {
@@ -13,20 +13,13 @@ public class EmployeeContainer {
 	public ArrayList<Employee> getEmployees() {
 		return employeeList;
 	}
-//	public EmployeeContainer getInstance() {
-//		return instance;
-//	}
 	
-	public Employee logIn(String username,String password) {
-		for (Employee _employee: employeeList) {
-			if (_employee.getUsername().equals(username)) {
-				if (_employee.getPassword().equals(password)) {
-				return _employee;
-				}
-	        }
-		}
-		return null;
-	}
+	public static EmployeeContainer getInstance() {
+        if(instance == null) {
+            instance = new EmployeeContainer();
+        }
+        return instance;
+    }
 	
 	public boolean addEmployee(Employee newEmployee) {
 		boolean foundEmployee = false;

@@ -9,7 +9,7 @@ public class EmployeeController {
 	private EmployeeContainer employeeContainer;
     
     public EmployeeController() {
-    	employeeContainer = new EmployeeContainer();
+    	employeeContainer = EmployeeContainer.getInstance();
     }  
     
 	public EmployeeContainer getEmployeeContainer() {
