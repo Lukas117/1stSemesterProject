@@ -1,36 +1,38 @@
 package Model;
 
-import java.util.*;
-import java.io.*;
-import java.lang.*;
-
 public class Product {
 	private String name;
     private long barcode;
-    private String department;
-    private int aisle;
-    private int shelf;
-    private int amountInStock;
+    private String type;
+    private Location location;
+    private double price;
 
 
-    public Product (String name, long barcode, String department, int aisle,
-                    int shelf, int amountInStock){
+    public Product (String name, long barcode, String type, Location location, double price){
         this.name = name;
         this.barcode = barcode;
-        this.department = department;
-        this.aisle = aisle;
-        this.shelf = shelf;
-        this.amountInStock = amountInStock;
+        this.type = type;
+        this.price = price;
+        this.location = location;
     }
 
-    public String getLocation() {
-        String x = Integer.toString(aisle);
-        String y = Integer.toString(shelf);
-        String location = x + "." + y;
-        return location;
-    }
+    public Location getLocation() {
+		return location;
+	}
 
-    public String getName() {
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getName() {
         return name;
     }
 
@@ -46,27 +48,12 @@ public class Product {
         this.barcode = barcode;
     }
 
-    public String getDepartment() {
-        return department;
+    public String getType() {
+        return type;
     }
 
-    public void setDepartment(String department) {
-        this.department = department;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setAisle(int aisle) {
-        this.aisle = aisle;
-    }
-
-    public void setShelf(int shelf) {
-        this.shelf = shelf;
-    }
-
-    public int getAmountInStock() {
-        return amountInStock;
-    }
-
-    public void setAmountInStock(int amountInStock) {
-        this.amountInStock = amountInStock;
-    }
 }
