@@ -3,7 +3,6 @@ package Model;
 import java.util.ArrayList;
 
 public class EmployeeContainer {
-	
 	//private static EmployeeContainer instance;
 	private ArrayList<Employee> employeeList = new ArrayList<>();
 		
@@ -45,7 +44,7 @@ public class EmployeeContainer {
         }
 		return foundEmployee;
 	}
-		
+	
 	public Employee findEmployee(String username) {
 		for (Employee _employee: employeeList) {
 			if (_employee.getUsername().equals(username)) {
@@ -79,4 +78,3 @@ public class EmployeeContainer {
 		return deletedEmployee;
     }		
 }
-

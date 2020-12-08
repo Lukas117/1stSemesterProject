@@ -1,12 +1,13 @@
 package Model;
 
-public class Department {
+public class Location {
+	
 	private String name;
 	private String location;
 	private String type;
 	private double price;
 	
-	public Department (String name, String location, String type, double price) {
+	public Location (String name, String location, String type, double price) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
@@ -44,5 +45,6 @@ public class Department {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
+
 }
