@@ -1,8 +1,6 @@
 package Model;
 
-import java.util.HashMap;
 import java.util.ArrayList;
-
 
 public class CustomerContainer {
 	private static CustomerContainer instance;
@@ -12,7 +10,11 @@ public class CustomerContainer {
     private CustomerContainer() {
     	//instance = new CustomerContainer();
     }
-
+    
+    public ArrayList<Customer> getCustomerList() {
+    	return customerList;
+    }
+    
     public static CustomerContainer getInstance() {
         if(instance == null) {
             instance = new CustomerContainer();
@@ -38,12 +40,30 @@ public class CustomerContainer {
     }
 
     public Customer findCustomer(String name){
+		for (Customer _customer: customerList) {
+			if (_customer.getName().equals(name)) {
+				return _customer;
+	        }
+		}
+	    return null;
+	}
 
+    public Customer updateCustomer(String name) {
+    	return null;
     }
 
-    //public Customer
-
-    public void deleteCustomer(String name) {
-        customers.remove(name);
+    public boolean deleteCustomer(Customer customer) {
+    	boolean deletedCustomer = false;
+    	Customer customerToDelete = null;
+    	for (Customer _employee: customerList) {
+            if (_employee.getName().equals(customer.getName())) {           
+            	customerToDelete = _employee;
+            	deletedCustomer = true;
+            }
+        }
+    	if (deletedCustomer) {
+    		customerList.remove(customerToDelete);
+    	}
+		return deletedCustomer;
     }
 }

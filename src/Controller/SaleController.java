@@ -28,7 +28,7 @@ public class SaleController {
 		return saleContainer.updateSale(ID);
 	}
 	
-	public boolean deleteEmplyee(Sale sale) {
+	public boolean deleteSale(Sale sale) {
 		return saleContainer.deleteSale(sale);
 	}
 }

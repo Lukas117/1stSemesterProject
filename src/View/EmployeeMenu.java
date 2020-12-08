@@ -126,7 +126,7 @@ public class EmployeeMenu {
     
     @SuppressWarnings("resource")
 	private void updateEmployee() {
-    	Scanner keyboard = new Scanner(System.in);;
+    	Scanner keyboard = new Scanner(System.in);
 
     	System.out.print(" Username: ");
     	String username = keyboard.nextLine();
@@ -212,12 +212,12 @@ public class EmployeeMenu {
                 keyboard.nextLine();
             }
             String nonCheckedUsername = keyboard.nextLine();
-            ArrayList<Employee> players = employeeController.getEmployeeContainer().getEmployees();
+            ArrayList<Employee> employees = employeeController.getEmployeeContainer().getEmployees();
             
-            if (players.isEmpty()) {
+            if (employees.isEmpty()) {
                 username = nonCheckedUsername;
             }
-            for(Employee employee: players) {
+            for(Employee employee: employees) {
                 if(employee.getUsername() == nonCheckedUsername){
                     System.out.println(" Username is already taken, try different one");
                 }
