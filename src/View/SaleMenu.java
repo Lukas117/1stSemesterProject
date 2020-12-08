@@ -39,7 +39,7 @@ public class SaleMenu {
 					deleteSale();
 					break;
 				case 5:
-					showEmployees();
+					showSale();
 					break;
 				case 0:
 					running = false;
@@ -74,7 +74,7 @@ public class SaleMenu {
 	}
 	
 	public void createSale() {
-		Sale sale = getDataToNewSale();
+	/*	Sale sale = getDataToNewSale();
 		
 		if (saleController.createSale(sale)) {
 			System.out.println("Sale is already created, please create another one!");
@@ -82,7 +82,7 @@ public class SaleMenu {
 		else {
 			saleController.createSale(sale);
 			System.out.println("\n Sale created! \n");
-		}
+		}*/
 	}
 	
 	@SuppressWarnings("resource")
@@ -138,7 +138,7 @@ public class SaleMenu {
 	@SuppressWarnings("resource")
 	private void deleteSale() {
 		Scanner keyboard;
-		int id;
+		int id = 0;
 		
 		System.out.println(" write ID of the slae that you want to delete: ");
 		keyboard = new Scanner(System.in);
@@ -152,11 +152,50 @@ public class SaleMenu {
 	}
 	
 	private void showSale() {
-		ArrayList<Sale> sale = saleController.getSaleContainer().getSales();
+		ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
 		
 		System.out.println("\n****** Registered Sales *******");
 		for(int i=0; i<sales.size(); i++) {
-			Sale sale = sale.get(i);
+			Sale sale = sales.get(i);
+			
+			System.out.println("----- Sale " + (i+1) + "-----");
+			System.out.println("ID: " + sale.getID());
+			System.out.println("Price: " + sale.getPrice());
 		}
+		System.out.println("**********************\n");
+	}
+	
+	@SuppressWarnings("resource")
+	private Sale getDataToNewSale() {
+		Scanner keyboard = new Scanner(System.in);
+		int id = 0;
+		
+		while(id == 0) {
+			
+			System.out.println(" ID: ");
+			
+			while (!keyboard.hasNextInt()) {
+				System.out.println(" Input must be a ID - try again");
+				keyboard.nextInt();
+			}
+			int nonCheckedId = keyboard.nextInt();
+			ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
+			
+			if (sales.isEmpty()) {
+				id = nonCheckedId;
+			}
+			for(Sale sale: sales) {
+				if(sale.getID() == nonCheckedId) {
+					System.out.println(" ID is already taken, try different one");
+				}
+				else {
+					id = nonCheckedId;
+				}
+			}
+		}
+		System.out.println(" Price: ");
+		int price = keyboard.nextInt();
+		
+		return new Sale(id, price);
 	}
 }
