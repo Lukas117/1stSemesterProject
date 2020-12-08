@@ -10,7 +10,7 @@ public class Sale {
     private LocalDateTime purchaseDate;
     private LocalDateTime paymentDeadline;
     private String department;
-    private boolean dispatchable;
+    private boolean dispatchable;//in store or delivery
 
     public Sale (int ID, int price) {
 
@@ -53,7 +53,7 @@ public class Sale {
     }
 
     public void setDueTime(LocalDateTime dueTime) {
-        this.purchaseDate = purchaseDate;
+        this.purchaseDate = dueTime;
     }
 
     public String getDepartment() {

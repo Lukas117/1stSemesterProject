@@ -9,7 +9,7 @@ public class SaleController {
 	private SaleContainer saleContainer;
 	
 	public SaleController() {
-		saleContainer = new SaleContainer();
+		saleContainer = SaleContainer.getInstance();
 	}
 	
 	public SaleContainer getSaleContainer() {
