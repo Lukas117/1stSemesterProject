@@ -5,16 +5,14 @@ import java.time.LocalDateTime;
 
 public class Sale {
 	private int ID;
-    private String costumer;
     private ArrayList<Integer> listOfProducts;
     private int price;
     private LocalDateTime purchaseDate;
     private LocalDateTime paymentDeadline;
     private String department;
 
-    public Sale (int ID, String costumer, int price, LocalDateTime purchaseDate, String department, LocalDateTime paymentDeadline) {
+    public Sale (int ID, int price) {
 
-        this.costumer = costumer;
         this.price = price;
         this.purchaseDate = purchaseDate;
         this.department = department;
@@ -32,13 +30,6 @@ public class Sale {
         this.ID = ID;
     }
 
-    public String getCostumer() {
-        return costumer;
-    }
-
-    public void setCostumer(String costumer) {
-        this.costumer = costumer;
-    }
 
     public ArrayList<Integer> getListOfProducts() {
         return listOfProducts;
