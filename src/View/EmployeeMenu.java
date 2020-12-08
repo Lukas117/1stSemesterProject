@@ -81,7 +81,7 @@ public class EmployeeMenu {
     	System.out.print(" Password: ");
     	String password = keyboard.nextLine();
     	
-    	if (employeeController.logIn(username,password)) {
+    	if (employeeController.logIn(username,password) != null) {
     		System.out.println(" Login successfull!\n");
     		return true;
     	}
@@ -92,14 +92,11 @@ public class EmployeeMenu {
     }
     
     public void createEmployee() {
-    	Employee employee;
-    	
-    	employee = getDataToNewEmployee();
+    	Employee employee = getDataToNewEmployee();
     	
     	if (employeeController.createEmployee(employee)) {
         	System.out.println(" Username is already taken, try different one");
     	}
-    	
     	else {
     		employeeController.createEmployee(employee);
     		System.out.println("\n Employee created! \n");
@@ -107,25 +104,24 @@ public class EmployeeMenu {
     }
     
     @SuppressWarnings("resource")
-	public boolean findEmployee() {
+	public void findEmployee() {
     	Scanner keyboard = new Scanner(System.in);
     	
     	System.out.print(" Username: ");
     	String username = keyboard.nextLine();
-    	
 //    	System.out.print(" Password: ");
 //    	String password = keyboard.nextLine();
-    	Employee employee = employeeController.getEmployeeContainer().findEmployee(username);    
     	
-    	if (employeeController.findEmployee(username)) {
+    	Employee employee = employeeController.findEmployee(username);    
+    	
+    	if (employeeController.findEmployee(username) != null) {
+    		System.out.println("----- Employee -----");
     		System.out.println(" Name: " + username);
     		System.out.println(" Email: " + employee.getEmail() + "\n");
-    		return true;
     	}
     	else {
     		System.out.println(" User does not exist!\n");
     	}
-		return false;
     }
     
     @SuppressWarnings("resource")
@@ -138,8 +134,8 @@ public class EmployeeMenu {
 //    	String password = keyboard.nextLine();
 		Employee employee = employeeController.getEmployeeContainer().findEmployee(username);    	
     	
-    	if (employeeController.updateEmployee(username)) {
-    		employeeController.deleteEmployee(username);
+    	if (employeeController.updateEmployee(username) != null) {
+    		employeeController.deleteEmployee(employee);
 
     		System.out.println("Current username " + "[" + employee.getUsername() + "]");
             System.out.print("New username: ");
@@ -153,16 +149,14 @@ public class EmployeeMenu {
     		
     		employee = new Employee(username,email,password);
     		
-    		if (employeeController.createEmployee(employee)) {
+    		if (employeeController.getEmployeeContainer().addEmployee(employee)) {
         		System.out.println("\n User already exists!!!\n");
         	}
-        	
         	else {
         		employeeController.createEmployee(employee);
         		System.out.println("\n Employee updated! \n");
         	}
     	}
-    	
     	else {
     		System.out.println(" Employee not found.\n");
     	}
@@ -176,9 +170,8 @@ public class EmployeeMenu {
     	System.out.println(" Write username of the employee that you want to delete:");
     	keyboard = new Scanner(System.in);
     	username = keyboard.nextLine();
-
-    	if (employeeController.deleteEmployee(username)) {
-    		//employeeController.deleteEmployee(username);
+    	Employee employee = employeeController.findEmployee(username);
+		if (employeeController.deleteEmployee(employee)) {
     		System.out.println(" Employee deleted!\n");
     		//username = playerController.getPlayerContainer().deletePlayer(player);;
         	//String email = playerController.getPlayerContainer().deletePlayer(username).getEmail();
@@ -218,14 +211,12 @@ public class EmployeeMenu {
                 System.out.println(" Input must be a username - try again");
                 keyboard.nextLine();
             }
-            
             String nonCheckedUsername = keyboard.nextLine();
             ArrayList<Employee> players = employeeController.getEmployeeContainer().getEmployees();
             
             if (players.isEmpty()) {
                 username = nonCheckedUsername;
             }
-            
             for(Employee employee: players) {
                 if(employee.getUsername() == nonCheckedUsername){
                     System.out.println(" Username is already taken, try different one");
@@ -236,7 +227,6 @@ public class EmployeeMenu {
                 }
             }
         }
-    	
         System.out.print(" Email: ");
         String email = keyboard.nextLine();
         System.out.print(" Password: ");

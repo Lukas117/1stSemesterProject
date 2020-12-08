@@ -7,86 +7,40 @@ import Model.EmployeeContainer;
 
 public class EmployeeController {
 	private EmployeeContainer employeeContainer;
-    private ArrayList<Employee> employees;
     
     public EmployeeController() {
-    	employeeContainer = employeeContainer.getEmployeeContainer();
-    	employees = employeeContainer.getEmployees();
+    	employeeContainer = new EmployeeContainer();
     }  
     
-    public EmployeeContainer getEmployeeContainer() {
-    	return employeeContainer;
+	public EmployeeContainer getEmployeeContainer() {
+		return employeeContainer;
+	}
+	
+    public Employee logIn(String username,String password) {
+    	ArrayList<Employee> employeeList = employeeContainer.getEmployees();
+    	for (Employee _employee: employeeList) {
+			if (_employee.getUsername().equals(username)) {
+				if (_employee.getPassword().equals(password)) {
+					return _employee;
+				}
+			}
+    	}      
+        return null;
     }
-    
-    public boolean logIn(String username,String password) {
-    	boolean foundEmployee = false;
-        
-    	if (employeeContainer.logIn(username,password) != null) {
-    		foundEmployee = true;
-        }
-        
-        return foundEmployee;
-    }
-    
+
     public boolean createEmployee(Employee employee) {
-        boolean foundEmployee = false;
-        
-        if (employees.isEmpty()) {
-        	foundEmployee = false;
-        }
-        for (Employee _employee: employees) {
-            if (_employee.getUsername().equals(employee.getUsername())) {
-            	foundEmployee = true;
-            }
-        }
-        if (!foundEmployee) {
-        	employeeContainer.addEmployee(employee);
-        }
-		return foundEmployee;
+    	return employeeContainer.addEmployee(employee);
     }
     
-    public boolean findEmployee(String username) {
-    	boolean foundEmployee = false;
-        
-    	if (employeeContainer.findEmployee(username) != null) {
-    		foundEmployee = true;
-        }
-        
-        return foundEmployee;
+    public Employee findEmployee(String username) {
+    	return employeeContainer.findEmployee(username);
     }
 
-    
-    public boolean updateEmployee(String username) {
-        boolean foundEmployee = false;
-        
-        if (employeeContainer.updateEmployee(username) != null) {
-        	foundEmployee = true;
-        	}
-        
-		return foundEmployee;
+    public Employee updateEmployee(String username) {
+    	return employeeContainer.updateEmployee(username);
     }
     
-    public boolean deleteEmployee(String username) {
-    	boolean foundEmployee = false;
-    	Employee employeeToDelete = null;
-
-    	for (Employee _employee: employees) {
-            if (_employee.getUsername().equals(username)) {
-//                for(int _serialNumber: _player.loans){	for Game Characters
-//                    for(Loan loan: loanContainer.loanList){
-//                        loan.personCpr = 0;
-//                    }
-//                }             
-            	foundEmployee = true;
-            	employeeToDelete = _employee;
-            }
-        }
-        if (foundEmployee) {
-        	employeeContainer.deleteEmployee(employeeToDelete);
-        }
-        
-		return foundEmployee;
-    }		
-
+    public boolean deleteEmployee(Employee employee) {
+    	return employeeContainer.deleteEmployee(employee);
+    }
 }
-
