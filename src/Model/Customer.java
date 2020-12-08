@@ -1,7 +1,7 @@
 package Model;
 
 public class Customer {
-	private int Id;
+	private int id;
     //private String group;
     private String email;
     private String phoneNumber;
@@ -10,8 +10,8 @@ public class Customer {
     private int zipCode;
     private String name;
     
-    public Customer (int Id, String name, String email, String phoneNumber, String address, String city, int zipCode) {
-        this.setId(Id);
+    public Customer (int id, String name, String email, String phoneNumber, String address, String city, int zipCode) {
+        this.setId(id);
         this.setName(name);
         //this.group = group;
         this.setEmail(email);
@@ -22,7 +22,7 @@ public class Customer {
     }
 
 	public int getId() {
-		return Id;
+		return id;
 	}
 //	public String getGroup() {
 //		return group;
@@ -46,8 +46,8 @@ public class Customer {
 		return name;
 	}
 	
-	public void setId(int Id) {
-		this.Id = Id;
+	public void setId(int id) {
+		this.id = id;
 	}
 //	public void setGroup(String group) {
 //		this.group = group;
