@@ -16,7 +16,11 @@ public class MainMenu {
     	productController = new ProductController();
     	productMenu = new ProductMenu(productController);
     }
-   
+   public EmployeeMenu getEmployeeMenu()
+   {
+	   return employeeMenu;
+   }
+    
 	public void start() {
         mainMenu();
     }
