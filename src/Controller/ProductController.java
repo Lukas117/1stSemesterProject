@@ -1,7 +1,5 @@
 package Controller;
 
-import java.util.ArrayList;
-
 import Model.Product;
 import Model.ProductContainer;
 
@@ -10,9 +8,12 @@ public class ProductController {
 	private ProductContainer productContainer;
 	
 	public  ProductController() {
-		productContainer.getInstance();
+		productContainer = ProductContainer.getInstance();
 	}
 	
+	public ProductContainer getProductContainer() {
+		return productContainer;
+	}
 	public boolean createProduct(Product product) {
     	return productContainer.addProduct(product);
     }

@@ -4,11 +4,11 @@ public class Product {
 	private String name;
     private long barcode;
     private String type;
-    private Location location;
+    private String location;
     private double price;
 
 
-    public Product (String name, long barcode, String type, Location location, double price){
+    public Product (String name, long barcode, String type, String location, double price){
         this.name = name;
         this.barcode = barcode;
         this.type = type;
@@ -16,11 +16,11 @@ public class Product {
         this.location = location;
     }
 
-    public Location getLocation() {
+    public String getLocation() {
 		return location;
 	}
 
-	public void setLocation(Location location) {
+	public void setLocation(String location) {
 		this.location = location;
 	}
 
