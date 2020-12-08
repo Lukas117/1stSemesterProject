@@ -10,6 +10,7 @@ public class Sale {
     private LocalDateTime purchaseDate;
     private LocalDateTime paymentDeadline;
     private String department;
+    private boolean dispatchable;
 
     public Sale (int ID, int price) {
 
@@ -78,4 +79,13 @@ public class Sale {
     public void setPaymentDeadline(LocalDateTime paymentDeadline) {
         this.paymentDeadline = paymentDeadline;
     }
+
+	public boolean isDispatchable() {
+		return dispatchable;
+	}
+
+	public void setDispatchable(boolean dispatchable) {
+		this.dispatchable = dispatchable;
+	}
+    
 }
