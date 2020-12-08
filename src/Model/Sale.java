@@ -20,6 +20,7 @@ public class Sale {
         this.department = department;
         listOfProducts = new ArrayList<>();
         this.paymentDeadline = paymentDeadline;
+        this.ID = ID;
 
     }
 
