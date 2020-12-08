@@ -3,6 +3,7 @@ package Model;
 import java.util.ArrayList;
 
 public class SaleContainer {
+	private static SaleContainer instance;
 	private ArrayList<Sale> saleList = new ArrayList<>();
 	
 	public SaleContainer() {
@@ -13,10 +14,12 @@ public class SaleContainer {
 		return saleList;
 	}
 	
-	/* public SaleContainer getInstance(){
-	 * return instance;
-	 * }
-	 */
+	public static SaleContainer getInstance() {
+		if(instance == null) {
+			instance = new SaleContainer();
+		}
+		return instance;
+	}
 	
 	public boolean addSale(Sale newSale) {
 		boolean foundSale = false;
