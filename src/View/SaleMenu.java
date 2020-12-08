@@ -96,7 +96,7 @@ public class SaleMenu {
 		
 		if (saleController.findSale(id) != null) {
 			System.out.println("----- Sale -----");
-			System.out.println("ID: " + id);
+			System.out.println("ID: " + sale.getID());
 		}
 		else {
 			System.out.println(" Sale does not exist!\n");
