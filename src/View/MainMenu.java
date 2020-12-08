@@ -3,18 +3,23 @@ package View;
 import java.util.Scanner;
 import Controller.EmployeeController;
 import Controller.ProductController;
+import Controller.CustomerController;
 
 public class MainMenu {
 	private EmployeeController employeeController;
 	private EmployeeMenu employeeMenu;
 	private ProductController productController;
 	private ProductMenu productMenu;
+	private CustomerController customerController;
+	private CustomerMenu customerMenu;
     
     public MainMenu() {
     	employeeController = new EmployeeController();
     	employeeMenu = new EmployeeMenu(employeeController);
     	productController = new ProductController();
     	productMenu = new ProductMenu(productController);
+    	customerController = new CustomerController();
+    	customerMenu = new CustomerMenu(customerController);
     }
    public EmployeeMenu getEmployeeMenu()
    {
@@ -41,7 +46,7 @@ public class MainMenu {
                     employeeMenu.start();
                     break;
                 case 4:
-                    //copyMenu.start();
+                    customerMenu.start();
                     break;
                 case 0:
                     System.out.println("\n Goodbye.");

@@ -86,6 +86,7 @@ public class CustomerMenu {
     	}
     }
 	
+	@SuppressWarnings("resource")
 	private void findCustomer() {
 		Scanner keyboard = new Scanner(System.in);
     	
@@ -106,10 +107,14 @@ public class CustomerMenu {
 	}
 	
     @SuppressWarnings("resource")
-	private Employee getDataToNewCustomer() {
+	private Customer getDataToNewCustomer() {
     	Scanner keyboard = new Scanner(System.in);
-        String name = null;
+    	
+    	System.out.print(" Id: ");
+        int id = getIntegerFromUser(keyboard);
         
+        keyboard = new Scanner(System.in);
+        String name = null;
     	while(name == null){
             
     		System.out.print(" Name: ");
@@ -119,7 +124,7 @@ public class CustomerMenu {
                 keyboard.nextLine();
             }
             String nonCheckedName = keyboard.nextLine();
-            ArrayList<Customer> customers = customerController.getCustomerContainer().getCustomers();
+            ArrayList<Customer> customers = customerController.getCustomerContainer().getCustomerList();
             
             if (customers.isEmpty()) {
                 name = nonCheckedName;
@@ -134,11 +139,26 @@ public class CustomerMenu {
                 }
             }
         }
+    	
         System.out.print(" Email: ");
         String email = keyboard.nextLine();
-        System.out.print(" Password: ");
-        String password = keyboard.nextLine();
+        System.out.print(" Phone number: ");
+        String phoneNumber = keyboard.nextLine();
+        System.out.print(" Address: ");
+        String address = keyboard.nextLine();
+        System.out.print(" City: ");
+        String city = keyboard.nextLine();
+        System.out.print(" Zip code: ");
+        int zipCode = getIntegerFromUser(keyboard);
         
-		return new Employee(name,email,password);
+		return new Customer(id,name,email,phoneNumber,address,city,zipCode);
     }
+
+    private Integer getIntegerFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextLong()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextInt();
+	}
 }

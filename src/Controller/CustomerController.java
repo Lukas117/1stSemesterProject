@@ -10,9 +10,9 @@ public class CustomerController {
     	customerController = CustomerContainer.getInstance();
     }  
     
-//	public CustomerContainer getEmployeeContainer() {
-//		return costumerController;
-//	}
+	public CustomerContainer getCustomerContainer() {
+		return customerController;
+	}
 	
     public boolean createCustomer(Customer customer) {
     	return customerController.addCustomer(customer);
