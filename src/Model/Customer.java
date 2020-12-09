@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Random;
+
 public class Customer {
 	private int id;
     //private String group;
@@ -11,7 +13,7 @@ public class Customer {
     private String name;
     
     public Customer (int id, String name, String email, String phoneNumber, String address, String city, int zipCode) {
-        this.setId(id);
+    	id = getId();
         this.setName(name);
         //this.group = group;
         this.setEmail(email);
@@ -20,6 +22,8 @@ public class Customer {
         this.setCity(city);
         this.setZipCode(zipCode);
     }
+    
+    
 
 	public int getId() {
 		return id;
@@ -46,8 +50,9 @@ public class Customer {
 		return name;
 	}
 	
-	public void setId(int id) {
-		this.id = id;
+	public void randomId() {
+		Random rand = new Random ();
+        this.id = rand.nextInt(10000)+1;
 	}
 //	public void setGroup(String group) {
 //		this.group = group;

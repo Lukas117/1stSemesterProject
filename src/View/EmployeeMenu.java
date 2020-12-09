@@ -139,15 +139,18 @@ public class EmployeeMenu {
 
     		System.out.println("Current username " + "[" + employee.getUsername() + "]");
             System.out.print("New username: ");
-            username = keyboard.next();
+            username = keyboard.nextLine();
+            System.out.println("Current name " + "[" + employee.getName() + "]");
+            System.out.print("New name: ");
+            String name = keyboard.nextLine();
             System.out.println("Current email " + "[" + employee.getEmail() + "]");
             System.out.print("New email: ");
-            String email = keyboard.next();
+            String email = keyboard.nextLine();
             System.out.println("Current password " + "[" + employee.getPassword() + "]");
             System.out.print("New password: ");
-            String password = keyboard.next();
+            String password = keyboard.nextLine();
     		
-    		employee = new Employee(username,email,password);
+    		employee = new Employee(username,name,email,password);
     		
     		if (employeeController.getEmployeeContainer().addEmployee(employee)) {
         		System.out.println("\n User already exists!!!\n");
@@ -192,8 +195,10 @@ public class EmployeeMenu {
             
             System.out.println("––––– Employee " + (i+1) + " –––––");
             System.out.println("Username: " + employee.getUsername());
+            System.out.println("Name: " + employee.getName());
             System.out.println("Email: " + employee.getEmail());
             System.out.println("Password: " + employee.getPassword());
+            
         }
         System.out.println("*************************\n");
     }
@@ -227,11 +232,14 @@ public class EmployeeMenu {
                 }
             }
         }
+    	System.out.print(" Name: ");
+        String name = keyboard.nextLine();
         System.out.print(" Email: ");
         String email = keyboard.nextLine();
         System.out.print(" Password: ");
         String password = keyboard.nextLine();
+        //int saleCounter;
         
-		return new Employee(username,email,password);
+		return new Employee(username, name, email, password);
     }
 }

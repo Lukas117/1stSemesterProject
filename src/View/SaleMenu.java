@@ -8,7 +8,7 @@ import Model.Sale;
 public class SaleMenu {
 	private SaleController saleController;
 	
-	public SaleMenu(SaleController employeeController) {
+	public SaleMenu(SaleController saleController) {
 		this.saleController = saleController;
 	}
 	
@@ -74,7 +74,7 @@ public class SaleMenu {
 	}
 	
 	public void createSale() {
-	/*	Sale sale = getDataToNewSale();
+		Sale sale = getDataToNewSale();
 		
 		if (saleController.createSale(sale)) {
 			System.out.println("Sale is already created, please create another one!");
@@ -82,7 +82,7 @@ public class SaleMenu {
 		else {
 			saleController.createSale(sale);
 			System.out.println("\n Sale created! \n");
-		}*/
+		}
 	}
 	
 	@SuppressWarnings("resource")
@@ -96,7 +96,7 @@ public class SaleMenu {
 		
 		if (saleController.findSale(id) != null) {
 			System.out.println("----- Sale -----");
-			System.out.println("ID: " + id);
+			System.out.println("ID: " + sale.getID());
 		}
 		else {
 			System.out.println(" Sale does not exist!\n");

@@ -1,10 +1,10 @@
 package View;
 
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.CustomerController;
 import Model.Customer;
-import Model.Employee;
 
 public class CustomerMenu {
 	private CustomerController customerController;
@@ -37,10 +37,10 @@ public class CustomerMenu {
                 	//updateCustomer();
                     break;
                 case 4:
-                	//deleteCustomer();
+                	deleteCustomer();
                     break;
                 case 5:
-                	//showCustomers();
+                	showCustomers();
                     break;
                 case 0:
                     running = false;
@@ -78,11 +78,11 @@ public class CustomerMenu {
     	Customer customer = getDataToNewCustomer();
     	
     	if (customerController.createCustomer(customer)) {
-        	System.out.println(" Username is already taken, try different one");
+        	System.out.println(" ID is already taken, try different one");
     	}
     	else {
     		customerController.createCustomer(customer);
-    		System.out.println("\n Employee created! \n");
+    		System.out.println("\n Customer created! \n");
     	}
     }
 	
@@ -90,14 +90,14 @@ public class CustomerMenu {
 	private void findCustomer() {
 		Scanner keyboard = new Scanner(System.in);
     	
-    	System.out.print(" Name: ");
-    	String name = keyboard.nextLine();
+    	System.out.print(" ID: ");
+    	int id = keyboard.nextInt();
     	
-    	Customer customer = customerController.findCustomer(name);    
+    	Customer customer = customerController.findCustomer(id);    
     	
-    	if (customerController.findCustomer(name) != null) {
+    	if (customerController.findCustomer(id) != null) {
     		System.out.println("----- Customer -----");
-    		System.out.println(" Name: " + name);
+    		System.out.println(" Name: " + id);
     		System.out.println(" Email: " + customer.getEmail() + "\n");
     		//more info
     	}
@@ -106,12 +106,48 @@ public class CustomerMenu {
     	}
 	}
 	
+	@SuppressWarnings("resource")
+	private void deleteCustomer() {
+    	Scanner keyboard;
+    	int id;
+    	
+    	System.out.println(" Write id of the customer that you want to delete:");
+    	keyboard = new Scanner(System.in);
+    	id = keyboard.nextInt();
+    	Customer customer = customerController.findCustomer(id);
+		if (customerController.deleteCustomer(customer)) {
+    		System.out.println(" Employee deleted!\n");
+    	}
+    	
+    	else {
+    		System.out.println("Err: System didn't find person by the username, therefore the player cannot be deleted.");
+    	}	
+    }
+    
+    private void showCustomers() {
+    	ArrayList<Customer> customers = customerController.getCustomerContainer().getCustomerList();
+        
+        System.out.println("\n****** Registered customers ******");
+        for(int i=0; i<customers.size(); i++) {
+        	Customer customer = customers.get(i);
+            
+            System.out.println("––––– Customer " + (i+1) + " –––––");
+            System.out.println("ID: " + customer.getId());
+            System.out.println("Name: " + customer.getName());
+            System.out.println("Email: " + customer.getEmail());
+            System.out.println("Phone number: " + customer.getPhoneNumber());
+            System.out.println("Address: " + customer.getAddress());
+            System.out.println("City: " + customer.getCity());
+            System.out.println("Zip code: " + customer.getZipCode());
+        }
+        System.out.println("*************************\n");
+    }
+	
     @SuppressWarnings("resource")
 	private Customer getDataToNewCustomer() {
     	Scanner keyboard = new Scanner(System.in);
-    	
-    	System.out.print(" Id: ");
-        int id = getIntegerFromUser(keyboard);
+
+        int id = customerController.getCustomerContainer().getInstance().getId()
         
         keyboard = new Scanner(System.in);
         String name = null;

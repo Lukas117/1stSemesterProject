@@ -39,9 +39,9 @@ public class CustomerContainer {
 		return foundCustomer; 
     }
 
-    public Customer findCustomer(String name){
+    public Customer findCustomer(int id){
 		for (Customer _customer: customerList) {
-			if (_customer.getName().equals(name)) {
+			if (_customer.getId()==id) {
 				return _customer;
 	        }
 		}

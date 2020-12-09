@@ -4,6 +4,7 @@ import java.util.Scanner;
 import Controller.EmployeeController;
 import Controller.ProductController;
 import Controller.CustomerController;
+import Controller.SaleController;
 
 public class MainMenu {
 	private EmployeeController employeeController;
@@ -12,6 +13,8 @@ public class MainMenu {
 	private ProductMenu productMenu;
 	private CustomerController customerController;
 	private CustomerMenu customerMenu;
+	private SaleController saleController;
+	private SaleMenu saleMenu;
     
     public MainMenu() {
     	employeeController = new EmployeeController();
@@ -20,6 +23,8 @@ public class MainMenu {
     	productMenu = new ProductMenu(productController);
     	customerController = new CustomerController();
     	customerMenu = new CustomerMenu(customerController);
+    	saleController = new SaleController();
+    	saleMenu = new SaleMenu(saleController);
     }
    public EmployeeMenu getEmployeeMenu()
    {
@@ -37,7 +42,7 @@ public class MainMenu {
             int choice = writeMainMenu();
             switch (choice) {
                 case 1:
-                    //borrowerMenu.start();
+                    saleMenu.start();
                     break;
                 case 2:
                     productMenu.start();
