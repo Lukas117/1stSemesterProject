@@ -6,18 +6,29 @@ import Controller.SaleController;
 import Controller.ProductController;
 import Controller.CustomerController;
 import Model.Sale;
+import Model.Customer;
 
 public class SaleMenu {
 	private SaleController saleController;
-	private CustomerController costumerController;
+	private CustomerController customerController;
+	private ProductController productController;
 	
-	
-	public SaleMenu(SaleController saleController) {
+	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController) {
 		this.saleController = saleController;
+		this.customerController = customerController;
+		this.productController = productController;
 	}
 	
 	public SaleController getSaleController() {
 		return saleController;
+	}
+	
+	public ProductController getProductController() {
+		return productController;
+	}
+	
+	public CustomerController getCustomerController() {
+		return customerController;
 	}
 	
 	public void start() {
@@ -197,9 +208,25 @@ public class SaleMenu {
 				}
 			}
 		}
+		System.out.println("Customer CPR number: ");
+		long cpr = keyboard.nextLong();
+		if(!cprCheck(cpr)) System.out.println("Customer does not exist, please create customer.");
+		System.out.println("Product name: ");
+		
 		System.out.println(" Price: ");
 		int price = keyboard.nextInt();
 		
 		return new Sale(id, price);
+	}
+	
+	private boolean cprCheck(long cpr) {
+		
+		boolean foundCpr=false;
+		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
+			if (x.getCprNumber()==cpr) {
+				foundCpr=true;
+			}
+		}
+		return foundCpr;
 	}
 }
