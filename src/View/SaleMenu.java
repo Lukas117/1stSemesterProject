@@ -3,31 +3,21 @@ package View;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.SaleController;
-import Model.Sale;
 import Controller.ProductController;
 import Controller.CustomerController;
+import Model.Sale;
 
 public class SaleMenu {
 	private SaleController saleController;
-	private ProductController productController;
-	private CustomerController customerController;
+	private CustomerController costumerController;
 	
-	public SaleMenu(SaleController saleController, ProductController productController, CustomerController customerController) {
+	
+	public SaleMenu(SaleController saleController) {
 		this.saleController = saleController;
-		this.productController = productController;
-		this.customerController = customerController;
 	}
 	
 	public SaleController getSaleController() {
 		return saleController;
-	}
-	
-	public ProductController getProductController() {
-		return productController;
-	}
-	
-	public CustomerController getCustomerController() {
-		return customerController;
 	}
 	
 	public void start() {
@@ -207,10 +197,6 @@ public class SaleMenu {
 				}
 			}
 		}
-		System.out.println("Customer CPR number: ");
-		String customer = keyboard.nextLine();
-		if (customer.equals())
-		
 		System.out.println(" Price: ");
 		int price = keyboard.nextInt();
 		
