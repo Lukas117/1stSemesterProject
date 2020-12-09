@@ -3,6 +3,7 @@ package View;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.SaleController;
+import Model.Customer;
 import Model.Sale;
 import Controller.ProductController;
 import Controller.CustomerController;
@@ -208,12 +209,24 @@ public class SaleMenu {
 			}
 		}
 		System.out.println("Customer CPR number: ");
-		String customer = keyboard.nextLine();
-		if (customer.equals())
+		long cpr = keyboard.nextLong();
+		if(!cprCheck(cpr)) System.out.println("Customer does not exist, please create customer.");
+		System.out.println("Product name: ");
 		
 		System.out.println(" Price: ");
 		int price = keyboard.nextInt();
 		
 		return new Sale(id, price);
+	}
+	
+	private boolean cprCheck(long cpr) {
+		
+		boolean foundCpr=false;
+		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
+			if (x.getCprNumber()==cpr) {
+				foundCpr=true;
+			}
+		}
+		return foundCpr;
 	}
 }
