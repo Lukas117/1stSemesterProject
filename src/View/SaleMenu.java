@@ -1,5 +1,6 @@
 package View;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.SaleController;
@@ -184,6 +185,10 @@ public class SaleMenu {
 	private Sale getDataToNewSale() {
 		Scanner keyboard = new Scanner(System.in);
 		int id = 0;
+		LocalDateTime purchaseDate;
+		LocalDateTime paymentDeadline;
+		boolean dispatchable;
+		Customer customer;
 		
 		while(id == 0) {
 			
@@ -218,7 +223,7 @@ public class SaleMenu {
 		System.out.println(" Price: ");
 		double price = getDoubleFromUser(keyboard);
 		
-		return new Sale(id, price);
+		return new Sale(id, price, purchaseDate, paymentDeadline, dispatchable, customer);
 	}
 	
 	private boolean cprCheck(long cpr) {
