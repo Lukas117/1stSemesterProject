@@ -27,7 +27,7 @@ public class LoginMenu {
                 	createEmployee();
                     break;
                 case 0:
-                    System.out.println("\n Goodbye.");
+                    System.out.println("\n Shutting down...\n Goodbye.");
                     running = false;
                     break;
                 default:

@@ -66,8 +66,8 @@ public class SaleMenu {
 		}
 	}
 	
+	@SuppressWarnings("resource")
 	private int writeSaleMeu() {
-		
 		Scanner keyboard = new Scanner(System.in);
 		
 		System.out.println("****** Sale menu ******");
@@ -187,11 +187,11 @@ public class SaleMenu {
 		
 		while(id == 0) {
 			
-			System.out.println(" ID: ");
+			System.out.print(" ID: ");
 			
 			while (!keyboard.hasNextInt()) {
-				System.out.println(" Input must be a ID - try again");
-				keyboard.nextInt();
+				System.out.println(" Input must be a number - try again");
+				keyboard.nextLine();
 			}
 			int nonCheckedId = keyboard.nextInt();
 			ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
@@ -209,18 +209,19 @@ public class SaleMenu {
 			}
 		}
 		System.out.println("Customer CPR number: ");
-		long cpr = keyboard.nextLong();
-		if(!cprCheck(cpr)) System.out.println("Customer does not exist, please create customer.");
+		long cpr = getLongFromUser(keyboard);
+		if(!cprCheck(cpr)) {
+			System.out.println("Customer does not exist, please create customer.");
+		}
 		System.out.println("Product name: ");
 		
 		System.out.println(" Price: ");
-		int price = keyboard.nextInt();
+		double price = getDoubleFromUser(keyboard);
 		
 		return new Sale(id, price);
 	}
 	
 	private boolean cprCheck(long cpr) {
-		
 		boolean foundCpr=false;
 		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
 			if (x.getCprNumber()==cpr) {
@@ -228,5 +229,13 @@ public class SaleMenu {
 			}
 		}
 		return foundCpr;
+	}
+	
+	private Double getDoubleFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextDouble()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextDouble();
 	}
 }

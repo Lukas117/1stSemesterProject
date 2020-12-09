@@ -182,7 +182,7 @@ public class CustomerMenu {
         for(int i=0; i<customers.size(); i++) {
         	Customer customer = customers.get(i);
 
-            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Customer " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
+            System.out.println("––––– Customer " + (i+1) + " –––––");
             System.out.println("CPR Number: " + customer.getCprNumber());
             System.out.println("Name: " + customer.getName());
             System.out.println("Email: " + customer.getEmail());
@@ -205,7 +205,7 @@ public class CustomerMenu {
             
             while (!keyboard.hasNextLong()) {
                 System.out.println(" Input must be a number - try again");
-                keyboard.nextLong();
+                keyboard.nextLine();
             }
             long nonCheckedCprNumber = keyboard.nextLong();
             ArrayList<Customer> customers = customerController.getCustomerContainer().getCustomerList();
@@ -242,7 +242,7 @@ public class CustomerMenu {
     }
 
     private Integer getIntegerFromUser(Scanner keyboard) {
-    	while (!keyboard.hasNextLong()) {
+    	while (!keyboard.hasNextInt()) {
     		System.out.println("Input must be a number - try again");
     		keyboard.nextLine();
     	}

@@ -24,7 +24,7 @@ public class MainMenu {
     	customerController = new CustomerController();
     	customerMenu = new CustomerMenu(customerController);
     	saleController = new SaleController();
-    	saleMenu = new SaleMenu(saleController);
+    	saleMenu = new SaleMenu(saleController, customerController, productController);
     }
    public EmployeeMenu getEmployeeMenu()
    {
@@ -54,7 +54,6 @@ public class MainMenu {
                     customerMenu.start();
                     break;
                 case 0:
-                    System.out.println("\n Goodbye.");
                     running = false;
                     break;
                 default:
@@ -71,7 +70,7 @@ public class MainMenu {
         System.out.println(" (2) Product menu");
         System.out.println(" (3) Employee menu");
         System.out.println(" (4) Customer menu");
-        System.out.println(" (0) Quit the program");
+        System.out.println(" (0) Exit the program");
         System.out.print("\n Choice: ");
 
         while (!keyboard.hasNextInt()) {

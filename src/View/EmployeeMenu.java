@@ -226,7 +226,6 @@ public class EmployeeMenu {
                 if(employee.getUsername() == nonCheckedUsername){
                     System.out.println(" Username is already taken, try different one");
                 }
-                
                 else {
                     username = nonCheckedUsername;
                 }
