@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.CustomerController;
 import Model.Customer;
-import Model.Employee;
 
 public class CustomerMenu {
 	private CustomerController customerController;
@@ -182,8 +181,8 @@ public class CustomerMenu {
         System.out.println("\n****** Registered customers ******");
         for(int i=0; i<customers.size(); i++) {
         	Customer customer = customers.get(i);
-            
-            System.out.println("––––– Customer " + (i+1) + " –––––");
+
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Customer " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
             System.out.println("CPR Number: " + customer.getCprNumber());
             System.out.println("Name: " + customer.getName());
             System.out.println("Email: " + customer.getEmail());
@@ -197,7 +196,7 @@ public class CustomerMenu {
 	
     @SuppressWarnings("resource")
 	private Customer getDataToNewCustomer() {
-    	Scanner keyboard;
+    	Scanner keyboard = new Scanner(System.in);
         
         keyboard = new Scanner(System.in);
         long cprNumber = 0;

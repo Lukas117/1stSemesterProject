@@ -4,16 +4,30 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.SaleController;
 import Model.Sale;
+import Controller.ProductController;
+import Controller.CustomerController;
 
 public class SaleMenu {
 	private SaleController saleController;
+	private ProductController productController;
+	private CustomerController customerController;
 	
-	public SaleMenu(SaleController saleController) {
+	public SaleMenu(SaleController saleController, ProductController productController, CustomerController customerController) {
 		this.saleController = saleController;
+		this.productController = productController;
+		this.customerController = customerController;
 	}
 	
 	public SaleController getSaleController() {
 		return saleController;
+	}
+	
+	public ProductController getProductController() {
+		return productController;
+	}
+	
+	public CustomerController getCustomerController() {
+		return customerController;
 	}
 	
 	public void start() {
