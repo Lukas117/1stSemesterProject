@@ -123,6 +123,11 @@ public class SaleMenu {
 	@SuppressWarnings("resource")
 	private void updateSale() {
 		Scanner keyboard = new Scanner(System.in);
+
+		LocalDateTime purchaseDate = null;
+		LocalDateTime paymentDeadline = null;
+		boolean dispatchable = false;
+		Customer customer = null;
 		
 		System.out.println("ID: ");
 		int id = keyboard.nextInt();
@@ -138,7 +143,7 @@ public class SaleMenu {
 			System.out.println("New price: ");
 			int price = keyboard.nextInt();
 			
-			sale = new Sale(id, price);
+			sale = new Sale(id, price, purchaseDate, paymentDeadline, dispatchable, customer);
 			
 			if (saleController.getSaleContainer().addSale(sale)) {
 				System.out.println("\n Sale already exists!!!\n");
@@ -178,15 +183,20 @@ public class SaleMenu {
 			System.out.println("----- Sale " + (i+1) + "-----");
 			System.out.println("ID: " + sale.getID());
 			System.out.println("Price: " + sale.getPrice());
+			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 		}
-		System.out.println("**********************\n");
+		System.out.println("************************\n");
 	}
 	
 	@SuppressWarnings("resource")
 	private Sale getDataToNewSale() {
 		Scanner keyboard = new Scanner(System.in);
 		int id = 0;
-		LocalDateTime
+		LocalDateTime purchaseDate = null;
+		LocalDateTime paymentDeadline = null;
+		boolean dispatchable = false;
+		Customer customer = null;
+		
 		while(id == 0) {
 			
 			System.out.print(" ID: ");
@@ -211,16 +221,19 @@ public class SaleMenu {
 			}
 		}
 		System.out.println("Customer CPR number: ");
-		long cpr = getLongFromUser(keyboard);
-		if(!cprCheck(cpr)) {
+		long cprNumber = getLongFromUser(keyboard);
+		if(!cprCheck(cprNumber)) {
 			System.out.println("Customer does not exist, please create customer.");
+		}
+		else {
+			customer = customerController.findCustomer(cprNumber);
 		}
 		System.out.println("Product name: ");
 		
 		System.out.println(" Price: ");
 		double price = getDoubleFromUser(keyboard);
 		
-		return new Sale(id, price);
+		return new Sale(id, price, purchaseDate, paymentDeadline, dispatchable, customer);
 	}
 	
 	@SuppressWarnings("resource")
