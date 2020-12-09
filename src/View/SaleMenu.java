@@ -166,7 +166,7 @@ public class SaleMenu {
 		keyboard = new Scanner(System.in);
 		Sale sale = saleController.findSale(id);
 		if (saleController.deleteSale(sale)) {
-			System.out.println(" Sale deleted");
+			System.out.println("Sale deleted");
 		}
 		else {
 			System.out.println("Err; System didn't find sale by the ID, therefore the sale cannot be deleted.");
@@ -180,9 +180,9 @@ public class SaleMenu {
 		for(int i=0; i<sales.size(); i++) {
 			Sale sale = sales.get(i);
 			
-			System.out.println("----- Sale " + (i+1) + "-----");
-			System.out.println("ID: " + sale.getID());
-			System.out.println("Price: " + sale.getPrice());
+			System.out.println("----- Sale number: " + (i+1) + "-----");
+			System.out.println("Sale ID: " + sale.getID());
+			System.out.println("Price: " + sale.getPrice() + "kr.");
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 		}
 		System.out.println("************************\n");
