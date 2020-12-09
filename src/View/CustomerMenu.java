@@ -131,7 +131,7 @@ public class CustomerMenu {
         for(int i=0; i<customers.size(); i++) {
         	Customer customer = customers.get(i);
             
-            System.out.println("––––– Customer " + (i+1) + " –––––");
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Customer " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
             System.out.println("ID: " + customer.getId());
             System.out.println("Name: " + customer.getName());
             System.out.println("Email: " + customer.getEmail());
@@ -147,7 +147,7 @@ public class CustomerMenu {
 	private Customer getDataToNewCustomer() {
     	Scanner keyboard = new Scanner(System.in);
 
-        int id = customerController.getCustomerContainer().getInstance().getId()
+        int id = 0;//customerController.getCustomerContainer().getInstance().getId()
         
         keyboard = new Scanner(System.in);
         String name = null;
