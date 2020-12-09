@@ -207,6 +207,10 @@ public class SaleMenu {
 				}
 			}
 		}
+		System.out.println("Customer CPR number: ");
+		String customer = keyboard.nextLine();
+		if (customer.equals())
+		
 		System.out.println(" Price: ");
 		int price = keyboard.nextInt();
 		
