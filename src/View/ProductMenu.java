@@ -163,8 +163,9 @@ public class ProductMenu {
 			Product product = productController.getProductContainer().findProduct(name);    	
 	    	
 	    	if (productController.findProduct(name) != null) {
+	    		ArrayList<Integer> barcodes= productController.getProductContainer().findProduct(name).getBarcodeList();
 	    		productController.deleteProduct(product);
-
+	    		int oldStock = product.getStock();
 	    		System.out.println("Current name " + "[" + product.getName() + "]");
 	            System.out.print("New name: ");
 	            name = keyboard.next();
@@ -180,14 +181,26 @@ public class ProductMenu {
 				System.out.println("Current stock " + "[" + product.getStock() + "]");
 				System.out.print("New stock: ");
 				int stock = keyboard.nextInt();
-	    		
 	    		product = new Product(name, type, location, price, stock);
-	    		
+	    		for(int i=0; i<oldStock;i++) {
+	    			product.getBarcodeList().add(i, barcodes.get(i));
+	    		}
+	    			
 	    		if (productController.getProductContainer().addProduct(product)) {
 	        		System.out.println("\n Product already exists!!!\n");
 	        	}
 	        	else {
 	        		productController.createProduct(product);
+	        		if(stock-oldStock>0) {
+		    			for(int i=0; i<(stock-oldStock); i++) {
+		    				productController.addToStock(name);
+		    			}	
+		    		}
+		    		else{
+		    			for(int i=0; i<(oldStock-stock); i++) {
+		    				productController.removeFromStock(name);
+		    			}
+		    		}
 	        		System.out.println("\n Product updated! \n");
 	        	}
 	    	}
