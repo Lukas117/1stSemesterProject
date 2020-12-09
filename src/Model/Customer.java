@@ -1,36 +1,27 @@
 package Model;
 
-import java.util.Random;
-
 public class Customer {
-	private int id;
-    //private String group;
+	private long cprNumber;
+    private String name;
     private String email;
     private String phoneNumber;
     private String address;
     private String city;
     private int zipCode;
-    private String name;
     
-    public Customer (int id, String name, String email, String phoneNumber, String address, String city, int zipCode) {
-    	id = getId();
-        this.setName(name);
-        //this.group = group;
+    public Customer (long cprNumber, String name, String email, String phoneNumber, String address, String city, int zipCode) {
+        this.setCprNumber(cprNumber);
+    	this.setName(name);
         this.setEmail(email);
         this.setPhoneNumber(phoneNumber);
         this.setAddress(address);
         this.setCity(city);
-        this.setZipCode(zipCode);
+        this.setZipcode(zipCode);
     }
     
-    
-
-	public int getId() {
-		return id;
+	public long getCprNumber() {
+		return cprNumber;
 	}
-//	public String getGroup() {
-//		return group;
-//	}
 	public String getEmail() {
 		return email;
 	}
@@ -43,20 +34,16 @@ public class Customer {
 	public String getCity() {
 		return city;
 	}
-	public int getZipCode() {
+	public int getZipcode() {
 		return zipCode;
 	}
 	public String getName() {
 		return name;
 	}
 	
-	public void randomId() {
-		Random rand = new Random ();
-        this.id = rand.nextInt(10000)+1;
+	public void setCprNumber(long cprNumber) {
+		this.cprNumber = cprNumber;
 	}
-//	public void setGroup(String group) {
-//		this.group = group;
-//	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -69,7 +56,7 @@ public class Customer {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public void setZipCode(int zipCode) {
+	public void setZipcode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 	public void setName(String name) {

@@ -39,17 +39,17 @@ public class CustomerContainer {
 		return foundCustomer; 
     }
 
-    public Customer findCustomer(int id){
+    public Customer findCustomer(long cprNumber){
 		for (Customer _customer: customerList) {
-			if (_customer.getId()==id) {
+			if (_customer.getCprNumber() == (cprNumber)) {
 				return _customer;
 	        }
 		}
 	    return null;
 	}
 
-    public Customer updateCustomer(String name) {
-    	return null;
+    public Customer updateCustomer(long cprNumber) {
+    	return findCustomer(cprNumber);
     }
 
     public boolean deleteCustomer(Customer customer) {
