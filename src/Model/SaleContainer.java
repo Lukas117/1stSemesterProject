@@ -32,7 +32,7 @@ public class SaleContainer {
 				foundSale = true;
 			}
 		}
-		if (foundSale) {
+		if (!foundSale) {
 			saleList.add(newSale);
 		}
 		return foundSale;
