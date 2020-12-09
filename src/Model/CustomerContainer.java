@@ -48,8 +48,8 @@ public class CustomerContainer {
 	    return null;
 	}
 
-    public Customer updateCustomer(String name) {
-    	return null;
+    public Customer updateCustomer(long cprNumber) {
+    	return findCustomer(cprNumber);
     }
 
     public boolean deleteCustomer(Customer customer) {
