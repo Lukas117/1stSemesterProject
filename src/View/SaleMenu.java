@@ -1,6 +1,5 @@
 package View;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.SaleController;
@@ -8,6 +7,8 @@ import Controller.ProductController;
 import Controller.CustomerController;
 import Model.Sale;
 import Model.Customer;
+import Model.Product;
+import java.time.LocalDateTime;
 
 public class SaleMenu {
 	private SaleController saleController;
@@ -185,11 +186,7 @@ public class SaleMenu {
 	private Sale getDataToNewSale() {
 		Scanner keyboard = new Scanner(System.in);
 		int id = 0;
-		LocalDateTime purchaseDate;
-		LocalDateTime paymentDeadline;
-		boolean dispatchable;
-		Customer customer;
-		
+		LocalDateTime
 		while(id == 0) {
 			
 			System.out.print(" ID: ");
@@ -223,7 +220,25 @@ public class SaleMenu {
 		System.out.println(" Price: ");
 		double price = getDoubleFromUser(keyboard);
 		
-		return new Sale(id, price, purchaseDate, paymentDeadline, dispatchable, customer);
+		return new Sale(id, price);
+	}
+	
+	@SuppressWarnings("resource")
+	private ArrayList<Product> addProductToCart() {
+		ArrayList<Product> products = productController.getProductContainer().getProductList();
+		ArrayList<Integer> saleItems = new ArrayList<>();
+		Scanner keyboard = new Scanner(System.in);
+		
+		System.out.println(" Name of the product: ");
+		String name = keyboard.nextLine();
+		Product product = productController.findProduct(name);
+		ArrayList<Integer> barcodes = product.getBarcodeList();
+		System.out.println(" Number of products: ");
+		int numberOfProducts = keyboard.nextInt();
+		
+		saleItems.add(product);
+		
+		return saleItems;
 	}
 	
 	private boolean cprCheck(long cpr) {
@@ -235,12 +250,18 @@ public class SaleMenu {
 		}
 		return foundCpr;
 	}
-	
 	private Double getDoubleFromUser(Scanner keyboard) {
     	while (!keyboard.hasNextDouble()) {
     		System.out.println("Input must be a number - try again");
     		keyboard.nextLine();
     	}
     	return keyboard.nextDouble();
+	}
+	private Long getLongFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextLong()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextLong();
 	}
 }
