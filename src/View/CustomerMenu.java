@@ -102,12 +102,60 @@ public class CustomerMenu {
     		System.out.println(" Phone number: " + customer.getPhoneNumber() + "\n");
     		System.out.println(" Address: " + customer.getAddress() + "\n");
     		System.out.println(" City: " + customer.getCity() + "\n");
-    		System.out.println(" Zipcode: " + customer.getZipCode() + "\n");
+    		System.out.println(" Zipcode: " + customer.getZipcode() + "\n");
     	}
     	else {
     		System.out.println(" User does not exist!\n");
     	}
 	}
+	
+    @SuppressWarnings("resource")
+	private void updateCustomer() {
+    	Scanner keyboard = new Scanner(System.in);
+
+    	System.out.print(" CPR Number (without dash): ");
+    	long cprNumber = keyboard.nextLong();
+		Customer customer = customerController.getCustomerContainer().findCustomer(cprNumber);    	
+    	
+    	if (customerController.updateCustomer(cprNumber) != null) {
+    		customerController.deleteCustomer(customer);
+
+    		System.out.println("Current CPR Number " + "[" + customer.getCprNumber() + "]");
+            System.out.print("New CPR Number: ");
+            cprNumber = keyboard.nextLong();
+            System.out.println("Current name " + "[" + customer.getName() + "]");
+            System.out.print("New name: ");
+            String name = keyboard.nextLine();
+            System.out.println("Current email " + "[" + customer.getEmail() + "]");
+            System.out.print("New email: ");
+            String email = keyboard.nextLine();
+            System.out.println("Current phone number " + "[" + customer.getPhoneNumber() + "]");
+            System.out.print("New phone number: ");
+            String phoneNumber = keyboard.nextLine();
+            System.out.println("Current city " + "[" + customer.getAddress() + "]");
+            System.out.print("New address: ");
+            String address = keyboard.nextLine();
+            System.out.println("Current city " + "[" + customer.getCity() + "]");
+            System.out.print("New city: ");
+            String city = keyboard.nextLine();
+            System.out.println("Current zipcode " + "[" + customer.getZipcode() + "]");
+            System.out.print("New phone number: ");
+            int zipCode = keyboard.nextInt();
+    		
+    		customer = new Customer(cprNumber, name, email, phoneNumber, address, city, zipCode);
+    		
+    		if (customerController.getCustomerContainer().addCustomer(customer)) {
+        		System.out.println("\n Customer already exists!!!\n");
+        	}
+        	else {
+        		customerController.createCustomer(customer);
+        		System.out.println("\n Customer updated! \n");
+        	}
+    	}
+    	else {
+    		System.out.println(" Employee not found.\n");
+    	}
+    }
 	
 	@SuppressWarnings("resource")
 	private void deleteCustomer() {
@@ -141,7 +189,7 @@ public class CustomerMenu {
             System.out.println("Phone number: " + customer.getPhoneNumber());
             System.out.println("Address: " + customer.getAddress());
             System.out.println("City: " + customer.getCity());
-            System.out.println("Zip code: " + customer.getZipCode());
+            System.out.println("Zip code: " + customer.getZipcode());
         }
         System.out.println("*************************\n");
     }

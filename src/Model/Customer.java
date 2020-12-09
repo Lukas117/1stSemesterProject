@@ -16,7 +16,7 @@ public class Customer {
         this.setPhoneNumber(phoneNumber);
         this.setAddress(address);
         this.setCity(city);
-        this.setZipCode(zipCode);
+        this.setZipcode(zipCode);
     }
     
 	public long getCprNumber() {
@@ -34,7 +34,7 @@ public class Customer {
 	public String getCity() {
 		return city;
 	}
-	public int getZipCode() {
+	public int getZipcode() {
 		return zipCode;
 	}
 	public String getName() {
@@ -56,7 +56,7 @@ public class Customer {
 	public void setCity(String city) {
 		this.city = city;
 	}
-	public void setZipCode(int zipCode) {
+	public void setZipcode(int zipCode) {
 		this.zipCode = zipCode;
 	}
 	public void setName(String name) {
