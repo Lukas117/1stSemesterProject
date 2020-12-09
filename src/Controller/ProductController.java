@@ -14,6 +14,7 @@ public class ProductController {
 	public ProductContainer getProductContainer() {
 		return productContainer;
 	}
+
 	public boolean createProduct(Product product) {
     	return productContainer.addProduct(product);
     }
@@ -25,4 +26,9 @@ public class ProductController {
     public boolean deleteProduct(Product product) {
     	return productContainer.deleteProduct(product);
     }
+
+    public void addToStock(String productName) {productContainer.addBarcode(productName);}
+
+    public boolean removeFromStock(String productName) {return productContainer.deleteBarcode(productName);}
 }
+

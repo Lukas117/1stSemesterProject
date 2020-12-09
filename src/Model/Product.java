@@ -1,19 +1,24 @@
 package Model;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class Product {
 	private String name;
-    private long barcode;
+    private ArrayList<Integer> barcodes;
     private String type;
     private String location;
     private double price;
+    private int stock;
 
 
-    public Product (String name, long barcode, String type, String location, double price){
+    public Product (String name, String type, String location, double price, int stock){
         this.name = name;
-        this.barcode = barcode;
         this.type = type;
         this.price = price;
         this.location = location;
+        this.stock = stock;
+        barcodes= new ArrayList<>();
     }
 
     public String getLocation() {
@@ -40,15 +45,6 @@ public class Product {
         this.name = name;
     }
 
-    public long getBarcode() {
-        return barcode;
-    }
-
-    public void setBarcode(long barcode) {
-        this.barcode = barcode;
-    }
-   
-
     public String getType() {
         return type;
     }
@@ -56,6 +52,35 @@ public class Product {
     public void setType(String type) {
         this.type = type;
     }
+
+    public void setStock(int stock) {
+        this.stock = stock;
+    }
+
+    public int getStock() {return stock;}
+
+    public void addBarcodeToList(int barcode) {
+        barcodes.add(barcode);
+    }
+
+    public ArrayList<Integer> getBarcodeList() {
+        return barcodes;
+    }
+
+    public int getBarcode() {
+        Random random= new Random();
+        return random.nextInt(10000)+1;
+    }
+
+    public boolean checkBarcode(ArrayList<Integer> list,int barcode) {
+        boolean exist=false;
+        for (int x: list) {
+            if(barcode==x) exist=true;
+            else exist= false;
+        }
+        return exist;
+    }
+    
     
 
 }

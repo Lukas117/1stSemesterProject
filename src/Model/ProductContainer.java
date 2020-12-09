@@ -2,6 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
+
 public class ProductContainer {
 
 	private static ProductContainer instance;
@@ -62,5 +63,49 @@ public class ProductContainer {
     	}
 		return deletedProduct;
     }
+
+	public boolean addBarcode(String productName) {
+		boolean foundProduct = false;
+		int barcode;
+		if (productList.isEmpty()) {
+			foundProduct = false;
+		}
+		for (Product _product: productList) {
+			if(_product.getName().equals(productName)) {
+				do {
+					barcode= _product.getBarcode();
+				}
+				while(_product.checkBarcode(_product.getBarcodeList(),barcode));
+				_product.addBarcodeToList(barcode);
+				foundProduct = true;
+			}
+		}
+		if (!foundProduct) {
+			System.out.println("The product does not exist.");
+		}
+		return foundProduct;
+	}
+
+	public boolean deleteBarcode(String productName) {
+		boolean deletedBarcode = false;
+		for (Product _product: productList) {
+			if (_product.getName().equals(productName)) {
+				_product.getBarcodeList().remove(1);
+				deletedBarcode = true;
+			}
+		}
+		return deletedBarcode;
+	}
+
+	public void printOutBarcodes(String productName) {
+		for(Product _product: productList) {
+			if (_product.getName().equals(productName)) {
+				for (int barcode: _product.getBarcodeList()) {
+					System.out.println(barcode);
+				}
+
+			}
+		}
+	}
 	
 }

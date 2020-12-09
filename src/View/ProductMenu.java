@@ -81,12 +81,16 @@ public class ProductMenu {
     	}
     	else {
     		productController.createProduct(product);
+    		for (int i=0; i<product.getStock(); i++) {
+		 		productController.addToStock(product.getName());
+			}
     		System.out.println("\n Product created! \n");
     	}
     }
 	
 	 @SuppressWarnings("resource")
 	private Product getDataToNewProduct() {
+		 	Product p;
 	    	Scanner keyboard = new Scanner(System.in);
 	        String name = null;
 	        
@@ -120,10 +124,12 @@ public class ProductMenu {
 	        double price = keyboard.nextDouble();
 	        System.out.print(" Location: ");
 	        String location = keyboard.nextLine();
-	        System.out.print(" Barcode: ");
-	        long barcode = keyboard.nextLong();
+		 	System.out.print(" Stock: ");
+		 	int stock = keyboard.nextInt();
+		 	p=new Product(name, type, location, price, stock);
+		 	
 	        
-			return new Product(name, barcode, type, location, price);
+			return p;
 	    }
 	 
 	 @SuppressWarnings("resource")
@@ -141,7 +147,7 @@ public class ProductMenu {
 	    		System.out.println(" Type: " + product.getType() + "\n");
 	    		System.out.println(" Price: " + product.getPrice() + "\n");
 	    		System.out.println(" Location: " + product.getLocation() + "\n");
-	    		System.out.println(" Barcode: " + product.getBarcode() + "\n");
+				System.out.println(" Stock: " + product.getStock() + "\n");
 	    	}
 	    	else {
 	    		System.out.println(" Product does not exist!\n");
@@ -171,11 +177,11 @@ public class ProductMenu {
 	            System.out.println("Current location " + "[" + product.getLocation() + "]");
 	            System.out.print("New location: ");
 	            String location = keyboard.next();
-	            System.out.println("Current barcode " + "[" + product.getBarcode() + "]");
-	            System.out.print("New barcode: ");
-	            long barcode = keyboard.nextLong();
+				System.out.println("Current stock " + "[" + product.getStock() + "]");
+				System.out.print("New stock: ");
+				int stock = keyboard.nextInt();
 	    		
-	    		product = new Product(name, barcode, type, location, price);
+	    		product = new Product(name, type, location, price, stock);
 	    		
 	    		if (productController.getProductContainer().addProduct(product)) {
 	        		System.out.println("\n Product already exists!!!\n");
@@ -220,8 +226,13 @@ public class ProductMenu {
 	            System.out.println("Type: " + product.getType());
 	            System.out.println("Price: " + product.getPrice());
 	            System.out.println("Location: " + product.getLocation());
-	            System.out.println("Barcode: " + product.getBarcode());
+				System.out.println("Stock: " + product.getStock());
+				for(int barcode: product.getBarcodeList()) {
+					System.out.println(barcode+"\n");
+				}
+				
 	        }
+	        
 	        System.out.println("*************************\n");
 	    }
 	
