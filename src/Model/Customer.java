@@ -1,21 +1,17 @@
 package Model;
 
-import java.util.Random;
-
 public class Customer {
-	private int id;
-    //private String group;
+	private long cprNumber;
+    private String name;
     private String email;
     private String phoneNumber;
     private String address;
     private String city;
     private int zipCode;
-    private String name;
     
-    public Customer (int id, String name, String email, String phoneNumber, String address, String city, int zipCode) {
-    	id = getId();
-        this.setName(name);
-        //this.group = group;
+    public Customer (long cprNumber, String name, String email, String phoneNumber, String address, String city, int zipCode) {
+        this.setCprNumber(cprNumber);
+    	this.setName(name);
         this.setEmail(email);
         this.setPhoneNumber(phoneNumber);
         this.setAddress(address);
@@ -23,14 +19,9 @@ public class Customer {
         this.setZipCode(zipCode);
     }
     
-    
-
-	public int getId() {
-		return id;
+	public long getCprNumber() {
+		return cprNumber;
 	}
-//	public String getGroup() {
-//		return group;
-//	}
 	public String getEmail() {
 		return email;
 	}
@@ -50,13 +41,9 @@ public class Customer {
 		return name;
 	}
 	
-	public void randomId() {
-		Random rand = new Random ();
-        this.id = rand.nextInt(10000)+1;
+	public void setCprNumber(long cprNumber) {
+		this.cprNumber = cprNumber;
 	}
-//	public void setGroup(String group) {
-//		this.group = group;
-//	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
