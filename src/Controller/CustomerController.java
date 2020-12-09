@@ -18,8 +18,8 @@ public class CustomerController {
     	return customerController.addCustomer(customer);
     }
     
-    public Customer findCustomer(int id) {
-    	return customerController.findCustomer(id);
+    public Customer findCustomer(long cprNumber) {
+    	return customerController.findCustomer(cprNumber);
     }
 
     public Customer updateCustomer(String name) {
