@@ -13,15 +13,15 @@ public class Sale {
     private Customer customer;
 
     public Sale (int id, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean dispatchable, Customer customer, ArrayList<Product> shoppingCart) {
-
-        this.setId(id);
+        
+    	this.setId(id);
         this.setPrice(price);
         this.setPurchaseDate(purchaseDate);
         this.setPaymentDeadline(paymentDeadline);
         this.setDispatchable(dispatchable);
         this.setCustomer(customer);
         this.setShoppingCart(shoppingCart);
-
+        
     }
 
     public int getId() {
@@ -87,5 +87,5 @@ public class Sale {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-    
+	
 }

@@ -30,5 +30,21 @@ public class ProductController {
     public void addToStock(String productName) {productContainer.addBarcode(productName);}
 
     public boolean removeFromStock(String productName) {return productContainer.deleteBarcode(productName);}
+    
+    public void updateStock(Product product, int oldStock, int newStock) {
+		product.getBarcodeList();
+		String name = product.getName();
+		if(newStock-oldStock>0) {
+			for(int i=0; i<(newStock-oldStock); i++) {
+				addToStock(name);
+			}
+		}
+		else{
+			for(int i=0; i<(oldStock-newStock); i++) {
+				removeFromStock(name);
+			}
+		}
+
+	}
 }
 

@@ -68,14 +68,14 @@ public class EmployeeMenu {
     }
     
     @SuppressWarnings("resource")
-	public boolean logIn() {
+	public boolean checkUser() {
     	Scanner keyboard = new Scanner(System.in);
     	System.out.print(" Username: ");
     	String username = keyboard.nextLine();
     	System.out.print(" Password: ");
     	String password = keyboard.nextLine();
     	
-    	if (employeeController.logIn(username,password) != null) {
+    	if (employeeController.checkUser(username,password) != null) {
     		System.out.println(" Login successfull!\n");
     		return true;
     	}
@@ -84,8 +84,8 @@ public class EmployeeMenu {
     	}
 		return false;
     }
-    
-    void createEmployee() {
+        
+    public void createEmployee() {
     	Employee employee = getDataToNewEmployee();
     	
     	if (employeeController.createEmployee(employee)) {
@@ -141,8 +141,9 @@ public class EmployeeMenu {
             System.out.println("Current password " + "[" + employee.getPassword() + "]");
             System.out.print("New password: ");
             String password = keyboard.nextLine();
+    		int saleCounter = employeeController.getCurrentUser().getSaleCounter();
     		
-    		employee = new Employee(username,name,email,password);
+    		employee = new Employee(username, name, email, password, saleCounter);
     		
     		if (employeeController.getEmployeeContainer().addEmployee(employee)) {
         		System.out.println("\n User already exists!\n");
@@ -229,9 +230,9 @@ public class EmployeeMenu {
         String email = keyboard.nextLine();
         System.out.print(" Password: ");
         String password = keyboard.nextLine();
-        //int saleCounter = currentUser.getSaleCounter();
+        int saleCounter = 0;
         
-		return new Employee(username, name, email, password);
+		return new Employee(username, name, email, password, saleCounter);
     }
     
     private Integer getIntegerFromUser(Scanner keyboard) {

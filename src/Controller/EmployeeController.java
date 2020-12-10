@@ -6,6 +6,7 @@ import Model.EmployeeContainer;
 
 public class EmployeeController {
 	private EmployeeContainer employeeContainer;
+    private Employee currentUser;
     
     public EmployeeController() {
     	employeeContainer = EmployeeContainer.getInstance();
@@ -15,16 +16,21 @@ public class EmployeeController {
 		return employeeContainer;
 	}
 	
-    public Employee logIn(String username,String password) {
+    public Employee checkUser(String username,String password) {
     	ArrayList<Employee> employeeList = employeeContainer.getEmployees();
     	for (Employee _employee: employeeList) {
 			if (_employee.getUsername().equals(username)) {
 				if (_employee.getPassword().equals(password)) {
+					currentUser = _employee;
 					return _employee;
 				}
 			}
     	}      
         return null;
+    }
+    
+    public Employee getCurrentUser() {
+    	return currentUser;
     }
 
     public boolean createEmployee(Employee employee) {
