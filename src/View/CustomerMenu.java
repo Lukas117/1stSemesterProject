@@ -64,11 +64,7 @@ public class CustomerMenu {
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
         
-        while (!keyboard.hasNextInt()) {
-            System.out.println(" Input must be a number - try again");
-            keyboard.nextLine();
-        }
-        int choice = keyboard.nextInt();
+        int choice = getIntegerFromUser(keyboard);
         return choice;
     }
 	
@@ -153,7 +149,6 @@ public class CustomerMenu {
     	}
     }
 	
-	@SuppressWarnings("resource")
 	private void deleteCustomer() {
     	Scanner keyboard = new Scanner(System.in);;
     	

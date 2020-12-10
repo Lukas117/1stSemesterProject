@@ -48,12 +48,7 @@ public class SaleContainer {
 	}
 	
 	public Sale updateSale(int id) {
-		for (Sale _sale : saleList) {
-			if (_sale.getId()==(id)) {
-				return _sale;
-			}
-		}
-		return null;
+		return findSale(id);
 	}
 	
 	public boolean deleteSale(Sale sale) {
