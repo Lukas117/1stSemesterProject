@@ -93,7 +93,7 @@ public class DepartmentMenu {
 		
 		if (departmentController.findDepartment(name) != null) {
 			System.out.println("----- Department -----");
-			System.out.println("Name: " + Department.getName());
+			System.out.println("Name: " + department.getName());
 		}
 		else {
 			System.out.println(" Department does not exist!\n");
@@ -106,7 +106,7 @@ public class DepartmentMenu {
 		System.out.println("Name of the department that you want to delete: ");
 		String name = getStringFromUser(keyboard);
 		Department department = departmentController.findDepartment(name);
-		if (departmentController.deleteDepartment(name)) {
+		if (departmentController.deleteDepartment(department)) {
 			System.out.println("Department deleted!");
 		}
 		else {
@@ -115,7 +115,7 @@ public class DepartmentMenu {
 	}
 	
 	private void showDepartment() {
-		ArrayList<Department> departments = departmentController.getDepartmentContainer().getDeaprtments();
+		ArrayList<Department> departments = departmentController.getDepartmentContainer().getDepartmentList();
 		
 		System.out.println("\n****** Registered Departments *******");
 		for(int i=0; i<departments.size(); i++) {
