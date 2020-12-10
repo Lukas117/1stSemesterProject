@@ -1,7 +1,5 @@
 package Controller;
 
-import java.util.ArrayList;
-
 import Model.SaleContainer;
 import Model.Sale;
 

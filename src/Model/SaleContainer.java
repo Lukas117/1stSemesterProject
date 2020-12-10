@@ -28,7 +28,7 @@ public class SaleContainer {
 			foundSale = false;
 		}
 		for (Sale _sale: saleList) {
-			if (_sale.getID()==(newSale.getID())) {
+			if (_sale.getId()==(newSale.getId())) {
 				foundSale = true;
 			}
 		}
@@ -38,29 +38,24 @@ public class SaleContainer {
 		return foundSale;
 	}
 	
-	public Sale findSale(int ID) {
+	public Sale findSale(int id) {
 		for (Sale _sale : saleList) {
-			if (_sale.getID()==(ID)) {
+			if (_sale.getId()==(id)) {
 				return _sale;
 			}
 		}
 		return null;
 	}
 	
-	public Sale updateSale(int ID) {
-		for (Sale _sale :saleList) {
-			if (_sale.getID()==(ID)) {
-				return _sale;
-			}
-		}
-		return null;
+	public Sale updateSale(int id) {
+		return findSale(id);
 	}
 	
 	public boolean deleteSale(Sale sale) {
 		boolean deletedSale = false;
 		Sale saleToDelete = null;
 		for (Sale _sale: saleList) {
-			if (_sale.getID()==(sale.getID())) {
+			if (_sale.getId()==(sale.getId())) {
 				saleToDelete = _sale;
 				deletedSale = true;
 			}

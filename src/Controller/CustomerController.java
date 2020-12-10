@@ -26,7 +26,7 @@ public class CustomerController {
     	return customerContainer.updateCustomer(cprNumber);
     }
     
-    public boolean deleteCustomer(Customer employee) {
-    	return customerContainer.deleteCustomer(employee);
+    public boolean deleteCustomer(Customer customer) {
+    	return customerContainer.deleteCustomer(customer);
     }
 }

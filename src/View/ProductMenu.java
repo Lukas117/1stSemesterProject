@@ -248,6 +248,4 @@ public class ProductMenu {
 	        
 	        System.out.println("*************************\n");
 	    }
-	
-	
 }

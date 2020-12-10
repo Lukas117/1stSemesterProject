@@ -48,12 +48,7 @@ public class EmployeeContainer {
 	}
 
 	public Employee updateEmployee(String username) {
-		for (Employee _employee :employeeList) {
-	        if (_employee.getUsername().equals(username)) {
-	        	return _employee;
-	        }
-		}
-		return null;
+		return findEmployee(username);
 	}
     		
 	public boolean deleteEmployee(Employee employee) {

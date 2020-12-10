@@ -48,9 +48,9 @@ public class DepartmentContainer {
     public boolean deleteDepartment(Department department) {
     	boolean deletedDepartment = false;
     	Department departmentToDelete = null;
-    	for (Department department2: departmentList) {
-            if (department2.getName().equals(department.getName())) {           
-            	departmentToDelete = department2;
+    	for (Department _department: departmentList) {
+            if (_department.getName().equals(department.getName())) {           
+            	departmentToDelete = _department;
             	deletedDepartment = true;
             }
         }

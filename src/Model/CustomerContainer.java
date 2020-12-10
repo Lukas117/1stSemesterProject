@@ -5,7 +5,6 @@ import java.util.ArrayList;
 public class CustomerContainer {
 	private static CustomerContainer instance;
 	private ArrayList<Customer> customerList = new ArrayList<>();
-    //private HashMap<String, Customer> map;
 
     private CustomerContainer() {
     	//instance = new CustomerContainer();
@@ -54,10 +53,11 @@ public class CustomerContainer {
 
     public boolean deleteCustomer(Customer customer) {
     	boolean deletedCustomer = false;
+    	
     	Customer customerToDelete = null;
-    	for (Customer _employee: customerList) {
-            if (_employee.getName().equals(customer.getName())) {           
-            	customerToDelete = _employee;
+    	for (Customer _customer: customerList) {
+            if (_customer.getName().equals(customer.getName())) {           
+            	customerToDelete = _customer;
             	deletedCustomer = true;
             }
         }

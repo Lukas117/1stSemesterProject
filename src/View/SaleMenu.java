@@ -81,12 +81,7 @@ public class SaleMenu {
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
         
-        while (!keyboard.hasNextInt()) {
-        	System.out.println(" Input must be a number - try again");
-        	keyboard.nextLine();
-        }
-        
-        int choice = keyboard.nextInt();
+        int choice = getIntegerFromUser(keyboard);
         return choice;
 	}
 	
@@ -94,7 +89,7 @@ public class SaleMenu {
 		Sale sale = getDataToNewSale();
 		
 		if (saleController.createSale(sale)) {
-			System.out.println("Sale is already created, please create another one!");
+			System.out.println("Sale already exists.");
 		}
 		else {
 			saleController.createSale(sale);
@@ -107,13 +102,13 @@ public class SaleMenu {
 		Scanner keyboard = new Scanner(System.in);
 		
 		System.out.println("ID: ");
-		int id = keyboard.nextInt();
+		int id = getIntegerFromUser(keyboard);
 		
 		Sale sale = saleController.findSale(id);
 		
 		if (saleController.findSale(id) != null) {
 			System.out.println("----- Sale -----");
-			System.out.println("ID: " + sale.getID());
+			System.out.println("ID: " + sale.getId());
 			System.out.println("Customer name: " + sale.getCustomer().getName());
 			System.out.println("Total price: " + sale.getPrice());
 			System.out.println("Items: ");
@@ -124,13 +119,13 @@ public class SaleMenu {
 			System.out.print("Delivery: ");
 			if (sale.isDispatchable()) System.out.print("Yes\n");
 			else System.out.print("No\n");
+			System.out.println("ID: " + sale.getId());
 		}
 		else {
 			System.out.println(" Sale does not exist!\n");
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	private void updateSale() {
 		Scanner keyboard = new Scanner(System.in);
 
@@ -141,46 +136,45 @@ public class SaleMenu {
 		ArrayList<Product> cart= new ArrayList<>();
 		
 		System.out.println("ID: ");
-		int id = keyboard.nextInt();
+		int id = getIntegerFromUser(keyboard);
 		Sale sale = saleController.getSaleContainer().findSale(id);
 		
 		if (saleController.updateSale(id) != null) {
 			saleController.deleteSale(sale);
 			
-			System.out.println("Current ID " + "[" + sale.getID() + "]");
+			System.out.println("Current ID " + "[" + sale.getId() + "]");
 			System.out.println("Write the new ID: ");
-			id = keyboard.nextInt();
+			id = getIntegerFromUser(keyboard);
 			System.out.println("Current price " + "[" + sale.getPrice() + "]");
 			System.out.println("New price: ");
-			int price = keyboard.nextInt();
+			double price = getDoubleFromUser(keyboard);
 			
 			sale = new Sale(id, price, purchaseDate, paymentDeadline, dispatchable, customer, cart);
 			
 			if (saleController.getSaleContainer().addSale(sale)) {
-				System.out.println("\n Sale already exists!!!\n");
+				System.out.println("\n Sale already exists!\n");
 			}
 			else {
 				saleController.createSale(sale);
-				System.out.println("\nSale updated\n");
+				System.out.println("\nSale updated.\n");
 			}
 		}
 		else {
-			System.out.println(" Sale not found\n");
+			System.out.println(" Sale not found.\n");
 		}
 	}
-	@SuppressWarnings("resource")
+
 	private void deleteSale() {
-		Scanner keyboard;
-		int id = 0;
+		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println(" write ID of the slae that you want to delete: ");
-		keyboard = new Scanner(System.in);
+		System.out.println(" ID of the sale that you want to delete: ");
+		int id = getIntegerFromUser(keyboard);
 		Sale sale = saleController.findSale(id);
 		if (saleController.deleteSale(sale)) {
-			System.out.println(" Sale deleted");
+			System.out.println("Sale deleted!");
 		}
 		else {
-			System.out.println("Err; System didn't find sale by the ID, therefore the sale cannot be deleted.");
+			System.out.println(" Sale not found.");
 		}
 	}
 	
@@ -191,9 +185,9 @@ public class SaleMenu {
 		for(int i=0; i<sales.size(); i++) {
 			Sale sale = sales.get(i);
 			
-			System.out.println("----- Sale " + (i+1) + "-----");
-			System.out.println("ID: " + sale.getID());
-			System.out.println("Price: " + sale.getPrice());
+			System.out.println("----- Sale number: " + (i+1) + "-----");
+			System.out.println("Sale ID: " + sale.getId());
+			System.out.println("Price: " + sale.getPrice() + "kr.");
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 			System.out.println("Items: ");
 			printSaleItems(sale.getShoppingCart());
@@ -227,7 +221,7 @@ public class SaleMenu {
 				id = nonCheckedId;
 			}
 			for(Sale sale: sales) {
-				if(sale.getID() == nonCheckedId) {
+				if(sale.getId() == nonCheckedId) {
 					System.out.println(" ID is already taken, try different one");
 				}
 				else {
@@ -259,7 +253,6 @@ public class SaleMenu {
 		totalPrice=getTotalPrice(cart);
 		dispatchable=getDelivery();
 
-		
 		return new Sale(id, totalPrice, null, null, dispatchable, customer, cart);
 	}
 	
@@ -291,8 +284,27 @@ public class SaleMenu {
 		else if(delivery.equals("No")) dispatchable = false;
 		else System.out.println("Choose from yes or no");
 		return dispatchable;
+		
 	}
-
+	
+//	@SuppressWarnings("resource")
+//	private ArrayList<Product> addProductToCart() {
+//		ArrayList<Product> products = productController.getProductContainer().getProductList();
+//		ArrayList<Integer> saleItems = new ArrayList<>();
+//		Scanner keyboard = new Scanner(System.in);
+//		
+//		System.out.println(" Name of the product: ");
+//		String name = keyboard.nextLine();
+//		Product product = productController.findProduct(name);
+//		ArrayList<Integer> barcodes = product.getBarcodeList();
+//		System.out.println(" Number of products: ");
+//		int numberOfProducts = keyboard.nextInt();
+//		
+//		saleItems.add(product);
+//		
+//		return saleItems;
+//	}
+	
 	private boolean cprCheck(long cpr) {
 		boolean foundCpr=false;
 		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
@@ -302,7 +314,7 @@ public class SaleMenu {
 		}
 		return foundCpr;
 	}
-
+	
 	private Double getDoubleFromUser(Scanner keyboard) {
     	while (!keyboard.hasNextDouble()) {
     		System.out.println("Input must be a number - try again");
@@ -326,5 +338,13 @@ public class SaleMenu {
 				System.out.println(barcode);
 			}
 		}
+	}
+
+	private Integer getIntegerFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextInt()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextInt();
 	}
 }

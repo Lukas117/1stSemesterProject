@@ -52,8 +52,7 @@ public class EmployeeMenu {
     }
     
     private int writeEmployeeMenu()  {
-        @SuppressWarnings("resource")
-		Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in);
         
         System.out.println("****** Employee menu ******");
         System.out.println(" (1) Create employee");
@@ -64,24 +63,19 @@ public class EmployeeMenu {
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
         
-        while (!keyboard.hasNextInt()) {
-            System.out.println(" Input must be a number - try again");
-            keyboard.nextLine();
-        }
-        
-        int choice = keyboard.nextInt();
+        int choice = getIntegerFromUser(keyboard);
         return choice;
     }
     
     @SuppressWarnings("resource")
-	public boolean logIn() {
+	public boolean checkUser() {
     	Scanner keyboard = new Scanner(System.in);
     	System.out.print(" Username: ");
     	String username = keyboard.nextLine();
     	System.out.print(" Password: ");
     	String password = keyboard.nextLine();
     	
-    	if (employeeController.logIn(username,password) != null) {
+    	if (employeeController.checkUser(username,password) != null) {
     		System.out.println(" Login successfull!\n");
     		return true;
     	}
@@ -90,7 +84,7 @@ public class EmployeeMenu {
     	}
 		return false;
     }
-    
+        
     public void createEmployee() {
     	Employee employee = getDataToNewEmployee();
     	
@@ -104,20 +98,20 @@ public class EmployeeMenu {
     }
     
     @SuppressWarnings("resource")
-	public void findEmployee() {
+	private void findEmployee() {
     	Scanner keyboard = new Scanner(System.in);
     	
     	System.out.print(" Username: ");
-    	String username = keyboard.nextLine();
-//    	System.out.print(" Password: ");
-//    	String password = keyboard.nextLine();
-    	
+    	String username = keyboard.nextLine();    	
     	Employee employee = employeeController.findEmployee(username);    
     	
     	if (employeeController.findEmployee(username) != null) {
     		System.out.println("----- Employee -----");
-    		System.out.println(" Name: " + username);
-    		System.out.println(" Email: " + employee.getEmail() + "\n");
+    		System.out.println(" Username: " + username);
+    		System.out.println(" Name: " + employee.getName());
+    		System.out.println(" Email: " + employee.getEmail());
+    		System.out.println(" Password: " + employee.getPassword());
+    		System.out.println(" Number of sales: " + employee.getSaleCounter() + "\n");
     	}
     	else {
     		System.out.println(" User does not exist!\n");
@@ -130,8 +124,6 @@ public class EmployeeMenu {
 
     	System.out.print(" Username: ");
     	String username = keyboard.nextLine();
-//    	System.out.print(" Password: ");
-//    	String password = keyboard.nextLine();
 		Employee employee = employeeController.getEmployeeContainer().findEmployee(username);    	
     	
     	if (employeeController.updateEmployee(username) != null) {
@@ -149,11 +141,12 @@ public class EmployeeMenu {
             System.out.println("Current password " + "[" + employee.getPassword() + "]");
             System.out.print("New password: ");
             String password = keyboard.nextLine();
+    		int saleCounter = employeeController.getCurrentUser().getSaleCounter();
     		
-    		employee = new Employee(username,name,email,password);
+    		employee = new Employee(username, name, email, password, saleCounter);
     		
     		if (employeeController.getEmployeeContainer().addEmployee(employee)) {
-        		System.out.println("\n User already exists!!!\n");
+        		System.out.println("\n User already exists!\n");
         	}
         	else {
         		employeeController.createEmployee(employee);
@@ -167,13 +160,12 @@ public class EmployeeMenu {
     
     @SuppressWarnings("resource")
 	private void deleteEmployee() {
-    	Scanner keyboard;
-    	String username;
+    	Scanner keyboard = new Scanner(System.in);;
     	
     	System.out.println(" Write username of the employee that you want to delete:");
-    	keyboard = new Scanner(System.in);
-    	username = keyboard.nextLine();
+    	String username = keyboard.nextLine();
     	Employee employee = employeeController.findEmployee(username);
+    	
 		if (employeeController.deleteEmployee(employee)) {
     		System.out.println(" Employee deleted!\n");
     		//username = playerController.getPlayerContainer().deletePlayer(player);;
@@ -182,7 +174,7 @@ public class EmployeeMenu {
     	}
     	
     	else {
-    		System.out.println("Err: System didn't find person by the username, therefore the player cannot be deleted.");
+    		System.out.println(" Employee not found.\n");
     	}	
     }
     
@@ -198,6 +190,7 @@ public class EmployeeMenu {
             System.out.println("Name: " + employee.getName());
             System.out.println("Email: " + employee.getEmail());
             System.out.println("Password: " + employee.getPassword());
+            System.out.println("Number of sales: " + employee.getSaleCounter());
             
         }
         System.out.println("*************************\n");
@@ -237,8 +230,16 @@ public class EmployeeMenu {
         String email = keyboard.nextLine();
         System.out.print(" Password: ");
         String password = keyboard.nextLine();
-        //int saleCounter;
+        int saleCounter = 0;
         
-		return new Employee(username, name, email, password);
+		return new Employee(username, name, email, password, saleCounter);
     }
+    
+    private Integer getIntegerFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextInt()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextInt();
+	}
 }

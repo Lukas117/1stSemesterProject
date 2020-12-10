@@ -55,7 +55,7 @@ public class LoginMenu {
     }
 	
 	private void login() {
-    	if (mainMenu.getEmployeeMenu().logIn()) {
+    	if (mainMenu.getEmployeeMenu().checkUser()) {
     		mainMenu.start();
     	}
     }

@@ -4,25 +4,25 @@ import Model.Department;
 import Model.DepartmentContainer;
 
 public class DepartmentController {
-	private DepartmentContainer departmentController;
+	private DepartmentContainer departmentContainer;
 	
 	public DepartmentController() {
-		departmentController = DepartmentContainer.getInstance();
+		departmentContainer = DepartmentContainer.getInstance();
 	}
 	
 	public DepartmentContainer getDepartmentContainer() {
-		return departmentController;
+		return departmentContainer;
 	}
 	
 	public boolean createDepartment(Department department) {
-    	return departmentController.addDepartment(department);
+    	return departmentContainer.addDepartment(department);
     }
     
     public Department findDepartment(String name) {
-    	return departmentController.findDepartment(name);
+    	return departmentContainer.findDepartment(name);
     }
     
     public boolean deleteDepartment(Department department) {
-    	return departmentController.deleteDepartment(department);
+    	return departmentContainer.deleteDepartment(department);
     }
 }
