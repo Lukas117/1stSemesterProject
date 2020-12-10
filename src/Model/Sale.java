@@ -12,11 +12,11 @@ public class Sale {
     private boolean dispatchable;//in store or delivery
     private Customer customer;
 
-    public Sale (int ID, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean dispatchable, Customer customer) {
+    public Sale (int ID, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean dispatchable, Customer customer, ArrayList<Product> shoppingCart) {
 
         this.price = price;
         this.purchaseDate = purchaseDate;
-        shoppingCart = new ArrayList<>();
+        this.shoppingCart = shoppingCart;
         this.paymentDeadline = paymentDeadline;
         this.ID = ID;
         this.dispatchable = dispatchable;

@@ -32,3 +32,4 @@ public class SaleController {
 		return saleContainer.deleteSale(sale);
 	}
 }
+	
