@@ -103,9 +103,7 @@ public class ProductContainer {
 				for (int barcode: _product.getBarcodeList()) {
 					System.out.println(barcode);
 				}
-
 			}
 		}
 	}
-	
 }

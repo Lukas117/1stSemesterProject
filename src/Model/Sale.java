@@ -4,7 +4,7 @@ import java.util.*;
 import java.time.LocalDateTime;
 
 public class Sale {
-	private int ID;
+	private int id;
     private ArrayList<Product> shoppingCart;
     private double price;
     private LocalDateTime purchaseDate;
@@ -12,24 +12,24 @@ public class Sale {
     private boolean dispatchable;//in store or delivery
     private Customer customer;
 
-    public Sale (int ID, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean dispatchable, Customer customer) {
+    public Sale (int id, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean dispatchable, Customer customer, ArrayList<Product> shoppingCart) {
 
-        this.price = price;
-        this.purchaseDate = purchaseDate;
-        shoppingCart = new ArrayList<>();
-        this.paymentDeadline = paymentDeadline;
-        this.ID = ID;
-        this.dispatchable = dispatchable;
-        this.customer = customer;
+        this.setId(id);
+        this.setPrice(price);
+        this.setPurchaseDate(purchaseDate);
+        this.setPaymentDeadline(paymentDeadline);
+        this.setDispatchable(dispatchable);
+        this.setCustomer(customer);
+        this.setShoppingCart(shoppingCart);
 
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
     
     public double getPrice() {

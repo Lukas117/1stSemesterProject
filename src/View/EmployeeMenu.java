@@ -91,7 +91,7 @@ public class EmployeeMenu {
 		return false;
     }
     
-    private void createEmployee() {
+    void createEmployee() {
     	Employee employee = getDataToNewEmployee();
     	
     	if (employeeController.createEmployee(employee)) {
