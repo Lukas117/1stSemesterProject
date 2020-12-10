@@ -5,13 +5,16 @@ public class Location {
 	private String name;
 	private String location;
 	private String type;
-	private double price;
+	private int aisle;
+	private String warehouse;
 	
-	public Location (String name, String location, String type, double price) {
+	
+	public Location (String name, String location, String type, int asile, String warehouse) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
-		this.price = price;
+		this.aisle = aisle;
+		this.warehouse = warehouse;
 	}
 
 	public String getName() {
@@ -38,13 +41,23 @@ public class Location {
 		this.type = type;
 	}
 
-	public double getPrice() {
-		return price;
+	public int getAisle() {
+		return aisle;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setAisle(int aisle) {
+		this.aisle = aisle;
 	}
+
+	public String getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(String warehouse) {
+		this.warehouse = warehouse;
+	}
+	
+	
 
 
 }
