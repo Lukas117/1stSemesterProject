@@ -287,24 +287,6 @@ public class SaleMenu {
 		
 	}
 	
-//	@SuppressWarnings("resource")
-//	private ArrayList<Product> addProductToCart() {
-//		ArrayList<Product> products = productController.getProductContainer().getProductList();
-//		ArrayList<Integer> saleItems = new ArrayList<>();
-//		Scanner keyboard = new Scanner(System.in);
-//		
-//		System.out.println(" Name of the product: ");
-//		String name = keyboard.nextLine();
-//		Product product = productController.findProduct(name);
-//		ArrayList<Integer> barcodes = product.getBarcodeList();
-//		System.out.println(" Number of products: ");
-//		int numberOfProducts = keyboard.nextInt();
-//		
-//		saleItems.add(product);
-//		
-//		return saleItems;
-//	}
-	
 	private boolean cprCheck(long cpr) {
 		boolean foundCpr=false;
 		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
