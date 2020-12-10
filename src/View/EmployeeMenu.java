@@ -52,8 +52,7 @@ public class EmployeeMenu {
     }
     
     private int writeEmployeeMenu()  {
-        @SuppressWarnings("resource")
-		Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in);
         
         System.out.println("****** Employee menu ******");
         System.out.println(" (1) Create employee");
@@ -64,12 +63,7 @@ public class EmployeeMenu {
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
         
-        while (!keyboard.hasNextInt()) {
-            System.out.println(" Input must be a number - try again");
-            keyboard.nextLine();
-        }
-        
-        int choice = keyboard.nextInt();
+        int choice = getIntegerFromUser(keyboard);
         return choice;
     }
     
@@ -239,4 +233,12 @@ public class EmployeeMenu {
         
 		return new Employee(username, name, email, password);
     }
+    
+    private Integer getIntegerFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextInt()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextInt();
+	}
 }
