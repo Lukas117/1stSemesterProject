@@ -121,12 +121,12 @@ public class ProductMenu {
 	        System.out.print(" type: ");
 	        String type = keyboard.nextLine();
 	        System.out.print(" Price: ");
-	        double price = keyboard.nextDouble();
+	        double price = getDoubleFromUser(keyboard);
 	        System.out.print(" Location: ");
 	        String location = keyboard.nextLine();
 		 	System.out.print(" Stock: ");
-		 	int stock = keyboard.nextInt();
-		 	p=new Product(name, type, location, price, stock);
+		 	int stock = getIntegerFromUser(keyboard);
+		 	p = new Product(name, type, location, price, stock);
 		 	
 	        
 			return p;
@@ -248,4 +248,22 @@ public class ProductMenu {
 	        
 	        System.out.println("*************************\n");
 	    }
+	 
+		private Double getDoubleFromUser(Scanner keyboard) {
+	    	while (!keyboard.hasNextDouble()) {
+	    		System.out.println("Input must be a number - try again");
+	    		keyboard.nextLine();
+	    	}
+	    	return keyboard.nextDouble();
+		}
+		
+		private Integer getIntegerFromUser(Scanner keyboard) {
+	    	while (!keyboard.hasNextInt()) {
+	    		System.out.println("Input must be a number - try again");
+	    		keyboard.nextLine();
+	    	}
+	    	return keyboard.nextInt();
+		}
 }
+
+

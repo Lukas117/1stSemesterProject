@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class SaleContainer {
 	private static SaleContainer instance;
-	private ArrayList<Sale> saleList = new ArrayList<>();
-	
-	public SaleContainer() {
-		//instance = new SaleContainer();
+	private ArrayList<Sale> saleList;
+		
+	private SaleContainer() {
+		saleList = new ArrayList<>();
 	}
 	
 	public ArrayList<Sale> getSales() {

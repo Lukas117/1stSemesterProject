@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class EmployeeContainer {
 	private static EmployeeContainer instance;
-	private ArrayList<Employee> employeeList = new ArrayList<>();
+	private ArrayList<Employee> employeeList;
 		
-	public EmployeeContainer() {
-		//instance = new EmployeeContainer();
+	private EmployeeContainer() {
+		employeeList = new ArrayList<>();
 	}
 		
 	public ArrayList<Employee> getEmployees() {

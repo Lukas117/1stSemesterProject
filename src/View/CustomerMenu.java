@@ -12,10 +12,6 @@ public class CustomerMenu {
 		this.customerController = customerController;
 	}
 	
-	public CustomerController getCustomerController() {
-		return customerController;
-	}
-	
 	public void start() {
 		customerMenu();
 	}
@@ -52,8 +48,7 @@ public class CustomerMenu {
     }
 	
 	private int writeCustomerMenu()  {
-        @SuppressWarnings("resource")
-		Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in);
         
         System.out.println("****** Customer menu ******");
         System.out.println(" (1) Create customer");
@@ -230,6 +225,7 @@ public class CustomerMenu {
     	}
     	return keyboard.nextInt();
 	}
+    
     private Long getLongFromUser(Scanner keyboard) {
     	while (!keyboard.hasNextLong()) {
     		System.out.println("Input must be a number - try again");

@@ -9,16 +9,16 @@ public class Sale {
     private double price;
     private LocalDateTime purchaseDate;
     private LocalDateTime paymentDeadline;
-    private boolean dispatchable;//in store or delivery
+    private boolean delivery;
     private Customer customer;
 
-    public Sale (int id, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean dispatchable, Customer customer, ArrayList<Product> shoppingCart) {
+    public Sale (int id, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean delivery, Customer customer, ArrayList<Product> shoppingCart) {
         
     	this.setId(id);
         this.setPrice(price);
         this.setPurchaseDate(purchaseDate);
         this.setPaymentDeadline(paymentDeadline);
-        this.setDispatchable(dispatchable);
+        this.setDelivery(delivery);
         this.setCustomer(customer);
         this.setShoppingCart(shoppingCart);
         
@@ -64,12 +64,12 @@ public class Sale {
         this.paymentDeadline = paymentDeadline;
     }
 
-	public boolean isDispatchable() {
-		return dispatchable;
+	public boolean isDelivery() {
+		return delivery;
 	}
 
-	public void setDispatchable(boolean dispatchable) {
-		this.dispatchable = dispatchable;
+	public void setDelivery(boolean delivery) {
+		this.delivery = delivery;
 	}
 
 	public ArrayList<Product> getShoppingCart() {
@@ -87,5 +87,4 @@ public class Sale {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
 }

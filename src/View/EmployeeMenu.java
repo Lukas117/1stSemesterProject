@@ -7,6 +7,7 @@ import Model.Employee;
 
 public class EmployeeMenu {
 	private EmployeeController employeeController;
+    private Employee currentUser;
     
     public EmployeeMenu(EmployeeController employeeController) {
        this.employeeController = employeeController;
@@ -76,6 +77,7 @@ public class EmployeeMenu {
     	String password = keyboard.nextLine();
     	
     	if (employeeController.checkUser(username,password) != null) {
+			currentUser = employeeController.checkUser(username,password);
     		System.out.println(" Login successfull!\n");
     		return true;
     	}
@@ -83,6 +85,10 @@ public class EmployeeMenu {
     		System.out.println(" User does not exist!\n");
     	}
 		return false;
+    }
+    
+    public Employee getCurrentUser() {
+    	return currentUser;
     }
         
     public void createEmployee() {
@@ -141,7 +147,7 @@ public class EmployeeMenu {
             System.out.println("Current password " + "[" + employee.getPassword() + "]");
             System.out.print("New password: ");
             String password = keyboard.nextLine();
-    		int saleCounter = employeeController.getCurrentUser().getSaleCounter();
+    		int saleCounter = currentUser.getSaleCounter();
     		
     		employee = new Employee(username, name, email, password, saleCounter);
     		

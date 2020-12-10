@@ -21,18 +21,6 @@ public class SaleMenu {
 		this.productController = productController;
 	}
 	
-	public SaleController getSaleController() {
-		return saleController;
-	}
-	
-	public ProductController getProductController() {
-		return productController;
-	}
-	
-	public CustomerController getCustomerController() {
-		return customerController;
-	}
-	
 	public void start() {
 		saleMenu();
 	}
@@ -68,7 +56,6 @@ public class SaleMenu {
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	private int writeSaleMeu() {
 		Scanner keyboard = new Scanner(System.in);
 		
@@ -85,7 +72,7 @@ public class SaleMenu {
         return choice;
 	}
 	
-	public void createSale() {
+	private void createSale() {
 		Sale sale = getDataToNewSale();
 		
 		if (saleController.createSale(sale)) {
@@ -97,8 +84,7 @@ public class SaleMenu {
 		}
 	}
 	
-	@SuppressWarnings("resource")
-	public void findSale() {
+	private void findSale() {
 		Scanner keyboard = new Scanner(System.in);
 		
 		System.out.println("ID: ");
@@ -110,19 +96,22 @@ public class SaleMenu {
 			System.out.println("----- Sale -----");
 			System.out.println("ID: " + sale.getId());
 			System.out.println("Customer name: " + sale.getCustomer().getName());
-			System.out.println("Total price: " + sale.getPrice());
-			System.out.println("Items: ");
+			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
+			System.out.println("Total price: " + sale.getPrice() + " dkk");
+			System.out.print("Items: ");
 			for (Product item: sale.getShoppingCart()) {
-				System.out.println(item.getName());
-				System.out.println(item.getStock());
+				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getBarcodeList().size());
 			}
 			System.out.print("Delivery: ");
-			if (sale.isDispatchable()) System.out.print("Yes\n");
-			else System.out.print("No\n");
-			System.out.println("ID: " + sale.getId());
+			if (sale.isDelivery()) {
+				System.out.print("Yes. Item will be delivered.\n");
+			}
+			else {
+				System.out.print("No. Pick up at the store.\n");
+			}
 		}
 		else {
-			System.out.println(" Sale does not exist!\n");
+			System.out.println(" Sale does not exist.\n");
 		}
 	}
 	
@@ -187,7 +176,7 @@ public class SaleMenu {
 			
 			System.out.println("----- Sale number: " + (i+1) + "-----");
 			System.out.println("Sale ID: " + sale.getId());
-			System.out.println("Price: " + sale.getPrice() + "kr.");
+			System.out.println("Price: " + sale.getPrice() + " dkk");
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 			System.out.println("Items: ");
 			printSaleItems(sale.getShoppingCart());
@@ -195,15 +184,14 @@ public class SaleMenu {
 		System.out.println("************************\n");
 	}
 	
-	@SuppressWarnings("resource")
 	private Sale getDataToNewSale() {
 		Scanner keyboard = new Scanner(System.in);
 		int id = 0;
 		LocalDateTime purchaseDate = null;
 		LocalDateTime paymentDeadline = null;
-		boolean dispatchable = false;
+		boolean delivery = false;
 		Customer customer = null;
-		ArrayList<Product> cart= new ArrayList<>();
+		ArrayList<Product> shoppingCart = new ArrayList<>();
 		double totalPrice=0;
 
 		while(id == 0) {
@@ -229,7 +217,7 @@ public class SaleMenu {
 				}
 			}
 		}
-		System.out.println("Customer CPR number: ");
+		System.out.println("Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
 		if(!cprCheck(cprNumber)) {
 			System.out.println("Customer does not exist, please create customer.");
@@ -238,63 +226,83 @@ public class SaleMenu {
 			customer = customerController.findCustomer(cprNumber);
 		}
 
-		int choice=0;
-		while(choice!=2) {
+		int choice = 0;
+		while(choice != 2) {
 			keyboard = new Scanner(System.in);
 			System.out.println(" Name of the product: ");
 			String name = keyboard.nextLine();
 			System.out.println(" Number of products: ");
-			int numberOfProducts = keyboard.nextInt();
-			cart.add(addProductToCart(name, numberOfProducts));
+			int numberOfProducts = getIntegerFromUser(keyboard);
+			shoppingCart.add(addProductToCart(name, numberOfProducts));
 			System.out.println("(1) Add more products");
 			System.out.println("(2) Finish");
-			choice = keyboard.nextInt();
+			choice = getIntegerFromUser(keyboard);
 		}
-		totalPrice=getTotalPrice(cart);
-		dispatchable=getDelivery();
+		totalPrice = getTotalPrice(shoppingCart);
+		delivery = getDelivery();
 
-		return new Sale(id, totalPrice, null, null, dispatchable, customer, cart);
+		return new Sale(id, totalPrice, null, null, delivery, customer, shoppingCart);
 	}
 	
-	@SuppressWarnings("resource")
 	private Product addProductToCart(String name, int numberOfProducts) {
-		ArrayList<Product> products = productController.getProductContainer().getProductList();
-			Product temp;
-			Product product = productController.findProduct(name);
-			temp = product;
-			productController.updateStock(temp, product.getStock(), numberOfProducts);
-		return temp;
+		Product currentProduct;
+		Product product = productController.findProduct(name);
+		currentProduct = product;
+		productController.updateStock(currentProduct, product.getStock(), numberOfProducts);
+		return currentProduct;
 	}
 
 	private double getTotalPrice(ArrayList<Product> cart) {
-		double total=0;
+		double total = 0;
 		for (Product item: cart) {
-			total=total+(item.getPrice()*item.getBarcodeList().size());
+			total=total+(item.getPrice() * item.getBarcodeList().size());
 		}
 		return total;
 	}
 
+	@SuppressWarnings("resource")
 	private boolean getDelivery() {
-		boolean dispatchable=false;
+		ArrayList<String> options = new ArrayList<>();
+		options.add("yes");
+		options.add("no");
+		boolean delivery = false;
 		Scanner keyboard = new Scanner(System.in);
-		System.out.println("Delivery (Yes/No): ");
-		String delivery = keyboard.nextLine();
-
-		if(delivery.equals("Yes")) dispatchable = true;
-		else if(delivery.equals("No")) dispatchable = false;
-		else System.out.println("Choose from yes or no");
-		return dispatchable;
 		
+		System.out.println("Delivery (Yes/No): ");
+		String _delivery = keyboard.nextLine();
+		while (!options.contains(_delivery)) {
+			System.out.println("Choose from > yes < or > no <");
+			keyboard.nextLine();
+		}
+		if (_delivery.equalsIgnoreCase("yes")) {
+			delivery = true;
+		}
+		else if(_delivery.equalsIgnoreCase("no")) {
+			delivery = false;
+		}
+		else {
+			System.out.println("Choose from > yes < or > no <");
+		}
+		return delivery;
 	}
 	
 	private boolean cprCheck(long cpr) {
-		boolean foundCpr=false;
+		boolean foundCpr = false;
 		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
-			if (x.getCprNumber()==cpr) {
-				foundCpr=true;
+			if (x.getCprNumber() == cpr) {
+				foundCpr = true;
 			}
 		}
 		return foundCpr;
+	}
+
+	private void printSaleItems(ArrayList<Product> cart) {
+		for (Product item: cart) {
+			System.out.println(item.getName());
+			for(int barcode : item.getBarcodeList()) {
+				System.out.println(barcode);
+			}
+		}
 	}
 	
 	private Double getDoubleFromUser(Scanner keyboard) {
@@ -312,16 +320,7 @@ public class SaleMenu {
     	}
     	return keyboard.nextLong();
 	}
-
-	private void printSaleItems(ArrayList<Product> cart) {
-		for (Product item: cart) {
-			System.out.println(item.getName());
-			for(int barcode: item.getBarcodeList()) {
-				System.out.println(barcode);
-			}
-		}
-	}
-
+	
 	private Integer getIntegerFromUser(Scanner keyboard) {
     	while (!keyboard.hasNextInt()) {
     		System.out.println("Input must be a number - try again");
