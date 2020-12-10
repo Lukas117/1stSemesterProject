@@ -1,5 +1,10 @@
 package Controller;
 
-public class LocationController {
+import java.util.*;
+import Model.LocationContainer;
 
+public class LocationController {
+	private LocationContainer locationContainer;
+	
+	
 }
