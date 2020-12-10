@@ -7,7 +7,6 @@ import Controller.ProductController;
 import Controller.CustomerController;
 import Model.Sale;
 import Model.Customer;
-import Model.Product;
 import java.time.LocalDateTime;
 
 public class SaleMenu {

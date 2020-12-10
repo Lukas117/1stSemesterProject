@@ -7,7 +7,7 @@ public class Employee {
 	private String password;
 	private int saleCounter;
 	
-	public Employee(String username, String name, String email, String password) {
+	public Employee(String username, String name, String email, String password, int saleCounter) {
 		this.setUsername(username);
 		this.setName(name);
 		this.setEmail(email);
