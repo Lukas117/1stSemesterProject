@@ -104,10 +104,10 @@ public class SaleMenu {
 			}
 			System.out.print("Delivery: ");
 			if (sale.isDelivery()) {
-				System.out.print("Yes. Item will be delivered.\n");
+				System.out.println("Yes. Item will be delivered.\n");
 			}
 			else {
-				System.out.print("No. Pick up at the store.\n");
+				System.out.println("No. Pick up at the store.\n");
 			}
 		}
 		else {
@@ -178,8 +178,10 @@ public class SaleMenu {
 			System.out.println("Sale ID: " + sale.getId());
 			System.out.println("Price: " + sale.getPrice() + " dkk");
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
-			System.out.println("Items: ");
-			printSaleItems(sale.getShoppingCart());
+			System.out.print("Items: ");
+			for (Product item: sale.getShoppingCart()) {
+				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getBarcodeList().size());
+			}
 		}
 		System.out.println("************************\n");
 	}
@@ -255,12 +257,11 @@ public class SaleMenu {
 	private double getTotalPrice(ArrayList<Product> cart) {
 		double total = 0;
 		for (Product item: cart) {
-			total=total+(item.getPrice() * item.getBarcodeList().size());
+			total += (item.getPrice() * item.getBarcodeList().size());
 		}
 		return total;
 	}
 
-	@SuppressWarnings("resource")
 	private boolean getDelivery() {
 		ArrayList<String> options = new ArrayList<>();
 		options.add("yes");
@@ -268,20 +269,18 @@ public class SaleMenu {
 		boolean delivery = false;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println("Delivery (Yes/No): ");
-		String _delivery = keyboard.nextLine();
-		while (!options.contains(_delivery)) {
-			System.out.println("Choose from > yes < or > no <");
-			keyboard.nextLine();
-		}
-		if (_delivery.equalsIgnoreCase("yes")) {
-			delivery = true;
-		}
-		else if(_delivery.equalsIgnoreCase("no")) {
-			delivery = false;
-		}
-		else {
-			System.out.println("Choose from > yes < or > no <");
+		System.out.println("Delivery (1 Yes/2 No): ");
+		int option = getIntegerFromUser(keyboard);
+		switch (option) {
+			case 1:
+				delivery = true;
+				break;
+			case 2:
+				delivery = false;
+				break;
+			default:
+				System.out.println("Unknown error with choise = " + option);
+				break;
 		}
 		return delivery;
 	}

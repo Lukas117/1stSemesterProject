@@ -88,9 +88,7 @@ public class ProductMenu {
     	}
     }
 	
-	 @SuppressWarnings("resource")
-	private Product getDataToNewProduct() {
-		 	Product p;
+	 private Product getDataToNewProduct() {
 	    	Scanner keyboard = new Scanner(System.in);
 	        String name = null;
 	        
@@ -108,8 +106,8 @@ public class ProductMenu {
 	            if (productList.isEmpty()) {
 	                name = nonCheckedName;
 	            }
-	            for(Product product: productList) {
-	                if(product.getName() == nonCheckedName){
+	            for(Product _product: productList) {
+	                if(_product.getName() == nonCheckedName){
 	                    System.out.println(" Name is already taken, try different one");
 	                }
 	                
@@ -118,18 +116,18 @@ public class ProductMenu {
 	                }
 	            }
 	        }
-	        System.out.print(" type: ");
+	        System.out.print(" Type: ");
 	        String type = keyboard.nextLine();
 	        System.out.print(" Price: ");
 	        double price = getDoubleFromUser(keyboard);
 	        System.out.print(" Location: ");
-	        String location = keyboard.nextLine();
+	        String location = keyboard.next();
 		 	System.out.print(" Stock: ");
 		 	int stock = getIntegerFromUser(keyboard);
-		 	p = new Product(name, type, location, price, stock);
+		 	Product product = new Product(name, type, location, price, stock);
 		 	
 	        
-			return p;
+			return product;
 	    }
 	 
 	 @SuppressWarnings("resource")
@@ -240,13 +238,14 @@ public class ProductMenu {
 	            System.out.println("Price: " + product.getPrice());
 	            System.out.println("Location: " + product.getLocation());
 				System.out.println("Stock: " + product.getStock());
+				System.out.print("Barcodes: ");
 				for(int barcode: product.getBarcodeList()) {
-					System.out.println(barcode+"\n");
+					System.out.print(barcode + " ");
 				}
 				
 	        }
 	        
-	        System.out.println("*************************\n");
+	        System.out.println("\n*************************\n");
 	    }
 	 
 		private Double getDoubleFromUser(Scanner keyboard) {
