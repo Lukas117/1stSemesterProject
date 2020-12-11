@@ -210,7 +210,7 @@ public class ProductMenu {
 	                name = nonCheckedName;
 	            }
 	            for(Product _product: productList) {
-	                if(_product.getName() == nonCheckedName){
+	                if(_product.getName().equals(nonCheckedName)){
 	                    System.out.println(" Name is already taken, try different one");
 	                }
 	                

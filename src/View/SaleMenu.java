@@ -198,27 +198,21 @@ public class SaleMenu {
 		int id = 0;
 		LocalDateTime purchaseDate = null;
 		LocalDateTime paymentDeadline = null;
-		boolean delivery = false;
 		Customer customer = null;
 		ArrayList<Product> shoppingCart = new ArrayList<>();
-		double totalPrice=0;
 
 		while(id == 0) {
 			
 			System.out.print(" ID: ");
 			
-			while (!keyboard.hasNextInt()) {
-				System.out.println(" Input must be a number - try again");
-				keyboard.nextLine();
-			}
-			int nonCheckedId = keyboard.nextInt();
-			ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
+			int nonCheckedId = getIntegerFromUser(keyboard);
+			ArrayList<Sale> saleList = saleController.getSaleContainer().getSales();
 			
-			if (sales.isEmpty()) {
+			if (saleList.isEmpty()) {
 				id = nonCheckedId;
 			}
-			for(Sale sale: sales) {
-				if(sale.getId() == nonCheckedId) {
+			for(Sale _sale: saleList) {
+				if(_sale.getId() == nonCheckedId) {
 					System.out.println(" ID is already taken, try different one");
 				}
 				else {
@@ -226,6 +220,7 @@ public class SaleMenu {
 				}
 			}
 		}
+		
 		System.out.println("Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
 		if(!cprCheck(cprNumber)) {
@@ -237,9 +232,9 @@ public class SaleMenu {
 
 		int choice = 0;
 		while(choice != 2) {
-			keyboard = new Scanner(System.in);
+			//keyboard = new Scanner(System.in);
 			System.out.println(" Name of the product: ");
-			String name = keyboard.nextLine();
+			String name = getStringFromUser(keyboard);
 			System.out.println(" Number of products: ");
 			int numberOfProducts = getIntegerFromUser(keyboard);
 			shoppingCart.add(addProductToCart(name, numberOfProducts));
@@ -247,8 +242,9 @@ public class SaleMenu {
 			System.out.println("(2) Finish");
 			choice = getIntegerFromUser(keyboard);
 		}
-		totalPrice = getTotalPrice(shoppingCart);
-		delivery = getDelivery();
+		
+		double totalPrice = getTotalPrice(shoppingCart);
+		boolean delivery = getDelivery();
 
 		return new Sale(id, totalPrice, null, null, delivery, customer, shoppingCart);
 	}
@@ -261,18 +257,15 @@ public class SaleMenu {
 		return currentProduct;
 	}
 
-	private double getTotalPrice(ArrayList<Product> cart) {
+	private double getTotalPrice(ArrayList<Product> shoppingCart) {
 		double total = 0;
-		for (Product item: cart) {
+		for (Product item: shoppingCart) {
 			total += (item.getPrice() * item.getBarcodeList().size());
 		}
 		return total;
 	}
 
 	private boolean getDelivery() {
-		ArrayList<String> options = new ArrayList<>();
-		options.add("yes");
-		options.add("no");
 		boolean delivery = false;
 		Scanner keyboard = new Scanner(System.in);
 		
@@ -286,7 +279,7 @@ public class SaleMenu {
 				delivery = false;
 				break;
 			default:
-				System.out.println("Unknown error with choise = " + option);
+				System.out.println("Option not available.");
 				break;
 		}
 		return delivery;
@@ -334,4 +327,12 @@ public class SaleMenu {
     	}
     	return keyboard.nextInt();
 	}
+	
+    private String getStringFromUser(Scanner keyboard) {
+		String inputToString = null;
+		while((inputToString = keyboard.nextLine()).isBlank()) {
+  		  System.out.println("You need to type something.");
+  		}
+		return inputToString;
+    }
 }

@@ -32,12 +32,15 @@ public class ProductController {
 		return productContainer.updateProduct(name);
 	}
 
-    public void addToStock(String productName) {productContainer.addBarcode(productName);}
+    public void addToStock(String productName) {
+    	productContainer.addBarcode(productName);
+    }
 
-    public boolean removeFromStock(String productName) {return productContainer.deleteBarcode(productName);}
+    public boolean removeFromStock(String productName) {
+    	return productContainer.deleteBarcode(productName);
+    }
     
     public void updateStock(Product product, int oldStock, int newStock) {
-		product.getBarcodeList();
 		String name = product.getName();
 		if(newStock-oldStock>0) {
 			for(int i=0; i<(newStock-oldStock); i++) {
@@ -49,7 +52,6 @@ public class ProductController {
 				removeFromStock(name);
 			}
 		}
-
 	}
 }
 
