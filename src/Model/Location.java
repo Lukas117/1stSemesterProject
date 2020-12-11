@@ -7,14 +7,16 @@ public class Location {
 	private String type;
 	private int aisle;
 	private String warehouse;
+	private int shelf;
 	
 	
-	public Location (String name, String location, String type, int aisle, String warehouse) {
+	public Location (String name, String location, String type, int aisle, String warehouse, int shelf) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
 		this.aisle = aisle;
 		this.warehouse = warehouse;
+		this.shelf = shelf;
 	}
 
 	public String getName() {
@@ -56,8 +58,12 @@ public class Location {
 	public void setWarehouse(String warehouse) {
 		this.warehouse = warehouse;
 	}
-	
-	
 
+	public int getShelf() {
+		return shelf;
+	}
 
+	public void setShelf(int shelf) {
+		this.shelf = shelf;
+	}
 }
