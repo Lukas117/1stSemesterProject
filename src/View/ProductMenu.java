@@ -52,8 +52,7 @@ public class ProductMenu {
 	}
 	
 	private int writeProductMenu()  {
-        @SuppressWarnings("resource")
-		Scanner keyboard = new Scanner(System.in);
+        Scanner keyboard = new Scanner(System.in);
         
         System.out.println("****** Product menu ******");
         System.out.println(" (1) Create product");
@@ -63,13 +62,8 @@ public class ProductMenu {
         System.out.println(" (5) Show product");
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
-        
-        while (!keyboard.hasNextInt()) {
-            System.out.println(" Input must be a number - try again");
-            keyboard.nextLine();
-        }
-        
-        int choice = keyboard.nextInt();
+                
+        int choice = getIntegerFromUser(keyboard);
         return choice;
     }
 	
@@ -99,9 +93,9 @@ public class ProductMenu {
 	   	if (productController.findProduct(name) != null) {
 	   		System.out.println("----- Product -----");
     		System.out.println(" Name: " + name);
-    		System.out.println(" Type: " + product.getType() + "\n");
-    		System.out.println(" Price: " + product.getPrice() + "\n");
-    		System.out.println(" Location: " + product.getLocation() + "\n");
+    		System.out.println(" Type: " + product.getType());
+    		System.out.println(" Location: " + product.getLocation());
+    		System.out.println(" Price: " + product.getPrice());
 			System.out.println(" Stock: " + product.getStock() + "\n");
     	}
     	else {
@@ -118,7 +112,7 @@ public class ProductMenu {
 	    	
 	    	if (productController.findProduct(name) != null) {
 	    		ArrayList<Integer> barcodes= productController.getProductContainer().findProduct(name).getBarcodeList();
-	    		productController.deleteProduct(product);
+	    		
 	    		int oldStock = product.getStock();
 	    		System.out.println("Current name " + "[" + product.getName() + "]");
 	            System.out.print("New name: ");
@@ -126,12 +120,12 @@ public class ProductMenu {
 	            System.out.println("Current type " + "[" + product.getType() + "]");
 	            System.out.print("New type: ");
 	            String type = getStringFromUser(keyboard);
-	            System.out.println("Current location " + "[" + product.getLocation() + "]");
-	            System.out.print("New location: ");
-	            String location = getStringFromUser(keyboard);
 	            System.out.println("Current price " + "[" + product.getPrice() + "]");
 	            System.out.print("New price: ");
 	            double price = keyboard.nextDouble();
+	            System.out.println("Current location " + "[" + product.getLocation() + "]");
+	            System.out.print("New location: ");
+	            String location = getStringFromUser(keyboard);
 				System.out.println("Current stock " + "[" + product.getStock() + "]");
 				System.out.print("New stock: ");
 				int stock = keyboard.nextInt();
@@ -142,9 +136,10 @@ public class ProductMenu {
 	    		}
 	    			
 	    		if (productController.getProductContainer().addProduct(product)) {
-	        		System.out.println("\n Product already exists!\n");
+	        		System.out.println("\n Product with the same name already exists!\n");
 	        	}
 	        	else {
+	        		productController.deleteProduct(product);
 	        		productController.createProduct(product);
 	        		if(stock-oldStock>0) {
 		    			for(int i=0; i<(stock-oldStock); i++) {
@@ -195,7 +190,7 @@ public class ProductMenu {
 			 for(int barcode: product.getBarcodeList()) {
 				 System.out.print(barcode + " ");
 			 }
-				
+			 System.out.println();
 	     } 
 	     System.out.println("\n*************************\n");
 	 }

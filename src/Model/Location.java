@@ -9,7 +9,7 @@ public class Location {
 	private String warehouse;
 	
 	
-	public Location (String name, String location, String type, int asile, String warehouse) {
+	public Location (String name, String location, String type, int aisle, String warehouse) {
 		this.name = name;
 		this.location = location;
 		this.type = type;
