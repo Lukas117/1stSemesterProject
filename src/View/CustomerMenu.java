@@ -93,7 +93,7 @@ public class CustomerMenu {
     		System.out.println(" Zipcode: " + customer.getZipcode() + "\n");
     	}
     	else {
-    		System.out.println(" User does not exist!\n");
+    		System.out.println(" Customer does not exist!\n");
     	}
 	}
 	
@@ -105,26 +105,25 @@ public class CustomerMenu {
 		Customer customer = customerController.getCustomerContainer().findCustomer(cprNumber);    	
     	
     	if (customerController.updateCustomer(cprNumber) != null) {
-    		customerController.deleteCustomer(customer);
 
     		System.out.println("Current CPR Number " + "[" + customer.getCprNumber() + "]");
             System.out.print("New CPR Number: ");
             cprNumber = getLongFromUser(keyboard);
             System.out.println("Current name " + "[" + customer.getName() + "]");
             System.out.print("New name: ");
-            String name = keyboard.nextLine();
+            String name = getStringFromUser(keyboard);
             System.out.println("Current email " + "[" + customer.getEmail() + "]");
             System.out.print("New email: ");
-            String email = keyboard.nextLine();
+            String email = getStringFromUser(keyboard);
             System.out.println("Current phone number " + "[" + customer.getPhoneNumber() + "]");
             System.out.print("New phone number: ");
-            String phoneNumber = keyboard.nextLine();
+            String phoneNumber = getStringFromUser(keyboard);
             System.out.println("Current city " + "[" + customer.getAddress() + "]");
             System.out.print("New address: ");
-            String address = keyboard.nextLine();
+            String address = getStringFromUser(keyboard);
             System.out.println("Current city " + "[" + customer.getCity() + "]");
             System.out.print("New city: ");
-            String city = keyboard.nextLine();
+            String city = getStringFromUser(keyboard);
             System.out.println("Current zipcode " + "[" + customer.getZipcode() + "]");
             System.out.print("New phone number: ");
             int zipCode = getIntegerFromUser(keyboard);
@@ -135,6 +134,7 @@ public class CustomerMenu {
         		System.out.println("\n Customer already exists.\n");
         	}
         	else {
+        		customerController.deleteCustomer(customer);
         		customerController.createCustomer(customer);
         		System.out.println("\n Customer updated! \n");
         	}
@@ -145,9 +145,9 @@ public class CustomerMenu {
     }
 	
 	private void deleteCustomer() {
-    	Scanner keyboard = new Scanner(System.in);;
+    	Scanner keyboard = new Scanner(System.in);
     	
-    	System.out.println(" Write CPR number of the customer that you want to delete:");
+    	System.out.println(" CPR number of the customer that you want to delete:");
     	long cprNumber = getLongFromUser(keyboard);
     	Customer customer = customerController.findCustomer(cprNumber);
 		if (customerController.deleteCustomer(customer)) {
@@ -175,7 +175,7 @@ public class CustomerMenu {
             System.out.println("City: " + customer.getCity());
             System.out.println("Zipcode: " + customer.getZipcode());
         }
-        System.out.println("*************************\n");
+        System.out.println("********************************\n");
     }
 	
     private Customer getDataToNewCustomer() {
@@ -185,7 +185,8 @@ public class CustomerMenu {
         long cprNumber = 0;
     	while(cprNumber == 0){
     		System.out.print(" CPR number (without dash): ");            
-            long nonCheckedCprNumber = getLongFromUser(keyboard);
+            
+    		long nonCheckedCprNumber = getLongFromUser(keyboard);
             
             if (customers.isEmpty()) {
             	cprNumber = nonCheckedCprNumber;
@@ -203,15 +204,15 @@ public class CustomerMenu {
     	
     	keyboard = new Scanner(System.in);
     	System.out.print(" Name: ");
-        String name = keyboard.nextLine();
+        String name = getStringFromUser(keyboard);
         System.out.print(" Email: ");
-        String email = keyboard.nextLine();
+        String email = getStringFromUser(keyboard);
         System.out.print(" Phone number: ");
-        String phoneNumber = keyboard.nextLine();
+        String phoneNumber = getStringFromUser(keyboard);
         System.out.print(" Address: ");
-        String address = keyboard.nextLine();
+        String address = getStringFromUser(keyboard);
         System.out.print(" City: ");
-        String city = keyboard.nextLine();
+        String city = getStringFromUser(keyboard);
         System.out.print(" Zipcode: ");
         int zipCode = getIntegerFromUser(keyboard);
         
@@ -233,4 +234,12 @@ public class CustomerMenu {
     	}
     	return keyboard.nextLong();
 	}
+    
+    private String getStringFromUser(Scanner keyboard) {
+		String inputToString = null;
+		while((inputToString = keyboard.nextLine()).isBlank()) {
+			System.out.println("You need to type something.");
+  		}
+		return inputToString;
+    }
 }

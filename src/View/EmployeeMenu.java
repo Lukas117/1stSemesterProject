@@ -68,13 +68,12 @@ public class EmployeeMenu {
         return choice;
     }
     
-    @SuppressWarnings("resource")
-	public boolean checkUser() {
+    public boolean checkUser() {
     	Scanner keyboard = new Scanner(System.in);
     	System.out.print(" Username: ");
-    	String username = keyboard.nextLine();
+    	String username = getStringFromUser(keyboard);
     	System.out.print(" Password: ");
-    	String password = keyboard.nextLine();
+    	String password = getStringFromUser(keyboard);
     	
     	if (employeeController.checkUser(username,password) != null) {
 			currentUser = employeeController.checkUser(username,password);
@@ -103,12 +102,11 @@ public class EmployeeMenu {
     	}
     }
     
-    @SuppressWarnings("resource")
-	private void findEmployee() {
+    private void findEmployee() {
     	Scanner keyboard = new Scanner(System.in);
     	
     	System.out.print(" Username: ");
-    	String username = keyboard.nextLine();    	
+    	String username = getStringFromUser(keyboard);
     	Employee employee = employeeController.findEmployee(username);    
     	
     	if (employeeController.findEmployee(username) != null) {
@@ -124,30 +122,29 @@ public class EmployeeMenu {
     	}
     }
     
-    @SuppressWarnings("resource")
-	private void updateEmployee() {
+    private void updateEmployee() {
     	Scanner keyboard = new Scanner(System.in);
 
     	System.out.print(" Username: ");
-    	String username = keyboard.nextLine();
+    	String username = getStringFromUser(keyboard);
 		Employee employee = employeeController.getEmployeeContainer().findEmployee(username);    	
     	
     	if (employeeController.updateEmployee(username) != null) {
-    		employeeController.deleteEmployee(employee);
 
     		System.out.println("Current username " + "[" + employee.getUsername() + "]");
             System.out.print("New username: ");
-            username = keyboard.nextLine();
+            username = getStringFromUser(keyboard);
             System.out.println("Current name " + "[" + employee.getName() + "]");
             System.out.print("New name: ");
-            String name = keyboard.nextLine();
+            String name = getStringFromUser(keyboard);
             System.out.println("Current email " + "[" + employee.getEmail() + "]");
             System.out.print("New email: ");
-            String email = keyboard.nextLine();
+            String email = getStringFromUser(keyboard);
             System.out.println("Current password " + "[" + employee.getPassword() + "]");
             System.out.print("New password: ");
-            String password = keyboard.nextLine();
-    		int saleCounter = currentUser.getSaleCounter();
+            String password = getStringFromUser(keyboard);
+    		
+            int saleCounter = currentUser.getSaleCounter();
     		
     		employee = new Employee(username, name, email, password, saleCounter);
     		
@@ -155,6 +152,7 @@ public class EmployeeMenu {
         		System.out.println("\n User already exists!\n");
         	}
         	else {
+        		employeeController.deleteEmployee(employee);
         		employeeController.createEmployee(employee);
         		System.out.println("\n Employee updated! \n");
         	}
@@ -164,19 +162,15 @@ public class EmployeeMenu {
     	}
     }
     
-    @SuppressWarnings("resource")
-	private void deleteEmployee() {
+    private void deleteEmployee() {
     	Scanner keyboard = new Scanner(System.in);;
     	
     	System.out.println(" Write username of the employee that you want to delete:");
-    	String username = keyboard.nextLine();
+    	String username = getStringFromUser(keyboard);
     	Employee employee = employeeController.findEmployee(username);
     	
 		if (employeeController.deleteEmployee(employee)) {
     		System.out.println(" Employee deleted!\n");
-    		//username = playerController.getPlayerContainer().deletePlayer(player);;
-        	//String email = playerController.getPlayerContainer().deletePlayer(username).getEmail();
-    		//System.out.println(" 	Username: "+username+"\n 	Email: "+email);
     	}
     	
     	else {
@@ -199,11 +193,10 @@ public class EmployeeMenu {
             System.out.println("Number of sales: " + employee.getSaleCounter());
             
         }
-        System.out.println("*************************\n");
+        System.out.println("**********************************\n");
     }
     
-    @SuppressWarnings("resource")
-	private Employee getDataToNewEmployee() {
+    private Employee getDataToNewEmployee() {
     	Scanner keyboard = new Scanner(System.in);
         String username = null;
         
@@ -211,11 +204,7 @@ public class EmployeeMenu {
             
     		System.out.print(" Username: ");
             
-            while (!keyboard.hasNextLine()) {
-                System.out.println(" Input must be a username - try again");
-                keyboard.nextLine();
-            }
-            String nonCheckedUsername = keyboard.nextLine();
+    		String nonCheckedUsername = getStringFromUser(keyboard);
             ArrayList<Employee> employees = employeeController.getEmployeeContainer().getEmployees();
             
             if (employees.isEmpty()) {
@@ -231,11 +220,11 @@ public class EmployeeMenu {
             }
         }
     	System.out.print(" Name: ");
-        String name = keyboard.nextLine();
+        String name = getStringFromUser(keyboard);
         System.out.print(" Email: ");
-        String email = keyboard.nextLine();
+        String email = getStringFromUser(keyboard);
         System.out.print(" Password: ");
-        String password = keyboard.nextLine();
+        String password = getStringFromUser(keyboard);
         int saleCounter = 0;
         
 		return new Employee(username, name, email, password, saleCounter);
@@ -248,4 +237,12 @@ public class EmployeeMenu {
     	}
     	return keyboard.nextInt();
 	}
+    
+    private String getStringFromUser(Scanner keyboard) {
+		String inputToString = null;
+		while((inputToString = keyboard.nextLine()).isBlank()) {
+  		  System.out.println("You need to type something.");
+  		}
+		return inputToString;
+    }
 }
