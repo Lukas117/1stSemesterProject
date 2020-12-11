@@ -118,10 +118,10 @@ public class ProductMenu {
 	        }
 	        System.out.print(" Type: ");
 	        String type = keyboard.nextLine();
+	        System.out.print(" Location: ");
+	        String location = keyboard.nextLine();
 	        System.out.print(" Price: ");
 	        double price = getDoubleFromUser(keyboard);
-	        System.out.print(" Location: ");
-	        String location = keyboard.next();
 		 	System.out.print(" Stock: ");
 		 	int stock = getIntegerFromUser(keyboard);
 		 	Product product = new Product(name, type, location, price, stock);

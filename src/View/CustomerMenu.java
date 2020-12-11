@@ -185,7 +185,8 @@ public class CustomerMenu {
         long cprNumber = 0;
     	while(cprNumber == 0){
     		System.out.print(" CPR number (without dash): ");            
-            long nonCheckedCprNumber = getLongFromUser(keyboard);
+            
+    		long nonCheckedCprNumber = getLongFromUser(keyboard);
             
             if (customers.isEmpty()) {
             	cprNumber = nonCheckedCprNumber;
@@ -203,7 +204,7 @@ public class CustomerMenu {
     	
     	keyboard = new Scanner(System.in);
     	System.out.print(" Name: ");
-        String name = keyboard.nextLine();
+        String name = getStringFromUser(keyboard);
         System.out.print(" Email: ");
         String email = keyboard.nextLine();
         System.out.print(" Phone number: ");
@@ -233,4 +234,12 @@ public class CustomerMenu {
     	}
     	return keyboard.nextLong();
 	}
+    
+    private String getStringFromUser(Scanner keyboard) {
+		String inputToString = null;
+		while((inputToString = keyboard.nextLine()).isBlank()) {
+			System.out.println("You need to type something.");
+  		}
+		return inputToString;
+    }
 }
