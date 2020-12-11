@@ -145,7 +145,7 @@ public class CustomerMenu {
     }
 	
 	private void deleteCustomer() {
-    	Scanner keyboard = new Scanner(System.in);;
+    	Scanner keyboard = new Scanner(System.in);
     	
     	System.out.println(" CPR number of the customer that you want to delete:");
     	long cprNumber = getLongFromUser(keyboard);
