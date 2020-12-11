@@ -86,7 +86,7 @@ public class LocationMenu {
 		Scanner keyboard = new Scanner(System.in);
 		
 		System.out.println("Location name: ");
-		int locaation = locationController.findLocation(aisle);
+		int location = locationController.findLocation(aisle);
 	}
 	
 	if (locationController.findLocation(aisle) !=null) {
@@ -98,43 +98,4 @@ public class LocationMenu {
 		System.out.println(" Number of sales: " + employee.getSaleCounter() + "\n");
 	}
 	
-	@SuppressWarnings("resource")
-	private void updateLocation() {
-    	Scanner keyboard = new Scanner(System.in);
-
-    	System.out.print(" Username: ");
-    	String username = keyboard.nextLine();
-		Employee employee = employeeController.getEmployeeContainer().findEmployee(username);    	
-    	
-    	if (employeeController.updateEmployee(username) != null) {
-    		employeeController.deleteEmployee(employee);
-
-    		System.out.println("Current username " + "[" + employee.getUsername() + "]");
-            System.out.print("New username: ");
-            username = keyboard.nextLine();
-            System.out.println("Current name " + "[" + employee.getName() + "]");
-            System.out.print("New name: ");
-            String name = keyboard.nextLine();
-            System.out.println("Current email " + "[" + employee.getEmail() + "]");
-            System.out.print("New email: ");
-            String email = keyboard.nextLine();
-            System.out.println("Current password " + "[" + employee.getPassword() + "]");
-            System.out.print("New password: ");
-            String password = keyboard.nextLine();
-    		int saleCounter = currentUser.getSaleCounter();
-    		
-    		employee = new Employee(username, name, email, password, saleCounter);
-    		
-    		if (employeeController.getEmployeeContainer().addEmployee(employee)) {
-        		System.out.println("\n User already exists!\n");
-        	}
-        	else {
-        		employeeController.createEmployee(employee);
-        		System.out.println("\n Employee updated! \n");
-        	}
-    	}
-    	else {
-    		System.out.println(" Employee not found.\n");
-    	}
-    }
  }
