@@ -160,7 +160,7 @@ public class ProductMenu {
 	    	String name = keyboard.nextLine();
 			Product product = productController.getProductContainer().findProduct(name);    	
 	    	
-	    	if (productController.findProduct(name) != null) {
+	    	if (productController.updateProduct(name) != null) {
 	    		ArrayList<Integer> barcodes= productController.getProductContainer().findProduct(name).getBarcodeList();
 	    		productController.deleteProduct(product);
 	    		int oldStock = product.getStock();

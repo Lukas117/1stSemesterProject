@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Product;
 import Model.ProductContainer;
+import Model.Sale;
 
 public class ProductController {
 	
@@ -26,6 +27,10 @@ public class ProductController {
     public boolean deleteProduct(Product product) {
     	return productContainer.deleteProduct(product);
     }
+    
+    public Product updateProduct(String name) {
+		return productContainer.updateProduct(name);
+	}
 
     public void addToStock(String productName) {productContainer.addBarcode(productName);}
 

@@ -80,6 +80,13 @@ public class SaleMenu {
 		}
 		else {
 			saleController.createSale(sale);
+			for(Product item: sale.getShoppingCart())
+			{
+				Product product = productController.getProductContainer().findProduct(item.getName());
+				int oldStock = productController.getProductContainer().findProduct(item.getName()).getStock();
+				int newStock = oldStock-item.getStock();
+				productController.updateStock(product, oldStock, newStock);
+			}
 			System.out.println("\n Sale created! \n");
 		}
 	}
