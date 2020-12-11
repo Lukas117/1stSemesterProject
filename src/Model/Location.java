@@ -10,7 +10,7 @@ public class Location {
 	private int shelf;
 	
 	
-	public Location (String name, String location, String type, int aisle, String warehouse, int shelf) {
+	public Location (String name, String location, String type, int asile, String warehouse, int shelf) {
 		this.name = name;
 		this.location = location;
 		this.type = type;

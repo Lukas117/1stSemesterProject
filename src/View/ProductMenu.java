@@ -122,13 +122,13 @@ public class ProductMenu {
 	            String type = getStringFromUser(keyboard);
 	            System.out.println("Current price " + "[" + product.getPrice() + "]");
 	            System.out.print("New price: ");
-	            double price = keyboard.nextDouble();
+	            double price = getDoubleFromUser(keyboard);
 	            System.out.println("Current location " + "[" + product.getLocation() + "]");
 	            System.out.print("New location: ");
 	            String location = getStringFromUser(keyboard);
 				System.out.println("Current stock " + "[" + product.getStock() + "]");
 				System.out.print("New stock: ");
-				int stock = keyboard.nextInt();
+				int stock = getIntegerFromUser(keyboard);
 	    		product = new Product(name, type, location, price, stock);
 	    		
 	    		for(int i=0; i<oldStock;i++) {
@@ -183,8 +183,8 @@ public class ProductMenu {
 	         System.out.println("––––– Product " + (i+1) + " –––––");
 	         System.out.println("Name: " + product.getName());
 	         System.out.println("Type: " + product.getType());
-	         System.out.println("Price: " + product.getPrice());
 	         System.out.println("Location: " + product.getLocation());
+	         System.out.println("Price: " + product.getPrice());
 			 System.out.println("Stock: " + product.getStock());
 			 System.out.print("Barcodes: ");
 			 for(int barcode: product.getBarcodeList()) {
@@ -257,5 +257,3 @@ public class ProductMenu {
 		return inputToString;
 	}
 }
-
-
