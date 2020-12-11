@@ -35,16 +35,16 @@ public class LocationContainer {
 		return foundLocation;
 	}
 	
-	public Location findLocation(int aisle) {
+	public Location findLocation(int aisle, int shelf) {
 		for(Location location : locationList) {
-			if(location.getAisle()==(aisle)) {
+			if(location.getAisle()==(aisle, shelf)) {
 				return location;
 			}
 		}
 		return null;
 	}
 	
-	public boolean deleteLocation(int aisle) {
+	public boolean deleteLocation(int aisle, int shelf) {
 		boolean deletedLocation = false;
 		Location locationToDelete = null;
 		for(Location location1: locationList) {

@@ -23,7 +23,7 @@ public class LocationController {
 		return locationContainer.findLocation(aisle);
 	}
 	
-	public boolean deleteLocation(int aisle) {
-		return locationContainer.deleteLocation(aisle);
+	public boolean deleteLocation(int aisle, int shelf) {
+		return locationContainer.deleteLocation(aisle, shelf);
 	}
 }
