@@ -49,6 +49,10 @@ public class ProductContainer {
 	    return null;
 	}
 	
+	public Product updateProduct(String name) {
+		return findProduct(name);
+	}
+	
 	public boolean deleteProduct(Product product) {
     	boolean deletedProduct = false;
     	Product productToDelete = null;
