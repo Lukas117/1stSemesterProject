@@ -16,8 +16,9 @@ public class LocationMenu {
 	private Location currentLocation;
 	private DepartmentController departmentController;
 
-	public LocationMenu(LocationController locationController) {
+	public LocationMenu(LocationController locationController, DepartmentController departmentController ) {
 		this.locationController = locationController;
+		this.departmentController = departmentController;
 	}
 
 	public LocationController getLocationController() {
@@ -58,19 +59,19 @@ public class LocationMenu {
 		System.out.println(" (2) Delete location");
 		System.out.println(" (0) Go back"); System.out.print("\n Choice: ");
 		
-		int choice = getIntegerFromUser(keyboard); return choice; }
+		int choice = getIntegerFromUser(keyboard);
+		return choice;
+	}
 	
 	public void createLocation() { 
-		//Location location = getDataToNewLocation();
+		Location location = getDataToNewLocation();
 		  
 		if (locationController.addLocation(location)) {
-			System.out.println("Location is already used, try different one");
+			System.out.println("Location is already created.");
 		}
 		else {
-			locationController.addLocation(location); System.out.println("\n"); 
-		}
-		if (locationController.findLocation(aisle) !=null) {
-			System.out.println("----- Location -----"); 
+			locationController.addLocation(location);
+			System.out.println("\n Location is created! \n");
 		}
 	}
 	 
@@ -106,4 +107,29 @@ public class LocationMenu {
 		}
 		return inputToString;
 	}
+	
+	private Location getDataToNewLocation() {
+    	Scanner keyboard = new Scanner(System.in);
+        String name = null;
+        System.out.print("Department: ");
+        name = getStringFromUser(keyboard);
+        Department department = departmentController.findDepartment(name); //later a checking cycle should be added that checks if the department exists or not
+        System.out.print("Aisle: ");
+        int nonCheckedAisle = getIntegerFromUser(keyboard);
+        System.out.print("Shelf: ");
+        int nonCheckedShelf = getIntegerFromUser(keyboard);
+        ArrayList<Location> locations = locationController.getLocationContainer().getLocationList();
+        int aisle = 0;
+        int shelf = 0;
+        for(Location location: locations) {
+        	if(location.getAisle() == nonCheckedAisle && location.getShelf() == nonCheckedShelf){
+        		System.out.println("Location already exists!");
+            }
+        	else {
+        		aisle = nonCheckedAisle;
+        		shelf = nonCheckedShelf;
+        	}
+        }
+		return new Location(department, aisle, shelf);
+    }
 }
