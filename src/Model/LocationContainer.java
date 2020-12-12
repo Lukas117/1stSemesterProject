@@ -25,8 +25,8 @@ public class LocationContainer {
 			foundLocation = true;
 		}
 		for (Location location : locationList) {
-			if (location.getLocation().equals(newLocation.getLocation())) {
-				foundLocation =true;
+			if (location.getDepartment().equals(newLocation.getDepartment()) && location.getAisle()==newLocation.getAisle() && location.getShelf()==newLocation.getShelf()) {
+				foundLocation = true;
 			}
 		}
 		if (!foundLocation) {
@@ -34,21 +34,12 @@ public class LocationContainer {
 		}
 		return foundLocation;
 	}
-	
-	public Location findLocation(int aisle, int shelf) {
-		for(Location location : locationList) {
-			if(location.getAisle()==(aisle, shelf)) {
-				return location;
-			}
-		}
-		return null;
-	}
-	
-	public boolean deleteLocation(int aisle, int shelf) {
+
+	public boolean deleteLocation(Department department, int aisle, int shelf) {
 		boolean deletedLocation = false;
 		Location locationToDelete = null;
 		for(Location location1: locationList) {
-			if (location1.getAisle()==(aisle)) {
+			if (location1.getDepartment()==department && location1.getAisle()==aisle && location1.getShelf()==shelf) {
 				locationToDelete = location1;
 				deletedLocation = true;
 			}
@@ -57,6 +48,16 @@ public class LocationContainer {
 			locationList.remove(locationToDelete);
 		}
 		return deletedLocation;
+	}
+	
+	public Location findLocation(Department department, int aisle, int shelf) {
+		Location locationToFind = null;
+		for(Location location1 : locationList) {
+			if(location1.getDepartment()==department && location1.getAisle()==aisle && location1.getShelf()==shelf) {
+				locationToFind = location1;
+			}
+		}
+		return locationToFind;
 	}
 }
 

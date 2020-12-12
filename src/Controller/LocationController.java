@@ -1,6 +1,8 @@
 package Controller;
 
 import java.util.*;
+
+import Model.Department;
 import Model.Location;
 import Model.LocationContainer;
 
@@ -19,11 +21,7 @@ public class LocationController {
 		return locationContainer.addLocation(location);
 	}
 	
-	public Location findLocation(int aisle) {
-		return locationContainer.findLocation(aisle);
-	}
-	
-	public boolean deleteLocation(int aisle, int shelf) {
-		return locationContainer.deleteLocation(aisle, shelf);
+	public boolean deleteLocation(Department department, int aisle, int shelf) {
+		return locationContainer.deleteLocation(department, aisle, shelf);
 	}
 }
