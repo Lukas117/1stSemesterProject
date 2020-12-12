@@ -48,7 +48,7 @@ public class ProductController {
 			}
 		}
 		else{
-			for(int i=0; i<(oldStock-newStock); i++) {
+			for(int i=0; i<(oldStock-(oldStock-newStock)); i++) {
 				removeFromStock(name);
 			}
 		}

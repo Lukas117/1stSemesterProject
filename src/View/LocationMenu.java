@@ -2,6 +2,8 @@ package View;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import Controller.DepartmentController;
 import Controller.LocationController;
 import Model.Department;
 import Model.DepartmentContainer;
@@ -12,6 +14,7 @@ import Model.LocationContainer;
 public class LocationMenu {
 	private LocationController locationController;
 	private Location currentLocation;
+	private DepartmentController departmentController;
 
 	public LocationMenu(LocationController locationController) {
 		this.locationController = locationController;
@@ -75,16 +78,11 @@ public class LocationMenu {
 		Scanner keyboard = new Scanner(System.in);
 		
 	    System.out.println("Type the location that you want to delete(department, aisle, shelf):");
-	    String department = getStringFromUser(keyboard);
+	    String name = getStringFromUser(keyboard);
+	    Department department = departmentController.findDepartment(name);
 	    int aisle = getIntegerFromUser(keyboard);
 	    int shelf = getIntegerFromUser(keyboard);
-	    //Department department1 = null;
-	    //Department department2 = null;
-	    for(Department department3 : locationController.getLocationContainer().getLocationList())
-		    if(department1.getName().equals(department)) { 
-			    department2 = department1; 
-			}
-	    if (locationController.deleteLocation(department2, aisle, shelf)) {
+	    if (locationController.deleteLocation(department, aisle, shelf)) {
 	    	System.out.println("Location deleted!\n");
 	    }
 	    else {

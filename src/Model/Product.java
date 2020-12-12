@@ -57,7 +57,9 @@ public class Product {
         this.stock = stock;
     }
 
-    public int getStock() {return stock;}
+    public int getStock() {
+    	return stock;
+    }
 
     public void addBarcodeToList(int barcode) {
         barcodes.add(barcode);

@@ -221,7 +221,7 @@ public class SaleMenu {
 			}
 		}
 		
-		System.out.println("Customer's CPR number: ");
+		System.out.print(" Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
 		if(!cprCheck(cprNumber)) {
 			System.out.println("Customer does not exist, please create customer.");
@@ -232,10 +232,10 @@ public class SaleMenu {
 
 		int choice = 0;
 		while(choice != 2) {
-			//keyboard = new Scanner(System.in);
-			System.out.println(" Name of the product: ");
+			keyboard = new Scanner(System.in);
+			System.out.print(" Name of the product: ");
 			String name = getStringFromUser(keyboard);
-			System.out.println(" Number of products: ");
+			System.out.print(" Number of products: ");
 			int numberOfProducts = getIntegerFromUser(keyboard);
 			shoppingCart.add(addProductToCart(name, numberOfProducts));
 			System.out.println("(1) Add more products");
