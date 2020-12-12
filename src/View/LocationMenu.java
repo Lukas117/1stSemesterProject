@@ -82,6 +82,7 @@ public class LocationMenu {
 	    Department department = departmentController.findDepartment(name);
 	    int aisle = getIntegerFromUser(keyboard);
 	    int shelf = getIntegerFromUser(keyboard);
+	    
 	    if (locationController.deleteLocation(department, aisle, shelf)) {
 	    	System.out.println("Location deleted!\n");
 	    }
