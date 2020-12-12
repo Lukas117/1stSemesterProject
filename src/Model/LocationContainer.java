@@ -22,7 +22,7 @@ public class LocationContainer {
 		boolean foundLocation = false;
 		
 		if (locationList.isEmpty()) {
-			foundLocation = true;
+			foundLocation = false;
 		}
 		for (Location location : locationList) {
 			if (location.getDepartment().equals(newLocation.getDepartment()) && location.getAisle()==newLocation.getAisle() && location.getShelf()==newLocation.getShelf()) {

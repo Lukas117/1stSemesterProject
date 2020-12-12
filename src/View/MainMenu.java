@@ -5,6 +5,8 @@ import Controller.EmployeeController;
 import Controller.ProductController;
 import Controller.CustomerController;
 import Controller.SaleController;
+import Controller.LocationController;
+import Controller.DepartmentController;
 
 public class MainMenu {
 	private EmployeeController employeeController;
@@ -15,6 +17,11 @@ public class MainMenu {
 	private CustomerMenu customerMenu;
 	private SaleController saleController;
 	private SaleMenu saleMenu;
+	private DepartmentController departmentController;
+	private DepartmentMenu departmentMenu;
+	private LocationController locationController;
+	private LocationMenu locationMenu;
+
     
     public MainMenu() {
     	employeeController = new EmployeeController();
@@ -25,6 +32,10 @@ public class MainMenu {
     	customerMenu = new CustomerMenu(customerController);
     	saleController = new SaleController();
     	saleMenu = new SaleMenu(saleController, customerController, productController);
+    	departmentController = new DepartmentController();
+    	departmentMenu = new DepartmentMenu(departmentController);
+    	locationController = new LocationController();
+    	locationMenu = new LocationMenu(locationController, departmentController);
     }
    public EmployeeMenu getEmployeeMenu()
    {
@@ -53,6 +64,12 @@ public class MainMenu {
                 case 4:
                     customerMenu.start();
                     break;
+                case 5:
+                	departmentMenu.start();
+                	break;
+                case 6:
+                	locationMenu.start();
+                	break;
                 case 0:
                     running = false;
                     break;
@@ -70,6 +87,8 @@ public class MainMenu {
         System.out.println(" (2) Product menu");
         System.out.println(" (3) Employee menu");
         System.out.println(" (4) Customer menu");
+        System.out.println(" (5) Department menu");
+        System.out.println(" (6) Location menu");
         System.out.println(" (0) Exit the program");
         System.out.print("\n Choice: ");
 

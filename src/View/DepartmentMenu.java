@@ -1,6 +1,5 @@
 package View;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,12 +12,12 @@ public class DepartmentMenu {
 	private LocationController locationController;
 	private DepartmentController departmentController;
 	
-	public DepartmentMenu(LocationController locationController) {
-		this.locationController = locationController;
+	public DepartmentMenu(DepartmentController departmentController) {
+		this.departmentController = departmentController;
 	}
 	
-	public LocationController getLocationController() {
-		return locationController;
+	public DepartmentController getDepartmentController() {
+		return departmentController;
 	}
 	
 	public void start() {

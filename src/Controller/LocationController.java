@@ -9,7 +9,7 @@ import Model.LocationContainer;
 public class LocationController {
 	private LocationContainer locationContainer;
 	
-	private LocationController() {
+	public LocationController() {
 		locationContainer = LocationContainer.getInstance();
 	}
 	
