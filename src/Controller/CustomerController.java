@@ -29,4 +29,8 @@ public class CustomerController {
     public boolean deleteCustomer(Customer customer) {
     	return customerContainer.deleteCustomer(customer);
     }
+    
+    public boolean cprCheck(long cpr) {
+    	return customerContainer.cprCheck(cpr);
+    }
 }

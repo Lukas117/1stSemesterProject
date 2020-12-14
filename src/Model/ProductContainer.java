@@ -90,11 +90,13 @@ public class ProductContainer {
 		return foundProduct;
 	}
 
-	public boolean deleteBarcode(String productName) {
+	public boolean deleteBarcode(String productName, int numberOfStock) {
 		boolean deletedBarcode = false;
 		for (Product _product: productList) {
 			if (_product.getName().equals(productName)) {
-				_product.getBarcodeList().remove(1);
+				for (int i=0; i<numberOfStock; i++) {
+					_product.getBarcodeList().remove(0);
+				}
 				deletedBarcode = true;
 			}
 		}
@@ -109,5 +111,16 @@ public class ProductContainer {
 				}
 			}
 		}
+	}
+	
+	public boolean stockCheck(int numberOfProducts, Product product) {
+		boolean enoughStock = false; 
+			if (numberOfProducts <= product.getBarcodeList().size()) {
+				enoughStock = true;
+			}
+			else {
+				enoughStock = false;
+			}
+		return enoughStock;
 	}
 }

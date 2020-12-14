@@ -70,15 +70,19 @@ public class Product {
     }
 
     public int getBarcode() {
-        Random random= new Random();
+        Random random = new Random();
         return random.nextInt(10000)+1;
     }
 
     public boolean checkBarcode(ArrayList<Integer> list,int barcode) {
-        boolean exist=false;
+        boolean exist = false;
         for (int x: list) {
-            if(barcode==x) exist=true;
-            else exist= false;
+            if(barcode == x) {
+            	exist=true;
+            }
+            else {
+            	exist= false;
+            }
         }
         return exist;
     }

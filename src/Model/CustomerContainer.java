@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class CustomerContainer {
 	private static CustomerContainer instance;
-	private ArrayList<Customer> customerList = new ArrayList<>();
+	private ArrayList<Customer> customerList;
 
     private CustomerContainer() {
-    	//instance = new CustomerContainer();
+    	customerList = new ArrayList<>();
     }
     
     public ArrayList<Customer> getCustomerList() {
@@ -66,4 +66,14 @@ public class CustomerContainer {
     	}
 		return deletedCustomer;
     }
+    
+    public boolean cprCheck(long cpr) {
+		boolean foundCpr = false;
+		for(Customer x : getCustomerList()) {
+			if (x.getCprNumber() == cpr) {
+				foundCpr = true;
+			}
+		}
+		return foundCpr;
+	}
 }

@@ -148,7 +148,7 @@ public class ProductMenu {
 		    		}
 		    		else{
 		    			for(int i=0; i<(oldStock-stock); i++) {
-		    				productController.removeFromStock(name);
+		    				productController.removeFromStock(name, i);
 		    			}
 		    		}
 	        		System.out.println("\n Product updated! \n");

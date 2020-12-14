@@ -2,10 +2,8 @@ package Controller;
 
 import Model.Product;
 import Model.ProductContainer;
-import Model.Sale;
 
 public class ProductController {
-	
 	private ProductContainer productContainer;
 	
 	public  ProductController() {
@@ -36,22 +34,26 @@ public class ProductController {
     	productContainer.addBarcode(productName);
     }
 
-    public boolean removeFromStock(String productName) {
-    	return productContainer.deleteBarcode(productName);
+    public boolean removeFromStock(String productName, int numberOfStock) {
+    	return productContainer.deleteBarcode(productName, numberOfStock);
     }
     
-    public void updateStock(Product product, int oldStock, int newStock) {
-		String name = product.getName();
-		if(newStock-oldStock>0) {
-			for(int i=0; i<(newStock-oldStock); i++) {
-				addToStock(name);
-			}
-		}
-		else{
-			for(int i=0; i<((oldStock-newStock)); i++) {
-				removeFromStock(name);
-			}
-		}
-	}
+    public boolean stockCheck(int numberOfProducts, Product product) {
+    	return productContainer.stockCheck(numberOfProducts, product);
+    }
+    
+//    public void updateStock(Product product, int oldStock, int newStock) {
+//		String name = product.getName();
+//		if(newStock-oldStock>0) {
+//			for(int i=0; i<(newStock-oldStock); i++) {
+//				addToStock(name);
+//			}
+//		}
+//		else{
+//			for(int i=0; i<((oldStock-newStock)); i++) {
+//				removeFromStock(name);
+//			}
+//		}
+	//}
 }
 

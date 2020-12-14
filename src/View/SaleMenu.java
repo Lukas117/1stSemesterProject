@@ -64,7 +64,7 @@ public class SaleMenu {
         System.out.println(" (2) Find sale");
         System.out.println(" (3) Update sale");
         System.out.println(" (4) Delete sale");
-        System.out.println(" (5) Show sale");
+        System.out.println(" (5) Show sales");
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
         
@@ -89,7 +89,6 @@ public class SaleMenu {
 		
 		System.out.println("ID: ");
 		int id = getIntegerFromUser(keyboard);
-		
 		Sale sale = saleController.findSale(id);
 		
 		if (saleController.findSale(id) != null) {
@@ -160,7 +159,7 @@ public class SaleMenu {
 		int id = getIntegerFromUser(keyboard);
 		Sale sale = saleController.findSale(id);
 		if (saleController.deleteSale(sale)) {
-			System.out.println("Sale deleted!");
+			System.out.println(" Sale deleted!");
 		}
 		else {
 			System.out.println(" Sale not found.");
@@ -180,7 +179,7 @@ public class SaleMenu {
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 			System.out.print("Items: ");
 			for (Product item: sale.getShoppingCart()) {
-				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getBarcodeList().size());
+				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getStock());
 			}
 		}
 		System.out.println("************************\n");
@@ -216,8 +215,8 @@ public class SaleMenu {
 		
 		System.out.print(" Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
-		if(!cprCheck(cprNumber)) {
-			System.out.println("Customer does not exist, please create customer.");
+		if(!customerController.cprCheck(cprNumber)) {
+			System.out.println(" Customer does not exist, please create customer.");
 		}
 		else {
 			customer = customerController.findCustomer(cprNumber);
@@ -231,8 +230,9 @@ public class SaleMenu {
 			System.out.print(" Number of products: ");
 			int numberOfProducts = getIntegerFromUser(keyboard);
 			shoppingCart.add(addProductToCart(name, numberOfProducts));
-			System.out.println("(1) Add more products");
-			System.out.println("(2) Finish");
+			System.out.println(" (1) Add more products");
+			System.out.println(" (2) Finish");
+			System.out.print(" Choice: ");
 			choice = getIntegerFromUser(keyboard);
 		}
 		
@@ -243,11 +243,14 @@ public class SaleMenu {
 	}
 	
 	private Product addProductToCart(String name, int numberOfProducts) {
-		Product currentProduct;
 		Product product = productController.findProduct(name);
-		currentProduct = product;
-		productController.updateStock(currentProduct, product.getStock(), numberOfProducts);
-		return currentProduct;
+		while (!productController.stockCheck(numberOfProducts,product)) {
+			System.out.println(" Not enough in stock.");
+			Scanner keyboard = new Scanner(System.in);
+			numberOfProducts = getIntegerFromUser(keyboard);
+		}
+		productController.removeFromStock(name, numberOfProducts);
+		return product;
 	}
 
 	private double getTotalPrice(ArrayList<Product> shoppingCart) {
@@ -262,7 +265,7 @@ public class SaleMenu {
 		boolean delivery = false;
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println("Delivery (1 Yes/2 No): ");
+		System.out.print(" Delivery (1 Yes/2 No): ");
 		int option = getIntegerFromUser(keyboard);
 		switch (option) {
 			case 1:
@@ -272,20 +275,10 @@ public class SaleMenu {
 				delivery = false;
 				break;
 			default:
-				System.out.println("Option not available.");
+				System.out.println(" Option not available.");
 				break;
 		}
 		return delivery;
-	}
-	
-	private boolean cprCheck(long cpr) {
-		boolean foundCpr = false;
-		for(Customer x : customerController.getCustomerContainer().getCustomerList()) {
-			if (x.getCprNumber() == cpr) {
-				foundCpr = true;
-			}
-		}
-		return foundCpr;
 	}
 
 	private void printSaleItems(ArrayList<Product> cart) {
