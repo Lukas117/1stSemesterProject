@@ -28,7 +28,7 @@ public class CustomerContainer {
         	foundCustomer = false;
         }
         for (Customer _customer: customerList) {
-            if (_customer.getName().equals(newCustomer.getName())) {
+            if (_customer.getCprNumber()==(newCustomer.getCprNumber())) {
             	foundCustomer = true;
             }
         }
