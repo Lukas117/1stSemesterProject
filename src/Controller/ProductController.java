@@ -41,19 +41,4 @@ public class ProductController {
     public boolean stockCheck(int numberOfProducts, Product product) {
     	return productContainer.stockCheck(numberOfProducts, product);
     }
-    
-//    public void updateStock(Product product, int oldStock, int newStock) {
-//		String name = product.getName();
-//		if(newStock-oldStock>0) {
-//			for(int i=0; i<(newStock-oldStock); i++) {
-//				addToStock(name);
-//			}
-//		}
-//		else{
-//			for(int i=0; i<((oldStock-newStock)); i++) {
-//				removeFromStock(name);
-//			}
-//		}
-	//}
 }
-

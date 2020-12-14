@@ -31,7 +31,7 @@ public class MainMenu {
     	customerController = new CustomerController();
     	customerMenu = new CustomerMenu(customerController);
     	saleController = new SaleController();
-    	saleMenu = new SaleMenu(saleController, customerController, productController);
+    	saleMenu = new SaleMenu(saleController, customerController, productController, employeeMenu);
     	departmentController = new DepartmentController();
     	departmentMenu = new DepartmentMenu(departmentController);
     	locationController = new LocationController();

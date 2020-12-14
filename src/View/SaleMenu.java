@@ -14,11 +14,13 @@ public class SaleMenu {
 	private SaleController saleController;
 	private CustomerController customerController;
 	private ProductController productController;
+	private EmployeeMenu employeeMenu;
 	
-	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController) {
+	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController, EmployeeMenu employeeMenu) {
 		this.saleController = saleController;
 		this.customerController = customerController;
 		this.productController = productController;
+		this.employeeMenu = employeeMenu;
 	}
 	
 	public void start() {
@@ -80,6 +82,7 @@ public class SaleMenu {
 		}
 		else {
 			saleController.createSale(sale);
+			employeeMenu.getCurrentUser().setSaleCounter(employeeMenu.getCurrentUser().getSaleCounter() + 1);
 			System.out.println("\n Sale created! \n");
 		}
 	}
@@ -166,7 +169,7 @@ public class SaleMenu {
 		}
 	}
 	
-	private void showSale() {
+	private void showSale() { //wrong
 		ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
 		
 		System.out.println("\n****** Registered Sales *******");
@@ -217,6 +220,7 @@ public class SaleMenu {
 		long cprNumber = getLongFromUser(keyboard);
 		if(!customerController.cprCheck(cprNumber)) {
 			System.out.println(" Customer does not exist, please create customer.");
+			//customerMenu.createCustomer()
 		}
 		else {
 			customer = customerController.findCustomer(cprNumber);
@@ -253,7 +257,7 @@ public class SaleMenu {
 		return product;
 	}
 
-	private double getTotalPrice(ArrayList<Product> shoppingCart) {
+	private double getTotalPrice(ArrayList<Product> shoppingCart) { //wrong
 		double total = 0;
 		for (Product item: shoppingCart) {
 			total += (item.getPrice() * item.getBarcodeList().size());
@@ -279,15 +283,6 @@ public class SaleMenu {
 				break;
 		}
 		return delivery;
-	}
-
-	private void printSaleItems(ArrayList<Product> cart) {
-		for (Product item: cart) {
-			System.out.println(item.getName());
-			for(int barcode : item.getBarcodeList()) {
-				System.out.println(barcode);
-			}
-		}
 	}
 	
 	private Double getDoubleFromUser(Scanner keyboard) {

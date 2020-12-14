@@ -52,7 +52,6 @@ public class DepartmentMenu {
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	private int writeDepartmentMenu() {
 		Scanner keyboard = new Scanner(System.in);
 		
@@ -81,7 +80,6 @@ public class DepartmentMenu {
 		}
 	}
 	
-	@SuppressWarnings("resource")
 	public void findDepartment() {
 		Scanner keyboard = new Scanner(System.in);
 		
@@ -127,7 +125,6 @@ public class DepartmentMenu {
 		System.out.println("************************\n");
 	}
 	
-	@SuppressWarnings("resource")
 	private Department getDataToNewDepartment() {
 		Scanner keyboard = new Scanner(System.in);
 		

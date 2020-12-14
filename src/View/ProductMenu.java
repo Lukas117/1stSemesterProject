@@ -120,16 +120,17 @@ public class ProductMenu {
 	            System.out.println("Current type " + "[" + product.getType() + "]");
 	            System.out.print("New type: ");
 	            String type = getStringFromUser(keyboard);
-	            System.out.println("Current price " + "[" + product.getPrice() + "]");
-	            System.out.print("New price: ");
-	            double price = getDoubleFromUser(keyboard);
 	            System.out.println("Current location " + "[" + product.getLocation() + "]");
 	            System.out.print("New location: ");
 	            String location = getStringFromUser(keyboard);
+	            System.out.println("Current price " + "[" + product.getPrice() + "]");
+	            System.out.print("New price: ");
+	            double price = getDoubleFromUser(keyboard);
 				System.out.println("Current stock " + "[" + product.getStock() + "]");
 				System.out.print("New stock: ");
 				int stock = getIntegerFromUser(keyboard);
-	    		product = new Product(name, type, location, price, stock);
+	    		
+				product = new Product(name, type, location, price, stock);
 	    		
 	    		for(int i=0; i<oldStock;i++) {
 	    			product.getBarcodeList().add(i, barcodes.get(i));
