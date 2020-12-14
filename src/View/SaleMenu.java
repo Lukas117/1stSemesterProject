@@ -15,12 +15,14 @@ public class SaleMenu {
 	private CustomerController customerController;
 	private ProductController productController;
 	private EmployeeMenu employeeMenu;
+	private CustomerMenu customerMenu;
 	
-	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController, EmployeeMenu employeeMenu) {
+	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController, EmployeeMenu employeeMenu, CustomerMenu customerMenu) {
 		this.saleController = saleController;
 		this.customerController = customerController;
 		this.productController = productController;
 		this.employeeMenu = employeeMenu;
+		this.customerMenu = customerMenu;
 	}
 	
 	public void start() {
@@ -169,7 +171,7 @@ public class SaleMenu {
 		}
 	}
 	
-	private void showSale() { //wrong
+	private void showSale() { 
 		ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
 		
 		System.out.println("\n****** Registered Sales *******");
@@ -220,7 +222,8 @@ public class SaleMenu {
 		long cprNumber = getLongFromUser(keyboard);
 		if(!customerController.cprCheck(cprNumber)) {
 			System.out.println(" Customer does not exist, please create customer.");
-			//customerMenu.createCustomer()
+			customerMenu.createCustomer();
+			customer = customerController.findCustomer(cprNumber);
 		}
 		else {
 			customer = customerController.findCustomer(cprNumber);

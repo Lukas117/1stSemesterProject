@@ -31,7 +31,7 @@ public class MainMenu {
     	customerController = new CustomerController();
     	customerMenu = new CustomerMenu(customerController);
     	saleController = new SaleController();
-    	saleMenu = new SaleMenu(saleController, customerController, productController, employeeMenu);
+    	saleMenu = new SaleMenu(saleController, customerController, productController, employeeMenu, customerMenu);
     	departmentController = new DepartmentController();
     	departmentMenu = new DepartmentMenu(departmentController);
     	locationController = new LocationController();
@@ -79,8 +79,8 @@ public class MainMenu {
             }
         }
     }
-    @SuppressWarnings("resource")
-	private int writeMainMenu() {
+    
+    private int writeMainMenu() {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("****** Main menu ******");
         System.out.println(" (1) Sale menu");
@@ -92,11 +92,15 @@ public class MainMenu {
         System.out.println(" (0) Exit the program");
         System.out.print("\n Choice: ");
 
-        while (!keyboard.hasNextInt()) {
-            System.out.println("Input must be a number - try again");
-            keyboard.nextLine();
-        }
-        int choice = keyboard.nextInt();
+        int choice = getIntegerFromUser(keyboard);
         return choice;
     }
+    
+	private Integer getIntegerFromUser(Scanner keyboard) {
+    	while (!keyboard.hasNextInt()) {
+    		System.out.println("Input must be a number - try again");
+    		keyboard.nextLine();
+    	}
+    	return keyboard.nextInt();
+	}
 }
