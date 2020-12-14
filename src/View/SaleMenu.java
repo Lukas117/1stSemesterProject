@@ -254,13 +254,14 @@ public class SaleMenu {
 			numberOfProducts = getIntegerFromUser(keyboard);
 		}
 		productController.removeFromStock(name, numberOfProducts);
+		product.setStock(numberOfProducts);
 		return product;
 	}
 
 	private double getTotalPrice(ArrayList<Product> shoppingCart) { //wrong
 		double total = 0;
 		for (Product item: shoppingCart) {
-			total += (item.getPrice() * item.getBarcodeList().size());
+			total += (item.getPrice() * item.getStock());
 		}
 		return total;
 	}

@@ -97,6 +97,7 @@ public class ProductContainer {
 				for (int i=0; i<numberOfStock; i++) {
 					_product.getBarcodeList().remove(0);
 				}
+				_product.setStock(_product.getStock()-numberOfStock);
 				deletedBarcode = true;
 			}
 		}

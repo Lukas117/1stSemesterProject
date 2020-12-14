@@ -41,4 +41,8 @@ public class ProductController {
     public boolean stockCheck(int numberOfProducts, Product product) {
     	return productContainer.stockCheck(numberOfProducts, product);
     }
+    
+    public void setStockToBarcodes(Product product) {
+    	if(product.getStock()!=product.getBarcodeList().size()) product.setStock(product.getBarcodeList().size());
+    }
 }

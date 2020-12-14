@@ -89,7 +89,7 @@ public class ProductMenu {
 	   	String name = getStringFromUser(keyboard);
 	    	
 	   	Product product = productController.findProduct(name);    
-	    	
+	   	productController.setStockToBarcodes(product);
 	   	if (productController.findProduct(name) != null) {
 	   		System.out.println("----- Product -----");
     		System.out.println(" Name: " + name);
@@ -109,7 +109,7 @@ public class ProductMenu {
 	    	System.out.print(" Name: ");
 	    	String name = getStringFromUser(keyboard);
 			Product product = productController.getProductContainer().findProduct(name);    	
-	    	
+			productController.setStockToBarcodes(product);
 	    	if (productController.updateProduct(name) != null) {
 	    		ArrayList<Integer> barcodes= productController.getProductContainer().findProduct(name).getBarcodeList();
 	    		
@@ -180,7 +180,7 @@ public class ProductMenu {
 	     System.out.println("\n****** Registered products ******");
 	     for(int i=0; i<productList.size(); i++) {
 	    	 Product product = productList.get(i);
-	            
+	         productController.setStockToBarcodes(product);
 	         System.out.println("––––– Product " + (i+1) + " –––––");
 	         System.out.println("Name: " + product.getName());
 	         System.out.println("Type: " + product.getType());
