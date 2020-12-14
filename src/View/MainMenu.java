@@ -27,11 +27,11 @@ public class MainMenu {
     	employeeController = new EmployeeController();
     	employeeMenu = new EmployeeMenu(employeeController);
     	productController = new ProductController();
-    	productMenu = new ProductMenu(productController);
+    	productMenu = new ProductMenu(productController,locationController,departmentController,departmentMenu,locationMenu);
     	customerController = new CustomerController();
     	customerMenu = new CustomerMenu(customerController);
     	saleController = new SaleController();
-    	saleMenu = new SaleMenu(saleController, customerController, productController, employeeMenu);
+    	saleMenu = new SaleMenu(saleController, customerController, productController, employeeMenu, customerMenu);
     	departmentController = new DepartmentController();
     	departmentMenu = new DepartmentMenu(departmentController);
     	locationController = new LocationController();

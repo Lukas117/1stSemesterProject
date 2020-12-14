@@ -7,12 +7,12 @@ public class Product {
 	private String name;
     private ArrayList<Integer> barcodes;
     private String type;
-    private String location;
+    private Location location;
     private double price;
     private int stock;
 
 
-    public Product (String name, String type, String location, double price, int stock){
+    public Product (String name, String type, Location location, double price, int stock){
         this.name = name;
         this.type = type;
         this.price = price;
@@ -21,11 +21,11 @@ public class Product {
         barcodes= new ArrayList<>();
     }
 
-    public String getLocation() {
+    public Location getLocation() {
 		return location;
 	}
 
-	public void setLocation(String location) {
+	public void setLocation(Location location) {
 		this.location = location;
 	}
 

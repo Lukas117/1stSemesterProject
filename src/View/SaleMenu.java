@@ -15,12 +15,14 @@ public class SaleMenu {
 	private CustomerController customerController;
 	private ProductController productController;
 	private EmployeeMenu employeeMenu;
+	private CustomerMenu customerMenu;
 	
-	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController, EmployeeMenu employeeMenu) {
+	public SaleMenu(SaleController saleController, CustomerController customerController, ProductController productController, EmployeeMenu employeeMenu, CustomerMenu customerMenu) {
 		this.saleController = saleController;
 		this.customerController = customerController;
 		this.productController = productController;
 		this.employeeMenu = employeeMenu;
+		this.customerMenu = customerMenu;
 	}
 	
 	public void start() {
@@ -219,8 +221,8 @@ public class SaleMenu {
 		System.out.print(" Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
 		if(!customerController.cprCheck(cprNumber)) {
-			System.out.println(" Customer does not exist, please create customer.");
-			//customerMenu.createCustomer()
+			System.out.println(" Customer does not exist, please go to Costumer Menu and create customer.");
+			customerMenu.createCustomer();
 		}
 		else {
 			customer = customerController.findCustomer(cprNumber);

@@ -63,7 +63,7 @@ public class CustomerMenu {
         return choice;
     }
 	
-	private void createCustomer() {
+	void createCustomer() {
     	Customer customer = getDataToNewCustomer();
     	
     	if (customerController.createCustomer(customer)) {
