@@ -184,7 +184,7 @@ public class SaleMenu {
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 			System.out.print("Items: ");
 			for (Product item: sale.getShoppingCart()) {
-				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getStock());
+				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.get);
 			}
 		}
 		System.out.println("************************\n");
@@ -245,10 +245,10 @@ public class SaleMenu {
 		
 		double totalPrice = getTotalPrice(shoppingCart);
 		boolean delivery = getDelivery();
-
+		
 		return new Sale(id, totalPrice, null, null, delivery, customer, shoppingCart);
 	}
-	
+		
 	private Product addProductToCart(String name, int numberOfProducts) {
 		Product product = productController.findProduct(name);
 		while (!productController.stockCheck(numberOfProducts,product)) {
@@ -257,11 +257,11 @@ public class SaleMenu {
 			numberOfProducts = getIntegerFromUser(keyboard);
 		}
 		productController.removeFromStock(name, numberOfProducts);
-		product.setStock(numberOfProducts);
+		//product.setStock(product.getStock() - numberOfProducts);
 		return product;
 	}
 
-	private double getTotalPrice(ArrayList<Product> shoppingCart) { //wrong
+	private double getTotalPrice(ArrayList<Product> shoppingCart) {
 		double total = 0;
 		for (Product item: shoppingCart) {
 			total += (item.getPrice() * item.getStock());
