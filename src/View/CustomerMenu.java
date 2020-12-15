@@ -63,6 +63,7 @@ public class CustomerMenu {
         return choice;
     }
 	
+
 	public void createCustomer() {
     	Customer customer = getDataToNewCustomer();
     	

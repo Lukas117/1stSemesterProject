@@ -27,7 +27,7 @@ public class EmployeeMenu {
         while(running) {
             int choice = writeEmployeeMenu();
             switch(choice) {
-                case 1:
+                case 1: 
                 	createEmployee();
                     break;
                 case 2:

@@ -221,6 +221,7 @@ public class SaleMenu {
 		System.out.print(" Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
 		if(!customerController.cprCheck(cprNumber)) {
+
 			System.out.println(" Customer does not exist, please create customer.");
 			customerMenu.createCustomer();
 			customer = customerController.findCustomer(cprNumber);

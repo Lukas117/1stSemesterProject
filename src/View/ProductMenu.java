@@ -4,16 +4,37 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Controller.ProductController;
 import Model.Product;
+import Controller.LocationController;
+import Controller.DepartmentController;
+import Model.Location;
+import Model.Department;
 
 public class ProductMenu {
 	private ProductController productController;
+	private LocationController locationController;
+	private DepartmentController departmentController;
+	private DepartmentMenu departmentMenu;
+	private LocationMenu locationMenu;
+
 	
-	public ProductMenu(ProductController productController) {
+	public ProductMenu(ProductController productController, LocationController locationController, DepartmentController departmentController, DepartmentMenu departmentMenu, LocationMenu locationMenu) {
 		this.productController = productController;
+		this.locationController = locationController;
+		this.departmentController = departmentController;
+		this.departmentMenu = departmentMenu;
+		this.locationMenu = locationMenu;
+	}
+	
+	public LocationController getLocationController() {
+		return locationController;
 	}
 	
 	public ProductController getProductController() {
 		return productController;
+	}
+	
+	public DepartmentController getDepartmentController() {
+		return departmentController;
 	}
 	
 	public void start() {
@@ -110,6 +131,9 @@ public class ProductMenu {
 	    	String name = getStringFromUser(keyboard);
 			Product product = productController.getProductContainer().findProduct(name);    	
 			productController.setStockToBarcodes(product);
+			Location location;
+			Department department;
+			
 	    	if (productController.updateProduct(name) != null) {
 	    		ArrayList<Integer> barcodes= productController.getProductContainer().findProduct(name).getBarcodeList();
 	    		
@@ -120,9 +144,26 @@ public class ProductMenu {
 	            System.out.println("Current type " + "[" + product.getType() + "]");
 	            System.out.print("New type: ");
 	            String type = getStringFromUser(keyboard);
-	            System.out.println("Current location " + "[" + product.getLocation() + "]");
-	            System.out.print("New location: ");
-	            String location = getStringFromUser(keyboard);
+	            System.out.println("Current location: ");
+	            System.out.println("Department: " + "[" + product.getLocation().getDepartment() + "]");
+		        System.out.println("Aisle: " + "[" + product.getLocation().getAisle() + "]");
+		        System.out.println("Shelf: " + "[" + product.getLocation().getShelf() + "]");
+		        System.out.print("New epartment name: ");
+		        String departmentName = getStringFromUser(keyboard);
+		        if(departmentController.findDepartment(departmentName) == null) {
+		        	System.out.println("Department does not exist! Please create it first!");
+		        	return;
+		        }
+		        else department = departmentController.findDepartment(departmentName);
+		        System.out.print("New aisle: ");
+		        int aisle = getIntegerFromUser(keyboard);
+		        System.out.print("New shelf: ");
+		        int shelf = getIntegerFromUser(keyboard);
+		        if(locationController.getLocationContainer().findLocation(department, aisle, shelf) == null ) {
+		        	System.out.println("Location does not exist! Please create it first!");
+		        	return;
+		        }
+		        else location = locationController.getLocationContainer().findLocation(department, aisle, shelf);
 	            System.out.println("Current price " + "[" + product.getPrice() + "]");
 	            System.out.print("New price: ");
 	            double price = getDoubleFromUser(keyboard);
@@ -184,7 +225,10 @@ public class ProductMenu {
 	         System.out.println("––––– Product " + (i+1) + " –––––");
 	         System.out.println("Name: " + product.getName());
 	         System.out.println("Type: " + product.getType());
-	         System.out.println("Location: " + product.getLocation());
+	         System.out.println("Location: ");
+	         System.out.println("Department: " + product.getLocation().getDepartment());
+	         System.out.println("Aisle: " + product.getLocation().getAisle());
+	         System.out.println("Shelf: " + product.getLocation().getShelf());
 	         System.out.println("Price: " + product.getPrice());
 			 System.out.println("Stock: " + product.getStock());
 			 System.out.print("Barcodes: ");
@@ -199,6 +243,8 @@ public class ProductMenu {
 	 private Product getDataToNewProduct() {
 	    	Scanner keyboard = new Scanner(System.in);
 	        String name = null;
+	        Department department;
+	        Location location;
 	        
 	    	while(name == null){
 	            
@@ -222,12 +268,24 @@ public class ProductMenu {
 	        }
 	        System.out.print(" Type: ");
 	        String type = getStringFromUser(keyboard);
-	        System.out.print(" Location: ");
-	        String location = getStringFromUser(keyboard);
+	        System.out.println(" Location: ");
+	        System.out.print("Department name: ");
+	        String departmentName = getStringFromUser(keyboard);
+	        departmentMenu.createDepartment();
+	        department = departmentController.findDepartment(departmentName);
+	        System.out.print("Aisle: ");
+	        int aisle = getIntegerFromUser(keyboard);
+	        System.out.print("Shelf: ");
+	        int shelf = getIntegerFromUser(keyboard);
+	        locationMenu.createLocation();
+	        location = locationController.getLocationContainer().findLocation(department, aisle, shelf);
 	        System.out.print(" Price: ");
 	        double price = getDoubleFromUser(keyboard);
 		 	System.out.print(" Stock: ");
 		 	int stock = getIntegerFromUser(keyboard);
+		 	
+		 	
+		 	
 		 	Product product = new Product(name, type, location, price, stock);
 		 	
 	        
@@ -257,4 +315,5 @@ public class ProductMenu {
 		}
 		return inputToString;
 	}
+	
 }

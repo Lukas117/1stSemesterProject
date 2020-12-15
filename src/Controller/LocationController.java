@@ -24,4 +24,5 @@ public class LocationController {
 	public boolean deleteLocation(Department department, int aisle, int shelf) {
 		return locationContainer.deleteLocation(department, aisle, shelf);
 	}
+	
 }
