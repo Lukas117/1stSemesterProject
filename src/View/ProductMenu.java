@@ -284,7 +284,7 @@ public class ProductMenu {
 	        int aisle = getIntegerFromUser(keyboard);
 	        System.out.print("Shelf: ");
 	        int shelf = getIntegerFromUser(keyboard);
-	        if( locationController==null) {
+	        if( locationController == null) {
 		        locationController = new LocationController();
 		        locationMenu = new LocationMenu(locationController, departmentController);
 	        }

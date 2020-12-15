@@ -128,9 +128,9 @@ public class DepartmentMenu {
 	private Department getDataToNewDepartment() {
 		Scanner keyboard = new Scanner(System.in);
 		
-		System.out.println("Department name: ");
+		System.out.print("Department name: ");
 		String name = getStringFromUser(keyboard);
-		System.out.println("Warehouse: ");
+		System.out.print("Warehouse: ");
 		String warehouse = getStringFromUser(keyboard);
 		
 		return new Department(name, warehouse);

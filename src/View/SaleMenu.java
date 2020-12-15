@@ -184,7 +184,7 @@ public class SaleMenu {
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
 			System.out.print("Items: ");
 			for (Product item: sale.getShoppingCart()) {
-				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.get);
+				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getStock());
 			}
 		}
 		System.out.println("************************\n");
@@ -258,7 +258,6 @@ public class SaleMenu {
 			numberOfProducts = getIntegerFromUser(keyboard);
 		}
 		productController.removeFromStock(name, numberOfProducts);
-		//product.setStock(product.getStock() - numberOfProducts);
 		return product;
 	}
 
