@@ -171,7 +171,7 @@ public class SaleMenu {
 		}
 	}
 	
-	private void showSale() { //wrong
+	private void showSale() { 
 		ArrayList<Sale> sales = saleController.getSaleContainer().getSales();
 		
 		System.out.println("\n****** Registered Sales *******");
@@ -221,8 +221,10 @@ public class SaleMenu {
 		System.out.print(" Customer's CPR number: ");
 		long cprNumber = getLongFromUser(keyboard);
 		if(!customerController.cprCheck(cprNumber)) {
-			System.out.println(" Customer does not exist, please go to Costumer Menu and create customer.");
+
+			System.out.println(" Customer does not exist, please create customer.");
 			customerMenu.createCustomer();
+			customer = customerController.findCustomer(cprNumber);
 		}
 		else {
 			customer = customerController.findCustomer(cprNumber);
