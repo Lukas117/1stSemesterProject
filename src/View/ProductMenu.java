@@ -271,13 +271,27 @@ public class ProductMenu {
 	        System.out.println(" Location: ");
 	        System.out.print("Department name: ");
 	        String departmentName = getStringFromUser(keyboard);
-	        departmentMenu.createDepartment();
+	        if(departmentController==null) {
+	        	departmentController= new DepartmentController();
+	        	departmentMenu = new DepartmentMenu(departmentController);
+	        }
+	        if(departmentController.findDepartment(departmentName)==null) {
+	        	System.out.println("Department does not exist! Please create one!");
+	        	departmentMenu.createDepartment();
+	        }	
 	        department = departmentController.findDepartment(departmentName);
 	        System.out.print("Aisle: ");
 	        int aisle = getIntegerFromUser(keyboard);
 	        System.out.print("Shelf: ");
 	        int shelf = getIntegerFromUser(keyboard);
-	        locationMenu.createLocation();
+	        if( locationController==null) {
+		        locationController = new LocationController();
+		        locationMenu = new LocationMenu(locationController, departmentController);
+	        }
+	        if( locationController.getLocationContainer().findLocation(department, aisle, shelf)==null) {
+		        System.out.println("Location does not exist! Please create one!");
+	        	locationMenu.createLocation();
+	        }
 	        location = locationController.getLocationContainer().findLocation(department, aisle, shelf);
 	        System.out.print(" Price: ");
 	        double price = getDoubleFromUser(keyboard);
