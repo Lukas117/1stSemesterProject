@@ -13,7 +13,6 @@ public class Sale {
     private Customer customer;
 
     public Sale (int id, double price, LocalDateTime purchaseDate, LocalDateTime paymentDeadline, boolean delivery, Customer customer, ArrayList<Product> shoppingCart) {
-        
     	this.setId(id);
         this.setPrice(price);
         this.setPurchaseDate(purchaseDate);
