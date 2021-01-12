@@ -185,7 +185,7 @@ public class EmployeeMenu {
         for(int i=0; i<employees.size(); i++) {
         	Employee employee = employees.get(i);
             
-            System.out.println("––––– Employee " + (i+1) + " –––––");
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Employee " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
             System.out.println("Username: " + employee.getUsername());
             System.out.println("Name: " + employee.getName());
             System.out.println("Email: " + employee.getEmail());

@@ -167,7 +167,7 @@ public class CustomerMenu {
         for(int i=0; i<customers.size(); i++) {
         	Customer customer = customers.get(i);
 
-            System.out.println("––––– Customer " + (i+1) + " –––––");
+            System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Customer " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
             System.out.println("CPR number: " + customer.getCprNumber());
             System.out.println("Name: " + customer.getName());
             System.out.println("Email: " + customer.getEmail());

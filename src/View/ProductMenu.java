@@ -62,6 +62,10 @@ public class ProductMenu {
             case 5:
             	showProducts();
                 break;
+                case 6:
+                	showStatistics();
+                	break;
+
             case 0:
                 running = false;
                 break;
@@ -81,6 +85,7 @@ public class ProductMenu {
         System.out.println(" (3) Update product");
         System.out.println(" (4) Delete product");
         System.out.println(" (5) Show product");
+        System.out.println(" (6) Show statistics");
         System.out.println(" (0) Go back");
         System.out.print("\n Choice: ");
                 
@@ -117,7 +122,8 @@ public class ProductMenu {
     		System.out.println(" Type: " + product.getType());
     		System.out.println(" Location: " + product.getLocation());
     		System.out.println(" Price: " + product.getPrice());
-			System.out.println(" Stock: " + product.getStock() + "\n");
+			System.out.println(" Stock: " + product.getStock());
+			System.out.println("Send notification when the stock drops below: " + product.getMinStock() + "\n");
     	}
     	else {
     		System.out.println(" Product does not exist!\n");
@@ -148,7 +154,7 @@ public class ProductMenu {
 	            System.out.println("Department: " + "[" + product.getLocation().getDepartment() + "]");
 		        System.out.println("Aisle: " + "[" + product.getLocation().getAisle() + "]");
 		        System.out.println("Shelf: " + "[" + product.getLocation().getShelf() + "]");
-		        System.out.print("New epartment name: ");
+		        System.out.print("New department name: ");
 		        String departmentName = getStringFromUser(keyboard);
 		        if(departmentController.findDepartment(departmentName) == null) {
 		        	System.out.println("Department does not exist! Please create it first!");
@@ -170,9 +176,17 @@ public class ProductMenu {
 				System.out.println("Current stock " + "[" + product.getStock() + "]");
 				System.out.print("New stock: ");
 				int stock = getIntegerFromUser(keyboard);
-	    		
-				product = new Product(name, type, location, price, stock);
-	    		
+				System.out.println("Send notification when the stock drops below [" + product.getMinStock() + "]");
+				System.out.println("New minimum stock: ");
+				int minStock = getIntegerFromUser(keyboard);
+				int salesCounter = product.getSalesCounter();
+				int numberOfItemSold = product.getNumberOfItemSold();
+
+				product = new Product(name, type, location, price, stock, minStock);
+
+				product.setSalesCounter(salesCounter);
+				product.setNumberOfItemSold(numberOfItemSold);
+
 	    		for(int i=0; i<oldStock;i++) {
 	    			product.getBarcodeList().add(i, barcodes.get(i));
 	    		}
@@ -222,11 +236,12 @@ public class ProductMenu {
 	     for(int i=0; i<productList.size(); i++) {
 	    	 Product product = productList.get(i);
 	         productController.setStockToBarcodes(product);
-	         System.out.println("––––– Product " + (i+1) + " –––––");
+	         System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Product " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
 	         System.out.println("Name: " + product.getName());
 	         System.out.println("Type: " + product.getType());
 	         System.out.println("Location: ");
-	         System.out.println("Department: " + product.getLocation().getDepartment());
+	         System.out.println("Warehouse: " + product.getLocation().getDepartment().getWarehouse());
+	         System.out.println("Department: " + product.getLocation().getDepartment().getName());
 	         System.out.println("Aisle: " + product.getLocation().getAisle());
 	         System.out.println("Shelf: " + product.getLocation().getShelf());
 	         System.out.println("Price: " + product.getPrice());
@@ -236,6 +251,7 @@ public class ProductMenu {
 				 System.out.print(barcode + " ");
 			 }
 			 System.out.println();
+			 System.out.println("Send notification when the stock drops below: " + product.getMinStock());
 	     } 
 	     System.out.println("\n*************************\n");
 	 }
@@ -297,12 +313,14 @@ public class ProductMenu {
 	        double price = getDoubleFromUser(keyboard);
 		 	System.out.print(" Stock: ");
 		 	int stock = getIntegerFromUser(keyboard);
-		 	
-		 	
-		 	
-		 	Product product = new Product(name, type, location, price, stock);
-		 	
-	        
+		 	System.out.println("Send notification when the stock drops below: ");
+		 	int minStock = getIntegerFromUser(keyboard);
+
+		 	Product product = new Product(name, type, location, price, stock, minStock);
+
+		 	product.setNumberOfItemSold(0);
+		 	product.setSalesCounter(0);
+
 			return product;
 	    }
 	 
@@ -328,6 +346,97 @@ public class ProductMenu {
 			System.out.println("You need to type something.");
 		}
 		return inputToString;
+	}
+
+	private void showStatistics() {
+		ArrayList<Product> productList = productController.getProductContainer().getProductList();
+		System.out.println("\n****** Products Statistics ******");
+		System.out.println("Most sold product: " + findMostSoldProduct(productList).getName() + ". Number of products sold: " + findMostSoldProduct(productList).getNumberOfItemSold());
+		System.out.println("Item was purchased the most times: " + findMostTimesPurchasedProduct(productList).getName() + ". Number of times: " + findMostTimesPurchasedProduct(productList).getSalesCounter());
+		System.out.println("Least sold product: " + findLeastSoldProduct(productList).getName() + ". Number of products sold: " + findLeastSoldProduct(productList).getNumberOfItemSold());
+		System.out.println("Item was purchased the least times: " + findLeastTimesPurchasedProduct(productList).getName() + ". Number of times: " + findLeastTimesPurchasedProduct(productList).getSalesCounter());
+		System.out.println("Product with the biggest stock: " + findProductWithBiggestStock(productList).getName() + ". Stock: " + findProductWithBiggestStock(productList).getStock());
+		System.out.println("Product with the smallest stock: " + findProductWithSmallestStock(productList).getName() + ". Stock: " + findProductWithSmallestStock(productList).getStock());
+		System.out.println("\n");
+		for(int i=0; i<productList.size(); i++) {
+			Product product = productList.get(i);
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Product " + (i+1) + " ï¿½ï¿½ï¿½ï¿½ï¿½");
+			System.out.println("Name: " + product.getName());
+			System.out.println("Number of times item was purchased: " + product.getSalesCounter());
+			System.out.println("Number of total sold: " + product.getNumberOfItemSold());
+		}
+	}
+
+	private Product findMostTimesPurchasedProduct(ArrayList<Product> products) {
+		int max = 0;
+		String nameOfMax = null;
+		for (Product p: products) {
+			if(p.getSalesCounter()>max) {
+				max = p.getSalesCounter();
+				nameOfMax = p.getName();
+			}
+		}
+		return productController.findProduct(nameOfMax);
+	}
+
+	private Product findMostSoldProduct(ArrayList<Product> products) {
+		int max = 0;
+		String nameOfMax = null;
+		for (Product p: products) {
+			if(p.getNumberOfItemSold()>max) {
+				max = p.getNumberOfItemSold();
+				nameOfMax = p.getName();
+			}
+		}
+		return productController.findProduct(nameOfMax);
+	}
+
+	private Product findLeastTimesPurchasedProduct(ArrayList<Product> products) {
+		int min = Integer.MAX_VALUE;
+		String nameOfMax = null;
+		for (Product p: products) {
+			if(p.getSalesCounter()<min) {
+				min = p.getSalesCounter();
+				nameOfMax = p.getName();
+			}
+		}
+		return productController.findProduct(nameOfMax);
+	}
+
+	private Product findLeastSoldProduct(ArrayList<Product> products) {
+		int min = Integer.MAX_VALUE;
+		String nameOfMax = null;
+		for (Product p: products) {
+			if(p.getNumberOfItemSold()<min) {
+				min = p.getNumberOfItemSold();
+				nameOfMax = p.getName();
+			}
+		}
+		return productController.findProduct(nameOfMax);
+	}
+
+	private Product findProductWithBiggestStock(ArrayList<Product> products) {
+		int max = 0;
+		String nameOfMax = null;
+		for (Product p: products) {
+			if(p.getStock()>max) {
+				max = p.getStock();
+				nameOfMax = p.getName();
+			}
+		}
+		return productController.findProduct(nameOfMax);
+	}
+
+	private Product findProductWithSmallestStock(ArrayList<Product> products) {
+		int min = Integer.MAX_VALUE;
+		String nameOfMax = null;
+		for (Product p: products) {
+			if(p.getStock()<min) {
+				min = p.getStock();
+				nameOfMax = p.getName();
+			}
+		}
+		return productController.findProduct(nameOfMax);
 	}
 	
 }

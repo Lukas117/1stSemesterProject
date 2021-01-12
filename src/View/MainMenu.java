@@ -7,6 +7,7 @@ import Controller.CustomerController;
 import Controller.SaleController;
 import Controller.LocationController;
 import Controller.DepartmentController;
+import Controller.LeaseController;
 
 public class MainMenu {
 	private EmployeeController employeeController;
@@ -21,6 +22,8 @@ public class MainMenu {
 	private DepartmentMenu departmentMenu;
 	private LocationController locationController;
 	private LocationMenu locationMenu;
+	private LeaseController leaseController;
+	private LeaseMenu leaseMenu;
 
     
     public MainMenu() {
@@ -36,6 +39,8 @@ public class MainMenu {
     	departmentMenu = new DepartmentMenu(departmentController);
     	locationController = new LocationController();
     	locationMenu = new LocationMenu(locationController, departmentController);
+    	leaseController = new LeaseController();
+    	leaseMenu = new LeaseMenu(saleController, customerController, productController, employeeMenu, customerMenu, leaseController);
     }
    public EmployeeMenu getEmployeeMenu()
    {
@@ -70,6 +75,9 @@ public class MainMenu {
                 case 6:
                 	locationMenu.start();
                 	break;
+                case 7:
+                    leaseMenu.start();
+                    break;
                 case 0:
                     running = false;
                     break;
@@ -89,6 +97,7 @@ public class MainMenu {
         System.out.println(" (4) Customer menu");
         System.out.println(" (5) Department menu");
         System.out.println(" (6) Location menu");
+        System.out.println(" (7) Lease menu");
         System.out.println(" (0) Exit the program");
         System.out.print("\n Choice: ");
 

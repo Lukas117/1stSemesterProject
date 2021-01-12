@@ -118,7 +118,7 @@ public class LocationMenu {
         int nonCheckedAisle = getIntegerFromUser(keyboard);
         System.out.print("Shelf: ");
         int nonCheckedShelf = getIntegerFromUser(keyboard);
-        ArrayList<Location> locations = locationController.getLocationContainer().getLocationList();
+        /*ArrayList<Location> locations = locationController.getLocationContainer().getLocationList();
         int aisle = 0;
         int shelf = 0;
         for(Location location: locations) {
@@ -129,7 +129,7 @@ public class LocationMenu {
         		aisle = nonCheckedAisle;
         		shelf = nonCheckedShelf;
         	}
-        }
-		return new Location(department, aisle, shelf);
+        } */
+		return new Location(department, nonCheckedAisle, nonCheckedShelf);
     }
 }

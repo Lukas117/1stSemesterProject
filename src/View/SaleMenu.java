@@ -9,6 +9,7 @@ import Model.Sale;
 import Model.Customer;
 import Model.Product;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class SaleMenu {
 	private SaleController saleController;
@@ -33,7 +34,7 @@ public class SaleMenu {
 		boolean running = true;
 		
 		while(running) {
-			int choice = writeSaleMeu();
+			int choice = writeSaleMenu();
 			switch(choice) {
 				case 1:
 					createSale();
@@ -60,7 +61,7 @@ public class SaleMenu {
 		}
 	}
 	
-	private int writeSaleMeu() {
+	private int writeSaleMenu() {
 		Scanner keyboard = new Scanner(System.in);
 		
 		System.out.println("****** Sale menu ******");
@@ -86,6 +87,7 @@ public class SaleMenu {
 			saleController.createSale(sale);
 			employeeMenu.getCurrentUser().setSaleCounter(employeeMenu.getCurrentUser().getSaleCounter() + 1);
 			System.out.println("\n Sale created! \n");
+			printWarningOfStock(sale);
 		}
 	}
 	
@@ -122,7 +124,7 @@ public class SaleMenu {
 	private void updateSale() {
 		Scanner keyboard = new Scanner(System.in);
 
-		LocalDateTime purchaseDate = null;
+		LocalDateTime purchaseDate;
 		LocalDateTime paymentDeadline = null;
 		boolean dispatchable = false;
 		Customer customer = null;
@@ -141,7 +143,7 @@ public class SaleMenu {
 			System.out.println("Current price " + "[" + sale.getPrice() + "]");
 			System.out.println("New price: ");
 			double price = getDoubleFromUser(keyboard);
-			
+			purchaseDate = LocalDateTime.now();
 			sale = new Sale(id, price, purchaseDate, paymentDeadline, dispatchable, customer, cart);
 			
 			if (saleController.getSaleContainer().addSale(sale)) {
@@ -150,6 +152,7 @@ public class SaleMenu {
 			else {
 				saleController.createSale(sale);
 				System.out.println("\nSale updated.\n");
+				printWarningOfStock(sale);
 			}
 		}
 		else {
@@ -182,6 +185,7 @@ public class SaleMenu {
 			System.out.println("Sale ID: " + sale.getId());
 			System.out.println("Price: " + sale.getPrice() + " dkk");
 			System.out.println("Customer's CPR number: " + sale.getCustomer().getCprNumber());
+			System.out.println("Purchase date: " + formDate(sale.getPurchaseDate()));
 			System.out.print("Items: ");
 			for (Product item: sale.getShoppingCart()) {
 				System.out.println("	Name: " + item.getName()+ " Quantity: " + item.getStock());
@@ -193,7 +197,7 @@ public class SaleMenu {
 	private Sale getDataToNewSale() {
 		Scanner keyboard = new Scanner(System.in);
 		int id = 0;
-		LocalDateTime purchaseDate = null;
+		LocalDateTime purchaseDate;
 		LocalDateTime paymentDeadline = null;
 		Customer customer = null;
 		ArrayList<Product> shoppingCart = new ArrayList<>();
@@ -238,6 +242,7 @@ public class SaleMenu {
 			System.out.print(" Number of products: ");
 			int numberOfProducts = getIntegerFromUser(keyboard);
 			shoppingCart.add(addProductToCart(name, numberOfProducts));
+			updateProductStatistics(name, numberOfProducts);
 			System.out.println(" (1) Add more products");
 			System.out.println(" (2) Finish");
 			System.out.print(" Choice: ");
@@ -246,19 +251,23 @@ public class SaleMenu {
 		
 		double totalPrice = getTotalPrice(shoppingCart);
 		boolean delivery = getDelivery();
+		purchaseDate = LocalDateTime.now();
 		
-		return new Sale(id, totalPrice, null, null, delivery, customer, shoppingCart);
+		return new Sale(id, totalPrice, purchaseDate, null, delivery, customer, shoppingCart);
 	}
 		
 	private Product addProductToCart(String name, int numberOfProducts) {
 		Product product = productController.findProduct(name);
+		Product temp;
 		while (!productController.stockCheck(numberOfProducts,product)) {
 			System.out.println(" Not enough in stock.");
 			Scanner keyboard = new Scanner(System.in);
 			numberOfProducts = getIntegerFromUser(keyboard);
 		}
 		productController.removeFromStock(name, numberOfProducts);
-		return product;
+		temp = product;
+		temp.setStock(numberOfProducts);
+		return temp;
 	}
 
 	private double getTotalPrice(ArrayList<Product> shoppingCart) {
@@ -320,4 +329,25 @@ public class SaleMenu {
   		}
 		return inputToString;
     }
+
+   private void printWarningOfStock(Sale sale) {
+	   for (Product p: sale.getShoppingCart()) {
+		   productController.printWarningOfStock(p);
+	   }
+   }
+
+   private String formDate(LocalDateTime localDateTime) {
+		String formattedTime;
+	   DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+	   formattedTime = localDateTime.format(myFormatObj);
+	   return formattedTime;
+   }
+
+   private void updateProductStatistics(String name, int numberOfProducts) {
+		Product product = productController.findProduct(name);
+		product.setSalesCounter(product.getSalesCounter()+1);
+		product.setNumberOfItemSold(product.getNumberOfItemSold()+numberOfProducts);
+   }
+
+
 }

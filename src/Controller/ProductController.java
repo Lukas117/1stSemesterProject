@@ -47,4 +47,8 @@ public class ProductController {
     		product.setStock(product.getBarcodeList().size());
     	}
     }
+
+	public void printWarningOfStock(Product product) {
+		if(product.getStock()< product.getMinStock()) System.out.println("The stock of the product fell below the minimum value. Please re-order from the product called: " + product.getName());
+	}
 }
