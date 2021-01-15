@@ -49,10 +49,7 @@ public class ProductMenu_GUI extends JFrame{
 	private JTextField textField_5;
 	private JPanel contentPane;
 	private JTable table;
-	private JComboBox<String> comboBoxName;
 	private JList<String> listName;
-	@SuppressWarnings("rawtypes")
-	private JComboBox comboBoxSelect;
 	private JLabel lblClock;
 
 	/**
@@ -100,16 +97,16 @@ public void Clock1(){
 
 Connection connection = null;
 private JLabel lblNewLabel;
-private final JLabel lblDesignedByMr = new JLabel("Designed By: Mr. Dina Chanthan");
+private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 private JLabel lblName;
 private JLabel lblType;
 private JLabel lblPrice;
 private JLabel lblStock;
 private JLabel lblMinStock;
-private JTextField textFieldEID;
-private JTextField textFieldName;
-private JTextField textFieldSurname;
-private JTextField textFieldAge;
+private JTextField textField_Name;
+private JTextField textField_Type;
+private JTextField textField_Price;
+private JTextField textField_Location;
 private JButton btnSave;
 private JButton btnUpdate;
 private JButton btnDelete;
@@ -119,9 +116,11 @@ private JScrollPane scrollPane_1;
 private JTextField textFieldSearch;
 private JButton btnSearch;
 private JLabel lblLocation;
-private JTextField textField_6;
-private JTextField textField_7;
-private JTextField textField_8;
+private JTextField textField_Stock;
+private JTextField textField_MinimumStock;
+private JLabel lblStock_1;
+private JLabel lblMinimumStock;
+private JLabel Label_nameOfProduct;
 
 	/**
 	 * Create the application.
@@ -167,12 +166,6 @@ private JTextField textField_8;
 		lblClock = new JLabel("");
 		lblClock.setBounds(492, 446, 220, 44);
 		contentPane.add(lblClock);
-		
-		comboBoxSelect = new JComboBox();
-		comboBoxSelect.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		comboBoxSelect.setModel(new DefaultComboBoxModel(new String[] {"Name", "Type", "Price", "Location", "Stock", "Minimum Stock"}));
-		comboBoxSelect.setBounds(354, 85, 96, 23);
-		contentPane.add(comboBoxSelect);
 		btnSearch.setBounds(592, 85, 84, 23);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -228,7 +221,7 @@ private JTextField textField_8;
 		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(239, 25, 383, 38);
+		lblNewLabel.setBounds(246, 23, 383, 38);
 		contentPane.add(lblNewLabel);
 		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -250,35 +243,45 @@ private JTextField textField_8;
 		lblPrice.setBounds(10, 208, 65, 31);
 		contentPane.add(lblPrice);
 		
+		lblStock_1 = new JLabel("Stock");
+		lblStock_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblStock_1.setBounds(10, 265, 65, 31);
+		contentPane.add(lblStock_1);
+		
+		lblMinimumStock = new JLabel("Minimum Stock");
+		lblMinimumStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblMinimumStock.setBounds(10, 310, 102, 31);
+		contentPane.add(lblMinimumStock);
+		
 		lblStock = new JLabel("Stock");
 		
 		lblMinStock = new JLabel("Minimum Stock");
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
-		textFieldEID = new JTextField();
-		textFieldEID.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldEID.setBounds(75, 154, 157, 22);
-		contentPane.add(textFieldEID);
-		textFieldEID.setColumns(10);
+		textField_Name = new JTextField();
+		textField_Name.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Name.setBounds(75, 154, 157, 22);
+		contentPane.add(textField_Name);
+		textField_Name.setColumns(10);
 		
-		textFieldName = new JTextField();
-		textFieldName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldName.setBounds(76, 184, 156, 22);
-		contentPane.add(textFieldName);
-		textFieldName.setColumns(10);
+		textField_Type = new JTextField();
+		textField_Type.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Type.setBounds(75, 184, 156, 22);
+		contentPane.add(textField_Type);
+		textField_Type.setColumns(10);
 		
-		textFieldSurname = new JTextField();
-		textFieldSurname.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSurname.setBounds(76, 213, 156, 22);
-		contentPane.add(textFieldSurname);
-		textFieldSurname.setColumns(10);
+		textField_Price = new JTextField();
+		textField_Price.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Price.setBounds(75, 213, 156, 22);
+		contentPane.add(textField_Price);
+		textField_Price.setColumns(10);
 		
-		textFieldAge = new JTextField();
-		textFieldAge.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldAge.setBounds(76, 240, 156, 22);
-		contentPane.add(textFieldAge);
-		textFieldAge.setColumns(10);
+		textField_Location = new JTextField();
+		textField_Location.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Location.setBounds(75, 240, 156, 22);
+		contentPane.add(textField_Location);
+		textField_Location.setColumns(10);
 		
 		btnSave = new JButton("Save");
 		btnSave.setBackground(Color.YELLOW);
@@ -354,33 +357,6 @@ private JTextField textField_8;
 		btnDelete.setBounds(470, 320, 96, 31);
 		contentPane.add(btnDelete);
 		
-		comboBoxName = new JComboBox<String>();
-		comboBoxName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		/*comboBoxName.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "select * from Employeeinfo where name = ? ";
-					PreparedStatement pst = connection.prepareStatement(query);
-					
-					pst.setString(1, (String)comboBoxName.getSelectedItem());
-					ResultSet rs = pst.executeQuery();
-					
-					while(rs.next()){
-						textFieldEID.setText(rs.getString("EID"));
-						textFieldName.setText(rs.getString("Name"));
-						textFieldSurname.setText(rs.getString("Surname"));
-						textFieldAge.setText(rs.getString("Age"));
-					}
-					pst.close();	
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}); */
-		comboBoxName.setBounds(10, 121, 220, 21);
-		contentPane.add(comboBoxName);
-		
 		JButton btnReset = new JButton("New");
 		btnReset.setForeground(SystemColor.textHighlight);
 		btnReset.setBackground(Color.BLUE);
@@ -404,23 +380,22 @@ private JTextField textField_8;
 		lblLocation.setBounds(6, 235, 65, 31);
 		contentPane.add(lblLocation);
 		
-		textField_6 = new JTextField();
-		textField_6.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_6.setColumns(10);
-		textField_6.setBounds(74, 274, 156, 22);
-		contentPane.add(textField_6);
+		textField_Stock = new JTextField();
+		textField_Stock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Stock.setColumns(10);
+		textField_Stock.setBounds(74, 274, 156, 22);
+		contentPane.add(textField_Stock);
 		
-		textField_7 = new JTextField();
-		textField_7.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_7.setColumns(10);
-		textField_7.setBounds(75, 308, 156, 22);
-		contentPane.add(textField_7);
+		textField_MinimumStock = new JTextField();
+		textField_MinimumStock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_MinimumStock.setColumns(10);
+		textField_MinimumStock.setBounds(120, 308, 111, 22);
+		contentPane.add(textField_MinimumStock);
 		
-		textField_8 = new JTextField();
-		textField_8.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_8.setColumns(10);
-		textField_8.setBounds(75, 354, 156, 22);
-		contentPane.add(textField_8);
+		Label_nameOfProduct = new JLabel("Name of product:");
+		Label_nameOfProduct.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+		Label_nameOfProduct.setBounds(356, 86, 119, 16);
+		contentPane.add(Label_nameOfProduct);
 		
 		/*lblNewLabel_3 = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
