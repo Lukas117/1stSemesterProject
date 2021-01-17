@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class EmployeeContainer {
 	private static EmployeeContainer instance;
 	private ArrayList<Employee> employeeList;
-		
+	
 	private EmployeeContainer() {
 		employeeList = new ArrayList<>();
 	}
