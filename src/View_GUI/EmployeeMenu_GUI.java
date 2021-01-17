@@ -51,10 +51,7 @@ public class EmployeeMenu_GUI extends JFrame{
 	private JTable table;
 	private JList<String> listName;
 	private JLabel lblClock;
-
-	/**
-	 * Launch the application.
-	 */    
+ 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -112,9 +109,6 @@ private JLabel lblNameOfCustomer;
 private JTextField textField_CPRNumber;
 private JTextField textField_6;
 
-	/**
-	 * Create the application.
-	 */
 	public EmployeeMenu_GUI() {
 		/*ProductController productController = new ProductController();
 		initialize(); */
@@ -295,6 +289,11 @@ private JTextField textField_6;
 		contentPane.add(btnDelete);
 		
 		JButton btnReset = new JButton("New");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new CreateEmployee_GUI();
+			}
+		});
 		btnReset.setBounds(248, 320, 96, 31);
 		btnReset.setForeground(SystemColor.textHighlight);
 		btnReset.setBackground(Color.BLUE);

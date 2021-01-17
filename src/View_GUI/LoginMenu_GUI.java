@@ -9,10 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 
 import Controller.EmployeeController;
-import Model.Employee;
-
 import java.awt.Font;
-import java.awt.Window;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -60,6 +57,7 @@ public class LoginMenu_GUI {
 		JButton signButton = new JButton("Sign up");
 		signButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				new CreateEmployee_GUI(employeeController);
 			}
 		});
 		signButton.setBounds(10, 232, 85, 21);
