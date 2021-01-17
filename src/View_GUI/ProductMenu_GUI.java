@@ -49,7 +49,6 @@ public class ProductMenu_GUI extends JFrame{
 	private JTextField textField_5;
 	private JPanel contentPane;
 	private JTable table;
-	private JList<String> listName;
 	private JLabel lblClock;
 
 	/**
@@ -97,7 +96,6 @@ public void Clock1(){
 
 Connection connection = null;
 private JLabel lblNewLabel;
-private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 private JLabel lblName;
 private JLabel lblType;
 private JLabel lblPrice;
@@ -112,7 +110,6 @@ private JButton btnUpdate;
 private JButton btnDelete;
 private JLabel lblNewLabel_3;
 private JScrollPane scrollPane;
-private JScrollPane scrollPane_1;
 private JTextField textFieldSearch;
 private JButton btnSearch;
 private JLabel lblLocation;
@@ -121,6 +118,7 @@ private JTextField textField_MinimumStock;
 private JLabel lblStock_1;
 private JLabel lblMinimumStock;
 private JLabel Label_nameOfProduct;
+private JLabel lblNewLabel_1;
 
 	/**
 	 * Create the application.
@@ -132,6 +130,7 @@ private JLabel Label_nameOfProduct;
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setBackground(getBackground());
 		
 		//connection = sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -174,10 +173,6 @@ private JLabel Label_nameOfProduct;
 		textFieldSearch.setBounds(465, 86, 117, 22);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
-		
-		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(10, 408, 220, 69);
-		contentPane.add(scrollPane_1);
 		/*listName.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -223,10 +218,6 @@ private JLabel Label_nameOfProduct;
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(246, 23, 383, 38);
 		contentPane.add(lblNewLabel);
-		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDesignedByMr.setBounds(240, 378, 233, 22);
-		contentPane.add(lblDesignedByMr);
 		
 		lblName = new JLabel("Name");
 		lblName.setFont(new Font("Times New Roman", Font.BOLD, 14));
@@ -284,7 +275,7 @@ private JLabel Label_nameOfProduct;
 		textField_Location.setColumns(10);
 		
 		btnSave = new JButton("Save");
-		btnSave.setBackground(Color.YELLOW);
+		btnSave.setBackground(new Color(255, 255, 255));
 		/*btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -310,8 +301,8 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
-		btnUpdate.setForeground(Color.BLUE);
-		btnUpdate.setBackground(Color.GREEN);
+		btnUpdate.setForeground(new Color(51, 0, 0));
+		btnUpdate.setBackground(new Color(255, 204, 204));
 		/*btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -333,7 +324,7 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
-		btnDelete.setBackground(Color.RED);
+		btnDelete.setBackground(new Color(255, 255, 255));
 		btnDelete.setForeground(Color.DARK_GRAY);
 		/*btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -369,12 +360,6 @@ private JLabel Label_nameOfProduct;
 		btnReset.setBounds(248, 320, 96, 31);
 		contentPane.add(btnReset);
 		
-		listName = new JList<String>();
-		listName.setBounds(14, 412, 216, 65);
-		contentPane.add(listName);
-		
-		listName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		
 		lblLocation = new JLabel("Location");
 		lblLocation.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblLocation.setBounds(6, 235, 65, 31);
@@ -397,6 +382,12 @@ private JLabel Label_nameOfProduct;
 		Label_nameOfProduct.setBounds(356, 86, 119, 16);
 		contentPane.add(Label_nameOfProduct);
 		
+		lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1.setIcon(new ImageIcon("/Users/balinttamas/Downloads/industryPic.jpg"));
+		lblNewLabel_1.setBounds(0, 0, 718, 496);
+		contentPane.add(lblNewLabel_1);
+		
+		
 		/*lblNewLabel_3 = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
 		lblNewLabel_3.setIcon(new ImageIcon(img2));
@@ -408,5 +399,6 @@ private JLabel Label_nameOfProduct;
 		lblNewLabel_1.setIcon(new ImageIcon(img));
 		lblNewLabel_1.setBounds(0, 0, 702, 411);
 		contentPane.add(lblNewLabel_1); */
-	}
+		
+		}
 }
