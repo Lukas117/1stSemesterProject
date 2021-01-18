@@ -244,6 +244,7 @@ private JTextField textField_CPRNumber;
 		}); */
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
+		JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
 		
 		btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(586, 320, 91, 31);

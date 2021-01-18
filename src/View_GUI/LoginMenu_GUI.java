@@ -82,6 +82,7 @@ public class LoginMenu_GUI {
 					MainMenu_GUI.MainMenu();
 					closeDialog();
 					
+					
 				}
 				else {
 					errorText.setVisible(true);

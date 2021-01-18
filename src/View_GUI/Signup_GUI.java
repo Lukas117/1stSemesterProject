@@ -1,9 +1,11 @@
 package View_GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -14,6 +16,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 public class Signup_GUI extends JDialog {
@@ -87,6 +91,8 @@ public class Signup_GUI extends JDialog {
 						Employee employee = new Employee(username, name, email, password, 0);
 						employeeController.createEmployee(employee);
 						closeDialog();
+						Component frame = null;
+						JOptionPane.showMessageDialog(frame, "New user created!");
 					}
 				});
 				okButton.setActionCommand("OK");
