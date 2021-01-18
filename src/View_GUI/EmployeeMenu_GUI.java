@@ -35,11 +35,14 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-import Controller.ProductController;
+import Controller.EmployeeController;
+import Model.Employee;
+
 import java.awt.SystemColor; 
 
 public class EmployeeMenu_GUI extends JFrame{
 
+	protected static final EmployeeController employeeController = new EmployeeController();
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -56,7 +59,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EmployeeMenu_GUI frame= new EmployeeMenu_GUI();
+					EmployeeMenu_GUI frame= new EmployeeMenu_GUI(employeeController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -107,9 +110,10 @@ private JTextField textFieldSearch;
 private JButton btnSearch;
 private JLabel lblNameOfCustomer;
 private JTextField textField_CPRNumber;
-private JTextField textField_6;
+private JTextField textField_Email;
+private JTextField textField_Password;
 
-	public EmployeeMenu_GUI() {
+	public EmployeeMenu_GUI(EmployeeController employeeController) {
 		/*ProductController productController = new ProductController();
 		initialize(); */
 		frame = new JFrame();
@@ -215,33 +219,24 @@ private JTextField textField_6;
 		textField_Name.setColumns(10);
 		
 		btnSave = new JButton("Save");
-		btnSave.setBounds(354, 320, 96, 31);
+		btnSave.setBounds(292, 320, 96, 31);
 		btnSave.setBackground(Color.YELLOW);
-		/*btnSave.addActionListener(new ActionListener() {
+		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "insert into Employeeinfo (EID, Name, SurName, Age) values (?, ?, ?, ?) ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					pst.setString(1, textFieldEID.getText());
-					pst.setString(2, textFieldName.getText());
-					pst.setString(3, textFieldSurname.getText());
-					pst.setString(4, textFieldAge.getText());					
-					pst.execute();					
-					JOptionPane.showMessageDialog(null, "Data Saved");					
-					pst.close();					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
+					String username = textField_CPRNumber.getText();
+					String name = textField_Name.getText();
+					String email = textField_Email.getText();
+					String password = textField_Password.getText();
+					Employee employee = new Employee(username, name, email, password, 0);
+					employeeController.createEmployee(employee);
+					JOptionPane.showMessageDialog(frame, "Employee is created!");
 			}
-		}); */
+		});
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(586, 320, 91, 31);
+		btnUpdate.setBounds(549, 320, 91, 31);
 		btnUpdate.setForeground(Color.BLUE);
 		btnUpdate.setBackground(Color.GREEN);
 		/*btnUpdate.addActionListener(new ActionListener() {
@@ -264,7 +259,7 @@ private JTextField textField_6;
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(470, 320, 96, 31);
+		btnDelete.setBounds(424, 320, 96, 31);
 		btnDelete.setBackground(Color.RED);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		/*btnDelete.addActionListener(new ActionListener() {
@@ -287,23 +282,6 @@ private JTextField textField_6;
 		}); */
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
-		
-		JButton btnReset = new JButton("New");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new CreateEmployee_GUI(null);
-			}
-		});
-		btnReset.setBounds(248, 320, 96, 31);
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
-		/*btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Reset();
-			}
-		}); */
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnReset);
 		
 		listName = new JList<String>();
 		listName.setBounds(14, 412, 216, 65);
@@ -337,11 +315,22 @@ private JTextField textField_6;
 		lblName_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.add(lblName_1_1_1);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(92, 177, 140, 22);
-		textField_6.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_6.setColumns(10);
-		contentPane.add(textField_6);
+		textField_Email = new JTextField();
+		textField_Email.setBounds(92, 177, 140, 22);
+		textField_Email.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Email.setColumns(10);
+		contentPane.add(textField_Email);
+		
+		JLabel lblName_1_1_1_1 = new JLabel("Password:");
+		lblName_1_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblName_1_1_1_1.setBounds(6, 210, 76, 22);
+		contentPane.add(lblName_1_1_1_1);
+		
+		textField_Password = new JTextField();
+		textField_Password.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Password.setColumns(10);
+		textField_Password.setBounds(92, 210, 140, 22);
+		contentPane.add(textField_Password);
 		
 		/*lblNewLabel_3 = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
