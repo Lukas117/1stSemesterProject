@@ -291,7 +291,7 @@ private JTextField textField_6;
 		JButton btnReset = new JButton("New");
 		btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new CreateEmployee_GUI();
+				new CreateEmployee_GUI(null);
 			}
 		});
 		btnReset.setBounds(248, 320, 96, 31);

@@ -1,12 +1,14 @@
 package View_GUI;
 
 import java.awt.Color;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 
 import Controller.EmployeeController;
 import java.awt.Font;
@@ -87,7 +89,7 @@ public class LoginMenu_GUI {
 		loginButton.setBounds(341, 232, 85, 21);
 		frame.getContentPane().add(loginButton);
 		
-		passwordText = new JTextField();
+		passwordText = new JPasswordField();
 		passwordText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		passwordText.setColumns(10);
 		passwordText.setBounds(130, 75, 162, 19);
