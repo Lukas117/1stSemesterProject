@@ -48,18 +48,17 @@ public class LoginMenu_GUI {
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				frame.setVisible(false);
-				frame.dispose();
+				closeDialog();
 			}
 		});
 		cancelButton.setActionCommand("Cancel");
-		cancelButton.setBounds(246, 232, 85, 21);
+		cancelButton.setBounds(341, 232, 85, 21);
 		frame.getContentPane().add(cancelButton);
 		
 		JButton signButton = new JButton("Sign up");
 		signButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new CreateEmployee_GUI(employeeController);
+				new Signup_GUI(employeeController);
 			}
 		});
 		signButton.setBounds(10, 232, 85, 21);
@@ -80,13 +79,16 @@ public class LoginMenu_GUI {
 				
 				if (employeeController.checkUser(username, password) != null) {
 					System.out.println("hello");
+					MainMenu_GUI.MainMenu();
+					closeDialog();
+					
 				}
 				else {
 					errorText.setVisible(true);
 				}
 			}
 		});
-		loginButton.setBounds(341, 232, 85, 21);
+		loginButton.setBounds(246, 232, 85, 21);
 		frame.getContentPane().add(loginButton);
 		
 		passwordText = new JPasswordField();
@@ -110,5 +112,9 @@ public class LoginMenu_GUI {
 		usernameText.setColumns(10);
 		usernameText.setBounds(130, 46, 162, 19);
 		frame.getContentPane().add(usernameText);
+	}
+	public void closeDialog() {
+		frame.setVisible(false);
+		frame.dispose();
 	}
 }

@@ -283,6 +283,26 @@ private JTextField textField_Password;
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
 		
+<<<<<<< HEAD
+=======
+		JButton btnReset = new JButton("New");
+		btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				new Signup_GUI(null);
+			}
+		});
+		btnReset.setBounds(248, 320, 96, 31);
+		btnReset.setForeground(SystemColor.textHighlight);
+		btnReset.setBackground(Color.BLUE);
+		/*btnReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Reset();
+			}
+		}); */
+		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		contentPane.add(btnReset);
+		
+>>>>>>> 8c6b67e35a26103024a699fd46e121dc69babf20
 		listName = new JList<String>();
 		listName.setBounds(14, 412, 216, 65);
 		contentPane.add(listName);

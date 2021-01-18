@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 
-public class CreateEmployee_GUI extends JDialog {
+public class Signup_GUI extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameText;
@@ -25,7 +25,7 @@ public class CreateEmployee_GUI extends JDialog {
 	private JTextField passwordText;
 
 
-	public CreateEmployee_GUI(EmployeeController employeeController) {
+	public Signup_GUI(EmployeeController employeeController) {
 		super(null,"Create new employee", ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
