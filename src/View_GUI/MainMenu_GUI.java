@@ -7,14 +7,10 @@ import javax.swing.JButton;
 import View.MainMenu;
 
 public class MainMenu_GUI {
-
 	private JFrame frame;
-	private MainMenu mainMenu;
+
 	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
+	public static void NewScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -27,17 +23,10 @@ public class MainMenu_GUI {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
 	public MainMenu_GUI() {
 		initialize();
-		mainMenu=new MainMenu();
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
 	private void initialize() {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
