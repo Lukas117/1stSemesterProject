@@ -10,7 +10,7 @@ public class MainMenu_GUI {
 	private JFrame frame;
 
 	
-	public static void NewScreen() {
+	public static void MainMenu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {

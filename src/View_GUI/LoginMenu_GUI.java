@@ -79,8 +79,7 @@ public class LoginMenu_GUI {
 				
 				if (employeeController.checkUser(username, password) != null) {
 					System.out.println("hello");
-					MainMenu_GUI nw = new MainMenu_GUI();
-					nw.NewScreen();
+					MainMenu_GUI.MainMenu();
 					closeDialog();
 					
 				}
