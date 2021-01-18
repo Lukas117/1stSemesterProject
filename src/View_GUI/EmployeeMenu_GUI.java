@@ -38,7 +38,8 @@ import java.awt.event.KeyEvent;
 import Controller.EmployeeController;
 import Model.Employee;
 
-import java.awt.SystemColor; 
+import java.awt.SystemColor;
+import javax.swing.table.DefaultTableModel; 
 
 public class EmployeeMenu_GUI extends JFrame{
 
@@ -51,7 +52,6 @@ public class EmployeeMenu_GUI extends JFrame{
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JPanel contentPane;
-	private JTable table;
 	private JList<String> listName;
 	private JLabel lblClock;
  
@@ -109,9 +109,10 @@ private JScrollPane scrollPane;
 private JTextField textFieldSearch;
 private JButton btnSearch;
 private JLabel lblNameOfCustomer;
-private JTextField textField_CPRNumber;
+private JTextField textField_Username;
 private JTextField textField_Email;
 private JTextField textField_Password;
+private JTable table;
 
 	public EmployeeMenu_GUI(EmployeeController employeeController) {
 		/*ProductController productController = new ProductController();
@@ -170,6 +171,20 @@ private JTextField textField_Password;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Username", "Name", "Email"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPane.setViewportView(table);
 		/*table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -223,7 +238,7 @@ private JTextField textField_Password;
 		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-					String username = textField_CPRNumber.getText();
+					String username = textField_Username.getText();
 					String name = textField_Name.getText();
 					String email = textField_Email.getText();
 					String password = textField_Password.getText();
@@ -295,11 +310,11 @@ private JTextField textField_Password;
 		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblNameOfCustomer);
 		
-		textField_CPRNumber = new JTextField();
-		textField_CPRNumber.setBounds(92, 117, 140, 22);
-		textField_CPRNumber.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_CPRNumber.setColumns(10);
-		contentPane.add(textField_CPRNumber);
+		textField_Username = new JTextField();
+		textField_Username.setBounds(92, 117, 140, 22);
+		textField_Username.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Username.setColumns(10);
+		contentPane.add(textField_Username);
 		
 		JLabel lblCprNumb = new JLabel("Username");
 		lblCprNumb.setBounds(6, 117, 76, 22);
