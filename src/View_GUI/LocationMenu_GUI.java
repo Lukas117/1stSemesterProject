@@ -35,11 +35,12 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
-import Controller.ProductController;
+import Controller.LocationController;
 import java.awt.SystemColor; 
 
 public class LocationMenu_GUI extends JFrame{
 
+	protected static final LocationController locationController = new LocationController();
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -59,7 +60,7 @@ public class LocationMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LocationMenu_GUI frame= new LocationMenu_GUI();
+					LocationMenu_GUI frame= new LocationMenu_GUI(locationController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -114,8 +115,9 @@ private JTextField textField_6;
 
 	/**
 	 * Create the application.
+	 * @param locationController 
 	 */
-	public LocationMenu_GUI() {
+	public LocationMenu_GUI(LocationController locationController) {
 		/*ProductController productController = new ProductController();
 		initialize(); */
 		frame = new JFrame();

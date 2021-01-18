@@ -145,7 +145,7 @@ private JTextField textField_Password;
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(592, 85, 84, 23);
 		btnSearch.setForeground(new Color(30, 144, 255));
-		btnSearch.setBackground(new Color(30, 144, 255));
+		btnSearch.setBackground(Color.LIGHT_GRAY);
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		/* btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -220,7 +220,7 @@ private JTextField textField_Password;
 		
 		btnSave = new JButton("Save");
 		btnSave.setBounds(292, 320, 96, 31);
-		btnSave.setBackground(Color.YELLOW);
+		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 					String username = textField_CPRNumber.getText();
@@ -228,8 +228,9 @@ private JTextField textField_Password;
 					String email = textField_Email.getText();
 					String password = textField_Password.getText();
 					Employee employee = new Employee(username, name, email, password, 0);
-					employeeController.createEmployee(employee);
-					JOptionPane.showMessageDialog(frame, "Employee is created!");
+					employeeController.createEmployee(employee);{
+						JOptionPane.showMessageDialog(frame, "Employee is created!");
+					}
 			}
 		});
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -238,7 +239,7 @@ private JTextField textField_Password;
 		btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(549, 320, 91, 31);
 		btnUpdate.setForeground(Color.BLUE);
-		btnUpdate.setBackground(Color.GREEN);
+		btnUpdate.setBackground(Color.LIGHT_GRAY);
 		/*btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -260,7 +261,7 @@ private JTextField textField_Password;
 		
 		btnDelete = new JButton("Delete");
 		btnDelete.setBounds(424, 320, 96, 31);
-		btnDelete.setBackground(Color.RED);
+		btnDelete.setBackground(Color.LIGHT_GRAY);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		/*btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -282,23 +283,6 @@ private JTextField textField_Password;
 		}); */
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
-		
-		JButton btnReset = new JButton("New");
-		btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				new Signup_GUI(null);
-			}
-		});
-		btnReset.setBounds(248, 320, 96, 31);
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
-		/*btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Reset();
-			}
-		}); */
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnReset);
 		
 		listName = new JList<String>();
 		listName.setBounds(14, 412, 216, 65);
