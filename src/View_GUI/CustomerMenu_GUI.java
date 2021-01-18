@@ -39,7 +39,7 @@ import Controller.ProductController;
 import java.awt.SystemColor; 
 
 public class CustomerMenu_GUI extends JFrame{
-
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -51,11 +51,8 @@ public class CustomerMenu_GUI extends JFrame{
 	private JTable table;
 	private JList<String> listName;
 	private JLabel lblClock;
-
-	/**
-	 * Launch the application.
-	 */    
-	public static void main(String[] args) {
+    
+	public static void CustomerMenu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -118,13 +115,11 @@ private JTextField textField_8;
 private JTextField textField_9;
 private JLabel lblName_1_1_4;
 
-	/**
-	 * Create the application.
-	 */
+
 	public CustomerMenu_GUI() {
 		/*ProductController productController = new ProductController();
 		initialize(); */
-		frame = new JFrame();
+		frame = new JFrame("Customer menu");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
