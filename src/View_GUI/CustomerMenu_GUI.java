@@ -389,6 +389,16 @@ private JLabel lblName_1_1_4;
 		lblName_1_1_4.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.add(lblName_1_1_4);
 		
+		JButton backButton = new JButton("Back");
+		backButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu_GUI.MainMenu();
+				closeDialog();
+			}
+		});
+		backButton.setBounds(543, 415, 85, 21);
+		contentPane.add(backButton);
+		
 		/*lblNewLabel_3 = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
 		lblNewLabel_3.setIcon(new ImageIcon(img2));
@@ -400,5 +410,10 @@ private JLabel lblName_1_1_4;
 		lblNewLabel_1.setIcon(new ImageIcon(img));
 		lblNewLabel_1.setBounds(0, 0, 702, 411);
 		contentPane.add(lblNewLabel_1); */
+	}
+	
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
 	}
 }
