@@ -4,7 +4,8 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import View.MainMenu;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MainMenu_GUI {
 	private JFrame frame;
@@ -33,37 +34,56 @@ public class MainMenu_GUI {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		JButton btnNewButton = new JButton("Sale menu");
-		btnNewButton.setBounds(33, 21, 117, 29);
-		frame.getContentPane().add(btnNewButton);
+		JButton saleButton = new JButton("Sale menu");
+		saleButton.setBounds(33, 21, 117, 29);
+		frame.getContentPane().add(saleButton);
 		
-		JButton btnNewButton_1 = new JButton("Product menu");
-		btnNewButton_1.setBounds(33, 72, 117, 29);
-		frame.getContentPane().add(btnNewButton_1);
+		JButton productButton = new JButton("Product menu");
+		productButton.setBounds(33, 60, 117, 29);
+		frame.getContentPane().add(productButton);
 		
-		JButton btnNewButton_2 = new JButton(" Employee menu");
-		btnNewButton_2.setBounds(20, 134, 157, 29);
-		frame.getContentPane().add(btnNewButton_2);
+		JButton employeeButton = new JButton(" Employee menu");
+		employeeButton.setBounds(33, 99, 117, 29);
+		frame.getContentPane().add(employeeButton);
 		
-		JButton btnNewButton_3 = new JButton("Customer menu");
-		btnNewButton_3.setBounds(20, 193, 157, 29);
-		frame.getContentPane().add(btnNewButton_3);
+		JButton customerButton = new JButton("Customer menu");
+		customerButton.setBounds(33, 138, 117, 29);
+		frame.getContentPane().add(customerButton);
 		
-		JButton btnNewButton_4 = new JButton("Department menu");
-		btnNewButton_4.setBounds(267, 21, 138, 29);
-		frame.getContentPane().add(btnNewButton_4);
+		JButton departmentButton = new JButton("Department menu");
+		departmentButton.setBounds(277, 21, 117, 29);
+		frame.getContentPane().add(departmentButton);
 		
-		JButton btnNewButton_5 = new JButton("Location menu");
-		btnNewButton_5.setBounds(277, 72, 117, 29);
-		frame.getContentPane().add(btnNewButton_5);
+		JButton locationButton = new JButton("Location menu");
+		locationButton.setBounds(277, 60, 117, 29);
+		frame.getContentPane().add(locationButton);
 		
-		JButton btnNewButton_6 = new JButton("Lease menu");
-		btnNewButton_6.setBounds(277, 134, 117, 29);
-		frame.getContentPane().add(btnNewButton_6);
+		JButton leaseButton = new JButton("Lease menu");
+		leaseButton.setBounds(277, 99, 117, 29);
+		frame.getContentPane().add(leaseButton);
 		
-		JButton btnNewButton_7 = new JButton("Lot out");
-		btnNewButton_7.setBounds(306, 237, 138, 29);
-		frame.getContentPane().add(btnNewButton_7);
+		JButton logoutButton = new JButton("Log out");
+		logoutButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				LoginMenu_GUI.main(null); //dont know better way
+				closeDialog();
+			}
+		});
+		logoutButton.setBounds(246, 232, 85, 21);
+		frame.getContentPane().add(logoutButton);
+		
+		JButton exitButton = new JButton("Exit");
+		exitButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				closeDialog();
+			}
+		});
+		exitButton.setBounds(341, 232, 85, 21);
+		frame.getContentPane().add(exitButton);
 	}
-
+	
+	public void closeDialog() {
+		frame.setVisible(false);
+		frame.dispose();
+	}
 }
