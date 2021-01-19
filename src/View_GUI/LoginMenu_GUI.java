@@ -21,7 +21,7 @@ public class LoginMenu_GUI {
 	private JTextField usernameText;
 	private EmployeeController employeeController;
 
-	public static void main(String[] args) {
+	public static void LoginMenu() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -114,6 +114,7 @@ public class LoginMenu_GUI {
 		usernameText.setBounds(130, 46, 162, 19);
 		frame.getContentPane().add(usernameText);
 	}
+	
 	public void closeDialog() {
 		frame.setVisible(false);
 		frame.dispose();
