@@ -36,6 +36,8 @@ public class MainMenu_GUI {
 		JButton saleButton = new JButton("Sale menu");
 		saleButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				SaleMenu_GUI.main(null);
+				closeDialog();
 			}
 		});
 		saleButton.setBounds(33, 21, 117, 29);
@@ -44,6 +46,8 @@ public class MainMenu_GUI {
 		JButton productButton = new JButton("Product menu");
 		productButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				ProductMenu_GUI.main(null);
+				closeDialog();
 			}
 		});
 		productButton.setBounds(33, 60, 117, 29);
@@ -52,6 +56,8 @@ public class MainMenu_GUI {
 		JButton employeeButton = new JButton(" Employee menu");
 		employeeButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				EmployeeMenu_GUI.main(null);
+				closeDialog();
 			}
 		});
 		employeeButton.setBounds(33, 99, 117, 29);
@@ -70,6 +76,8 @@ public class MainMenu_GUI {
 		JButton departmentButton = new JButton("Department menu");
 		departmentButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				DepartmentMenu_GUI.main(null);
+				closeDialog();
 			}
 		});
 		departmentButton.setBounds(277, 21, 117, 29);
@@ -78,6 +86,8 @@ public class MainMenu_GUI {
 		JButton locationButton = new JButton("Location menu");
 		locationButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				LocationMenu_GUI.main(null);
+				closeDialog();
 			}
 		});
 		locationButton.setBounds(277, 60, 117, 29);

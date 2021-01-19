@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class EmployeeContainer {
 	private static EmployeeContainer instance;
 	private ArrayList<Employee> employeeList;
+	private Employee example = new Employee("Balint", "Balint Tamas", "balint.tamas@gmail.com", "123", 0);
 	
 	private EmployeeContainer() {
 		employeeList = new ArrayList<>();
+		employeeList.add(example);
 	}
 		
 	public ArrayList<Employee> getEmployees() {

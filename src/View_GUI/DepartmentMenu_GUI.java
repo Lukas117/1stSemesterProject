@@ -26,6 +26,8 @@ import java.awt.event.KeyEvent;
 
 import Controller.DepartmentController;
 import Model.Department;
+import Model.Employee;
+
 import java.awt.SystemColor;
 import java.awt.Dialog.ModalityType;
 import javax.swing.table.DefaultTableModel; 
@@ -39,6 +41,7 @@ public class DepartmentMenu_GUI extends JFrame{
 	private JFrame frame;
 	private JPanel contentPane;
 	private JLabel lblClock;
+	protected static final DepartmentController departmentController = new DepartmentController();
 
 	/**
 	 * Launch the application.
@@ -47,7 +50,7 @@ public class DepartmentMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DepartmentMenu_GUI frame = new DepartmentMenu_GUI(null);
+					DepartmentMenu_GUI frame = new DepartmentMenu_GUI(departmentController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -121,7 +124,7 @@ private JTable table;
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(new Color(30, 144, 255));
+		btnSearch.setForeground(Color.WHITE);
 		btnSearch.setBackground(new Color(30, 144, 255));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		contentPane.setLayout(null);
@@ -142,6 +145,7 @@ private JTable table;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -149,13 +153,25 @@ private JTable table;
 				"Name", "Warehouse"
 			}
 		) {
+			Class[] columnTypes = new Class[] {
+					String.class, String.class, String.class
+				};
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
-				true, false
+				false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(1).setResizable(false);
 		scrollPane.setViewportView(table);
 		
 		lblNewLabel = new JLabel("Department Menu");
@@ -180,25 +196,25 @@ private JTable table;
 		btnSave.setBounds(408, 320, 100, 31);
 		btnSave.setBackground(Color.YELLOW);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
-<<<<<<< HEAD
 		btnSave.addActionListener(new ActionListener() {
-=======
-		contentPane.add(btnSave);
-		JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
-		
-		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(586, 320, 91, 31);
-		btnUpdate.setForeground(Color.BLUE);
-		btnUpdate.setBackground(Color.GREEN);
-		/*btnUpdate.addActionListener(new ActionListener() {
->>>>>>> 362fbc43e37c7d45431202152699bee3d1d7ece4
 			public void actionPerformed(ActionEvent arg0) {
 				String name = textField_Name.getText();
 				String warehouse = textField_Warehouse.getText();
-				Department department = new Department(name, warehouse);
-				departmentController.createDepartment(department);
-				String[] departments = {name, warehouse};
-				JOptionPane.showMessageDialog(frame, "Department created!");
+				if (name.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				
+				else if (warehouse.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				else {
+					if(name.isEmpty()==false && warehouse.isEmpty()==false) {
+						Department department = new Department(name, warehouse);
+						departmentController.createDepartment(department);
+						JOptionPane.showMessageDialog(frame, "Department created!");
+							DefaultTableModel model = (DefaultTableModel)table.getModel();
+							String [] departments = {name, warehouse};
+							model.addRow(departments);
+							Reset();
+					}
+					else JOptionPane.showMessageDialog(frame, "***Error!***");	
+				}
 			}
 		});
 		contentPane.add(btnSave);
@@ -218,7 +234,7 @@ private JTable table;
 		});
 		contentPane.add(btnDelete);
 		
-		JButton btnReset = new JButton("New");
+		JButton btnReset = new JButton("Update");
 		btnReset.setBounds(240, 320, 100, 31);
 		btnReset.setForeground(SystemColor.textHighlight);
 		btnReset.setBackground(Color.BLUE);
@@ -241,7 +257,7 @@ private JTable table;
 		textField_Name.setColumns(10);
 		contentPane.add(textField_Name);
 		
-		JLabel lblName = new JLabel("Name");
+		JLabel lblName = new JLabel("Name"); 
 		lblName.setBounds(6, 117, 76, 22);
 		lblName.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.add(lblName);
