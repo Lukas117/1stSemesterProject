@@ -7,28 +7,18 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import java.awt.Font;
-import java.sql.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import javax.swing.JList;
-
-
 import Controller.EmployeeController;
 import Model.Employee;
 
 import javax.swing.table.DefaultTableModel; 
 
 public class EmployeeMenu_GUI extends JFrame{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	protected static final EmployeeController employeeController = new EmployeeController();
 	private JFrame frame;
@@ -217,16 +207,20 @@ private JTable table;
 				if(action == 0){
 					
 					String usernameToupdate = JOptionPane.showInputDialog("Insert the username of the employee: "); 
-					employeeController.deleteEmployee(employeeController.findEmployee(usernameToupdate));
+					
 					String username = JOptionPane.showInputDialog("Insert the new username of the employee: "); 
 					String name = JOptionPane.showInputDialog("Insert the new name of the employee: "); 
 					String email = JOptionPane.showInputDialog("Insert the new email of the employee: ");
 					String password = JOptionPane.showInputDialog("Insert the new password of the employee: ");
 					Employee employee = new Employee(username, name, email, password, 0);
-					employeeController.createEmployee(employee);
-					updateTable();
-		
-					
+					if (employeeController.createEmployee(employee)) {
+						JOptionPane.showMessageDialog(frame, "Employee already exists!");
+					}
+					else {
+						employeeController.deleteEmployee(employeeController.findEmployee(usernameToupdate));
+						employeeController.createEmployee(employee);
+						updateTable();
+					}
 				}
 			}
 		});
