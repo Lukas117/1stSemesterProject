@@ -1,9 +1,11 @@
 package View_GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -14,9 +16,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
-public class CreateEmployee_GUI extends JDialog {
+public class Signup_GUI extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField usernameText;
@@ -25,7 +29,7 @@ public class CreateEmployee_GUI extends JDialog {
 	private JTextField passwordText;
 
 
-	public CreateEmployee_GUI(EmployeeController employeeController) {
+	public Signup_GUI(EmployeeController employeeController) {
 		super(null,"Create new employee", ModalityType.APPLICATION_MODAL);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -87,6 +91,8 @@ public class CreateEmployee_GUI extends JDialog {
 						Employee employee = new Employee(username, name, email, password, 0);
 						employeeController.createEmployee(employee);
 						closeDialog();
+						Component frame = null;
+						JOptionPane.showMessageDialog(frame, "New user created!");
 					}
 				});
 				okButton.setActionCommand("OK");

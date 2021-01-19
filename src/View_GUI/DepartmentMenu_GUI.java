@@ -180,7 +180,18 @@ private JTable table;
 		btnSave.setBounds(408, 320, 100, 31);
 		btnSave.setBackground(Color.YELLOW);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
+<<<<<<< HEAD
 		btnSave.addActionListener(new ActionListener() {
+=======
+		contentPane.add(btnSave);
+		JOptionPane.showMessageDialog(frame, "Eggs are not supposed to be green.");
+		
+		btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(586, 320, 91, 31);
+		btnUpdate.setForeground(Color.BLUE);
+		btnUpdate.setBackground(Color.GREEN);
+		/*btnUpdate.addActionListener(new ActionListener() {
+>>>>>>> 362fbc43e37c7d45431202152699bee3d1d7ece4
 			public void actionPerformed(ActionEvent arg0) {
 				String name = textField_Name.getText();
 				String warehouse = textField_Warehouse.getText();
