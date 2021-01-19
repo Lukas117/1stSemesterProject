@@ -4,53 +4,48 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import javax.swing.JButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import java.awt.Font;
 
-import java.awt.EventQueue;
-import java.awt.Image;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JTable;
 //import net.proteanit.sql.DbUtils;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
-
-import Controller.ProductController;
-import java.awt.SystemColor; 
+import javax.swing.JList; 
 
 public class CustomerMenu_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
 	private JPanel contentPane;
 	private JTable table;
-	private JList<String> listName;
 	private JLabel lblClock;
+	private JLabel customerLabel;
+	private final JLabel designLabel = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
+	private JLabel lblMinStock;
+	private JTextField nameText;
+	private JButton saveButton;
+	private JButton updateButton;
+	private JButton deleteButton;
+	private JScrollPane scrollPane;
+	private JTextField searchText;
+	private JButton searchButton;
+	private JTextField zipcodeText;
+	private JLabel zipcodeLabel;
+	private JLabel searchLabel;
+	private JTextField cprText;
+	private JTextField emailText;
+	private JTextField phoneText;
+	private JTextField addressText;
+	private JTextField cityText;
+	private JLabel cityLabel;
     
 	public static void CustomerMenu() {
 		EventQueue.invokeLater(new Runnable() {
@@ -65,10 +60,8 @@ public class CustomerMenu_GUI extends JFrame{
 		});
 	}
 	
-public void Clock1(){
-		
-		Thread clock = new Thread()
-		{
+	public void Clock1(){
+		Thread clock = new Thread() {
 			public void run(){
 				try {
 					while(true){
@@ -92,30 +85,8 @@ public void Clock1(){
 		clock.start();
 	}
 
-Connection connection = null;
-private JLabel lblNewLabel;
-private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
-private JLabel lblStock;
-private JLabel lblMinStock;
-private JTextField textField_Name;
-private JButton btnSave;
-private JButton btnUpdate;
-private JButton btnDelete;
-private JLabel lblNewLabel_3;
-private JScrollPane scrollPane;
-private JTextField textFieldSearch;
-private JButton btnSearch;
-private JTextField textField_MinimumStock;
-private JLabel lblMinimumStock;
-private JLabel lblNameOfCustomer;
-private JTextField textField_CPRNumber;
-private JTextField textField_6;
-private JTextField textField_7;
-private JTextField textField_8;
-private JTextField textField_9;
-private JLabel lblName_1_1_4;
-
-
+	Connection connection = null;
+	
 	public CustomerMenu_GUI() {
 		/*ProductController productController = new ProductController();
 		initialize(); */
@@ -131,13 +102,13 @@ private JLabel lblName_1_1_4;
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JButton btnLoadTable = new JButton("Load Data");
-		btnLoadTable.setBounds(240, 84, 104, 24);
-		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		btnLoadTable.setForeground(new Color(30, 144, 255));
+		JButton loadButton = new JButton("Load Data");
+		loadButton.setBounds(240, 85, 104, 23);
+		loadButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		loadButton.setForeground(Color.BLACK);
 		
-		textFieldSearch = new JTextField();
-		textFieldSearch.setBounds(465, 86, 117, 22);
+		searchText = new JTextField();
+		searchText.setBounds(465, 86, 117, 22);
 		/*textFieldSearch.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -145,11 +116,11 @@ private JLabel lblName_1_1_4;
 			}
 		}); */
 		
-		btnSearch = new JButton("Search");
-		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(new Color(30, 144, 255));
-		btnSearch.setBackground(new Color(30, 144, 255));
-		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		searchButton = new JButton("Search");
+		searchButton.setBounds(593, 86, 84, 22);
+		searchButton.setForeground(Color.BLACK);
+		searchButton.setBackground(UIManager.getColor("Button.background"));
+		searchButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		/* btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Search();
@@ -160,13 +131,13 @@ private JLabel lblName_1_1_4;
 		lblClock = new JLabel("");
 		lblClock.setBounds(492, 446, 220, 44);
 		contentPane.add(lblClock);
-		contentPane.add(btnSearch);
-		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSearch.setBackground(new Color(255, 248, 220));
-		textFieldSearch.setForeground(Color.BLACK);
-		contentPane.add(textFieldSearch);
-		textFieldSearch.setColumns(10);
-		contentPane.add(btnLoadTable);
+		contentPane.add(searchButton);
+		searchText.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		searchText.setBackground(new Color(255, 248, 220));
+		searchText.setForeground(Color.BLACK);
+		contentPane.add(searchText);
+		searchText.setColumns(10);
+		contentPane.add(loadButton);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setBounds(240, 117, 437, 192);
@@ -198,37 +169,38 @@ private JLabel lblName_1_1_4;
 			}
 		}); */
 		
-		lblNewLabel = new JLabel("Customer Menu");
-		lblNewLabel.setBounds(246, 23, 383, 38);
-		lblNewLabel.setForeground(Color.BLACK);
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblNewLabel);
-		lblDesignedByMr.setBounds(240, 378, 233, 22);
-		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDesignedByMr);
+		customerLabel = new JLabel("Customer Menu");
+		customerLabel.setBounds(246, 23, 383, 38);
+		customerLabel.setForeground(Color.BLACK);
+		customerLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
+		customerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(customerLabel);
+		designLabel.setBounds(10, 455, 233, 22);
+		designLabel.setFont(new Font("Tahoma", Font.ITALIC, 12));
+		designLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(designLabel);
 		
-		lblMinimumStock = new JLabel("ZIP Code");
-		lblMinimumStock.setBounds(6, 297, 76, 22);
-		lblMinimumStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblMinimumStock);
+		zipcodeLabel = new JLabel("ZIP Code");
+		zipcodeLabel.setBounds(6, 297, 76, 22);
+		zipcodeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(zipcodeLabel);
 		
-		lblStock = new JLabel("Stock");
+		new JLabel("Stock");
 		
 		lblMinStock = new JLabel("Minimum Stock");
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
-		textField_Name = new JTextField();
-		textField_Name.setBounds(92, 147, 140, 22);
-		textField_Name.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		contentPane.add(textField_Name);
-		textField_Name.setColumns(10);
+		nameText = new JTextField();
+		nameText.setBounds(92, 147, 140, 22);
+		nameText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(nameText);
+		nameText.setColumns(10);
 		
-		btnSave = new JButton("Save");
-		btnSave.setBounds(354, 320, 96, 31);
-		btnSave.setBackground(Color.YELLOW);
+		saveButton = new JButton("Save");
+		saveButton.setForeground(Color.GREEN);
+		saveButton.setBounds(356, 320, 91, 31);
+		saveButton.setBackground(UIManager.getColor("Button.background"));
 		/*btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -249,13 +221,13 @@ private JLabel lblName_1_1_4;
 				Reset();
 			}
 		}); */
-		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnSave);
+		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contentPane.add(saveButton);
 		
-		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(586, 320, 91, 31);
-		btnUpdate.setForeground(Color.BLUE);
-		btnUpdate.setBackground(Color.GREEN);
+		updateButton = new JButton("Update");
+		updateButton.setBounds(586, 320, 91, 31);
+		updateButton.setForeground(Color.BLUE);
+		updateButton.setBackground(UIManager.getColor("Button.background"));
 		/*btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -272,13 +244,13 @@ private JLabel lblName_1_1_4;
 				Reset();
 			}
 		}); */
-		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnUpdate);
+		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contentPane.add(updateButton);
 		
-		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(470, 320, 96, 31);
-		btnDelete.setBackground(Color.RED);
-		btnDelete.setForeground(Color.DARK_GRAY);
+		deleteButton = new JButton("Delete");
+		deleteButton.setBounds(470, 320, 91, 31);
+		deleteButton.setBackground(UIManager.getColor("Button.background"));
+		deleteButton.setForeground(Color.RED);
 		/*btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int action = JOptionPane.showConfirmDialog(null, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
@@ -297,106 +269,101 @@ private JLabel lblName_1_1_4;
 				}
 			}
 		}); */
-		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnDelete);
+		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contentPane.add(deleteButton);
 		
-		JButton btnReset = new JButton("New");
-		btnReset.setBounds(248, 320, 96, 31);
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
+		JButton newButton = new JButton("New");
+		newButton.setBounds(240, 320, 91, 31);
+		newButton.setForeground(Color.BLUE);
+		newButton.setBackground(UIManager.getColor("Button.background"));
 		/*btnReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Reset();
 			}
 		}); */
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnReset);
+		newButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		contentPane.add(newButton);
 		
-		listName = new JList<String>();
-		listName.setBounds(14, 412, 216, 65);
-		contentPane.add(listName);
+		zipcodeText = new JTextField();
+		zipcodeText.setBounds(92, 297, 139, 22);
+		zipcodeText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		zipcodeText.setColumns(10);
+		contentPane.add(zipcodeText);
 		
-		listName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		searchLabel = new JLabel("CPR n. of customer:");
+		searchLabel.setBounds(354, 85, 117, 22);
+		searchLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(searchLabel);
 		
-		textField_MinimumStock = new JTextField();
-		textField_MinimumStock.setBounds(92, 297, 139, 22);
-		textField_MinimumStock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_MinimumStock.setColumns(10);
-		contentPane.add(textField_MinimumStock);
+		cprText = new JTextField();
+		cprText.setBounds(92, 117, 140, 22);
+		cprText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cprText.setColumns(10);
+		contentPane.add(cprText);
 		
-		lblNameOfCustomer = new JLabel("Name of customer:");
-		lblNameOfCustomer.setBounds(356, 86, 117, 22);
-		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		contentPane.add(lblNameOfCustomer);
+		JLabel cprLabel = new JLabel("CPR Numb.");
+		cprLabel.setBounds(6, 117, 76, 22);
+		cprLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(cprLabel);
 		
-		textField_CPRNumber = new JTextField();
-		textField_CPRNumber.setBounds(92, 117, 140, 22);
-		textField_CPRNumber.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_CPRNumber.setColumns(10);
-		contentPane.add(textField_CPRNumber);
+		JLabel nameLabel = new JLabel("Name");
+		nameLabel.setBounds(6, 147, 76, 22);
+		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(nameLabel);
 		
-		JLabel lblCprNumb = new JLabel("CPR Numb.");
-		lblCprNumb.setBounds(6, 117, 76, 22);
-		lblCprNumb.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		contentPane.add(lblCprNumb);
+		JLabel emailLabel = new JLabel("Email");
+		emailLabel.setBounds(6, 177, 76, 22);
+		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(emailLabel);
 		
-		JLabel lblName_1_1 = new JLabel("Name");
-		lblName_1_1.setBounds(6, 147, 76, 22);
-		lblName_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1);
+		JLabel phoneLabel = new JLabel("Phone Numb.");
+		phoneLabel.setBounds(6, 207, 76, 22);
+		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(phoneLabel);
 		
-		JLabel lblName_1_1_1 = new JLabel("Email");
-		lblName_1_1_1.setBounds(6, 177, 76, 22);
-		lblName_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1_1);
+		JLabel addressLabel = new JLabel("Address");
+		addressLabel.setBounds(6, 237, 76, 22);
+		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(addressLabel);
 		
-		JLabel lblName_1_1_2 = new JLabel("Phone Numb.");
-		lblName_1_1_2.setBounds(6, 207, 76, 22);
-		lblName_1_1_2.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		contentPane.add(lblName_1_1_2);
+		emailText = new JTextField();
+		emailText.setBounds(92, 177, 140, 22);
+		emailText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		emailText.setColumns(10);
+		contentPane.add(emailText);
 		
-		JLabel lblName_1_1_3 = new JLabel("Address");
-		lblName_1_1_3.setBounds(6, 237, 76, 22);
-		lblName_1_1_3.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1_3);
+		phoneText = new JTextField();
+		phoneText.setBounds(92, 207, 140, 22);
+		phoneText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		phoneText.setColumns(10);
+		contentPane.add(phoneText);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(92, 177, 140, 22);
-		textField_6.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_6.setColumns(10);
-		contentPane.add(textField_6);
+		addressText = new JTextField();
+		addressText.setBounds(92, 237, 140, 22);
+		addressText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		addressText.setColumns(10);
+		contentPane.add(addressText);
 		
-		textField_7 = new JTextField();
-		textField_7.setBounds(92, 207, 140, 22);
-		textField_7.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_7.setColumns(10);
-		contentPane.add(textField_7);
+		cityText = new JTextField();
+		cityText.setBounds(92, 267, 140, 22);
+		cityText.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cityText.setColumns(10);
+		contentPane.add(cityText);
 		
-		textField_8 = new JTextField();
-		textField_8.setBounds(92, 237, 140, 22);
-		textField_8.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_8.setColumns(10);
-		contentPane.add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setBounds(92, 267, 140, 22);
-		textField_9.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_9.setColumns(10);
-		contentPane.add(textField_9);
-		
-		lblName_1_1_4 = new JLabel("City");
-		lblName_1_1_4.setBounds(6, 267, 76, 22);
-		lblName_1_1_4.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1_4);
+		cityLabel = new JLabel("City");
+		cityLabel.setBounds(6, 267, 76, 22);
+		cityLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		contentPane.add(cityLabel);
 		
 		JButton backButton = new JButton("Back");
+		backButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		backButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MainMenu_GUI.MainMenu();
 				closeDialog();
 			}
 		});
-		backButton.setBounds(543, 415, 85, 21);
+		backButton.setBounds(592, 379, 84, 23);
 		contentPane.add(backButton);
 		
 		/*lblNewLabel_3 = new JLabel("");

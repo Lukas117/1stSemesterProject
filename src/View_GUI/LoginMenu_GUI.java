@@ -78,7 +78,6 @@ public class LoginMenu_GUI {
 				String password = passwordText.getText();
 				
 				if (employeeController.checkUser(username, password) != null) {
-					System.out.println("hello");
 					MainMenu_GUI.MainMenu();
 					closeDialog();
 					
