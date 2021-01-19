@@ -77,6 +77,9 @@ private JTable table;
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			DefaultTableModel model = (DefaultTableModel)table.getModel();
+			String [] temp = {"","",""};
+			model.addRow(temp);
 			updateTable();
 				
 			}

@@ -9,7 +9,7 @@ public class EmployeeContainer {
 	
 	private EmployeeContainer() {
 		employeeList = new ArrayList<>();
-		employeeList.add(example);
+		addEmployee(example);
 	}
 		
 	public ArrayList<Employee> getEmployees() {
