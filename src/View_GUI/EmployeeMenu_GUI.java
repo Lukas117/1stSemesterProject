@@ -37,20 +37,20 @@ public class EmployeeMenu_GUI extends JFrame{
 		});
 	}
 
-private JLabel lblNewLabel;
-private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
-private JTextField textField_Name;
-private JButton btnSave;
-private JButton btnUpdate;
-private JButton btnDelete;
-private JScrollPane scrollPane;
-private JTextField textFieldSearch;
-private JButton btnSearch;
-private JLabel lblUsernameOfEmployee;
-private JTextField textField_Username;
-private JTextField textField_Email;
-private JTextField textField_Password;
-private JTable table;
+	private JLabel lblNewLabel;
+	private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
+	private JTextField textField_Name;
+	private JButton btnSave;
+	private JButton btnUpdate;
+	private JButton btnDelete;
+	private JScrollPane scrollPane;
+	private JTextField textFieldSearch;
+	private JButton btnSearch;
+	private JLabel lblUsernameOfEmployee;
+	private JTextField textField_Username;
+	private JTextField textField_Email;
+	private JTextField textField_Password;
+	private JTable table;
 
 	public EmployeeMenu_GUI(EmployeeController employeeController) {
 		frame = new JFrame();

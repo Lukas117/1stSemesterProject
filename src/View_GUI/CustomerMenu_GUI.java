@@ -1,11 +1,6 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.Font;
 
 import java.sql.*;
@@ -14,19 +9,21 @@ import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
-//import net.proteanit.sql.DbUtils;
+import javax.swing.table.DefaultTableModel;
+
+import Controller.CustomerController;
+import Model.Customer;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
-import javax.swing.JList; 
+import java.awt.Color; 
 
 public class CustomerMenu_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
+	protected static final CustomerController customerController = new CustomerController();
 	private JFrame frame;
 	private JPanel contentPane;
 	private JTable table;
-	private JLabel lblClock;
 	private JLabel customerLabel;
 	private final JLabel designLabel = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 	private JLabel lblMinStock;
@@ -51,7 +48,7 @@ public class CustomerMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					CustomerMenu_GUI frame= new CustomerMenu_GUI();
+					CustomerMenu_GUI frame= new CustomerMenu_GUI(customerController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,42 +57,12 @@ public class CustomerMenu_GUI extends JFrame{
 		});
 	}
 	
-	public void Clock1(){
-		Thread clock = new Thread() {
-			public void run(){
-				try {
-					while(true){
-					Calendar cal = new GregorianCalendar();
-					int day = cal.get(Calendar.DAY_OF_MONTH);
-					int month = cal.get(Calendar.MONTH);
-					int year = cal.get(Calendar.YEAR);
-					
-					int second = cal.get(Calendar.SECOND);
-					int minute = cal.get(Calendar.MINUTE);
-					int hour = cal.get(Calendar.HOUR);
-					
-					lblClock.setText("Time " + hour +" : "+ minute + " : " + second +" Date " + year + " / " + month + " / " + day );
-					sleep(1000);
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		clock.start();
-	}
-
-	Connection connection = null;
-	
-	public CustomerMenu_GUI() {
-		/*ProductController productController = new ProductController();
-		initialize(); */
+	public CustomerMenu_GUI(CustomerController customerController) {
 		frame = new JFrame("Customer menu");
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//connection = sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 718, 524);
 		contentPane = new JPanel();
@@ -103,34 +70,45 @@ public class CustomerMenu_GUI extends JFrame{
 		setContentPane(contentPane);
 		
 		JButton loadButton = new JButton("Load Data");
+		loadButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//DefaultTableModel model = (DefaultTableModel)table.getModel();
+				//String [] temp = {"","","","","","",""};
+				//model.addRow(temp);
+				updateTable();
+			}
+		});
 		loadButton.setBounds(240, 85, 104, 23);
 		loadButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		loadButton.setForeground(Color.BLACK);
 		
 		searchText = new JTextField();
 		searchText.setBounds(465, 86, 117, 22);
-		/*textFieldSearch.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				//Search();
-			}
-		}); */
 		
 		searchButton = new JButton("Search");
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Long cprNumber = Long.parseLong(cprText.getText());
+				Customer customer = customerController.findCustomer(cprNumber);
+				for (int i = 0; i < table.getRowCount(); i++) {
+				      for(int j = 0; j < table.getColumnCount(); j++) {
+				          table.setValueAt("", i, j);
+				      }
+				}
+				table.setValueAt(customer.getCprNumber(), 0, 0);
+				table.setValueAt(customer.getName(), 0, 1);
+				table.setValueAt(customer.getEmail(), 0, 2);
+				table.setValueAt(customer.getPhoneNumber(), 0, 3);
+				table.setValueAt(customer.getAddress(), 0, 4);
+				table.setValueAt(customer.getCity(), 0, 5);
+				table.setValueAt(customer.getZipcode(), 0, 6);
+			}
+		});
 		searchButton.setBounds(593, 86, 84, 22);
 		searchButton.setForeground(Color.BLACK);
 		searchButton.setBackground(UIManager.getColor("Button.background"));
 		searchButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		/* btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Search();
-			}
-		}); */
 		contentPane.setLayout(null);
-		
-		lblClock = new JLabel("");
-		lblClock.setBounds(492, 446, 220, 44);
-		contentPane.add(lblClock);
 		contentPane.add(searchButton);
 		searchText.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		searchText.setBackground(new Color(255, 248, 220));
@@ -144,31 +122,30 @@ public class CustomerMenu_GUI extends JFrame{
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
-		scrollPane.setViewportView(table);
-		/*table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				try {
-					int row = table.getSelectedRow();
-					String EID = (table.getModel().getValueAt(row, 0).toString());				
-					String query = "select * from Employeeinfo where EID = '" + EID + "' ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					ResultSet rs = pst.executeQuery();					
-					while(rs.next()){
-						textFieldEID.setText(rs.getString("EID"));
-						textFieldName.setText(rs.getString("Name"));
-						textFieldSurname.setText(rs.getString("Surname"));
-						textFieldAge.setText(rs.getString("Age"));
-					}
-					pst.close();					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}				
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Cpr number", "Name", "Email", "Phone number", "Address", "City", "Zipcode"
 			}
-		}); */
-		
+		) {
+
+			private static final long serialVersionUID = 1L;
+			Class[] columnTypes = new Class[] {
+				String.class, String.class, String.class, String.class, String.class, String.class, String.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		scrollPane.setViewportView(table);
+				
 		customerLabel = new JLabel("Customer Menu");
 		customerLabel.setBounds(246, 23, 383, 38);
 		customerLabel.setForeground(Color.BLACK);
@@ -198,92 +175,68 @@ public class CustomerMenu_GUI extends JFrame{
 		nameText.setColumns(10);
 		
 		saveButton = new JButton("Save");
-		saveButton.setForeground(Color.GREEN);
-		saveButton.setBounds(356, 320, 91, 31);
-		saveButton.setBackground(UIManager.getColor("Button.background"));
-		/*btnSave.addActionListener(new ActionListener() {
+		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "insert into Employeeinfo (EID, Name, SurName, Age) values (?, ?, ?, ?) ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					pst.setString(1, textFieldEID.getText());
-					pst.setString(2, textFieldName.getText());
-					pst.setString(3, textFieldSurname.getText());
-					pst.setString(4, textFieldAge.getText());					
-					pst.execute();					
-					JOptionPane.showMessageDialog(null, "Data Saved");					
-					pst.close();					
-				} catch (Exception e) {
-					e.printStackTrace();
+				long cprNumber = Long.parseLong(cprText.getText());
+				String name = nameText.getText();
+				String email = emailText.getText();
+				String phoneNumber = phoneText.getText();
+				String address = addressText.getText();
+				String city = cityText.getText();
+				int zipCode = Integer.parseInt(zipcodeText.getText());
+	
+					if (cprNumber == 0) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+			
+					else if (name.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+					else if (email.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+					else if (phoneNumber.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+					else if (address.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+					else if (city.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+					else if (zipCode == 0) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+			if(cprNumber != 0 && name.isEmpty() == false && email.isEmpty() == false && phoneNumber.isEmpty() == false && address.isEmpty() == false && city.isEmpty() == false && zipCode != 0) {
+				Customer customer = new Customer(cprNumber, name, email, phoneNumber, address, city, zipCode);
+				if (customerController.createCustomer(customer)) {
+					JOptionPane.showMessageDialog(frame, "Customer already exists!");
 				}
-				refreshTable();
-				Reset();
+				else {
+					customerController.createCustomer(customer);
+					JOptionPane.showMessageDialog(frame, "Customer is created!");
+					DefaultTableModel model = (DefaultTableModel)table.getModel();
+					String [] row = {String.valueOf(cprNumber), name, email, phoneNumber, address, city, String.valueOf(zipCode)};
+					model.addRow(row);
+					reset();
+					}		
+				} 
+				else JOptionPane.showMessageDialog(frame, "***Error!***");	
 			}
-		}); */
+		});
+		saveButton.setForeground(Color.BLACK);
+		saveButton.setBounds(313, 319, 91, 31);
+		saveButton.setBackground(UIManager.getColor("Button.background"));
 		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(saveButton);
 		
 		updateButton = new JButton("Update");
-		updateButton.setBounds(586, 320, 91, 31);
-		updateButton.setForeground(Color.BLUE);
+		updateButton.setBounds(515, 319, 91, 31);
+		updateButton.setForeground(Color.BLACK);
 		updateButton.setBackground(UIManager.getColor("Button.background"));
-		/*btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "update Employeeinfo set EID = '" + textFieldEID.getText() + "', Name = '" + textFieldName.getText() + "', Surname = '" + textFieldSurname.getText() +"', Age = '" + textFieldAge.getText() + "' where EID = '" + textFieldEID.getText() + "'";
-					PreparedStatement pst = connection.prepareStatement(query);									
-					pst.execute();				
-					JOptionPane.showMessageDialog(null, "Data Updated");	
-					pst.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
-			}
-		}); */
+
 		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(updateButton);
 		
 		deleteButton = new JButton("Delete");
-		deleteButton.setBounds(470, 320, 91, 31);
+		deleteButton.setBounds(414, 319, 91, 31);
 		deleteButton.setBackground(UIManager.getColor("Button.background"));
-		deleteButton.setForeground(Color.RED);
-		/*btnDelete.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int action = JOptionPane.showConfirmDialog(null, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
-				if(action == 0){
-				try {
-					String query = "delete from Employeeinfo where EID = '" + textFieldEID.getText() + "' ";
-					PreparedStatement pst = connection.prepareStatement(query);
-					pst.execute();
-					JOptionPane.showMessageDialog(null, "Data Deleted");
-					pst.close();	
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
-				}
-			}
-		}); */
+		deleteButton.setForeground(Color.BLACK);
+
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(deleteButton);
-		
-		JButton newButton = new JButton("New");
-		newButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-			}
-		});
-		newButton.setBounds(240, 320, 91, 31);
-		newButton.setForeground(Color.BLUE);
-		newButton.setBackground(UIManager.getColor("Button.background"));
-
-		newButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
-		contentPane.add(newButton);
 		
 		zipcodeText = new JTextField();
 		zipcodeText.setBounds(92, 297, 139, 22);
@@ -366,18 +319,33 @@ public class CustomerMenu_GUI extends JFrame{
 		});
 		backButton.setBounds(592, 379, 84, 23);
 		contentPane.add(backButton);
-		
-		/*lblNewLabel_3 = new JLabel("");
-		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
-		lblNewLabel_3.setIcon(new ImageIcon(img2));
-		lblNewLabel_3.setBounds(33, 0, 122, 130);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
-		lblNewLabel_1.setIcon(new ImageIcon(img));
-		lblNewLabel_1.setBounds(0, 0, 702, 411);
-		contentPane.add(lblNewLabel_1); */
+	}
+	
+	private void reset() {
+		cprText.setText("");
+		nameText.setText("");
+		emailText.setText("");
+		phoneText.setText("");
+		addressText.setText("");
+		cityText.setText("");
+		zipcodeText.setText("");
+	}
+	
+	private void updateTable() {
+		for (int i = 0; i < table.getRowCount(); i++) {
+		      for(int j = 0; j < table.getColumnCount(); j++) {
+		          table.setValueAt("", i, j);
+		      }
+		   }
+		for(int i = 0; i<customerController.getCustomerContainer().getCustomerList().size(); i++) {
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getCprNumber(), i, 0);
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getName(), i, 1);
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getEmail(), i, 2);
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getPhoneNumber(), i, 3);
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getAddress(), i, 4);
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getCity(), i, 5);
+			table.setValueAt(customerController.getCustomerContainer().getCustomerList().get(i).getZipcode(), i, 6);
+		}
 	}
 	
 	public void closeDialog() {
