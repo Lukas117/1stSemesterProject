@@ -242,11 +242,34 @@ private JTable table;
 					String name = textField_Name.getText();
 					String email = textField_Email.getText();
 					String password = textField_Password.getText();
-					Employee employee = new Employee(username, name, email, password, 0);
-					employeeController.createEmployee(employee);{
-						JOptionPane.showMessageDialog(frame, "Employee is created!");
+					/*if (username.isEmpty()==true||name.isEmpty()==true||email.isEmpty()==true||password.isEmpty()==true) {
+						JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					}
+					
+					String username;
+					String name;
+					String email;
+					String password; */
+		
+						if (username.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				
+						else if (name.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						
+						else if (email.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						
+						else if (password.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				if(username.isEmpty()==false && name.isEmpty()==false && email.isEmpty()==false && password.isEmpty()==false) {
+					Employee employee = new Employee(username, name, email, password, 0);
+					employeeController.createEmployee(employee);
+						JOptionPane.showMessageDialog(frame, "Employee is created!");
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						String [] row = {username, name, email};
+						model.addRow(row);
+						reset();
+				} else JOptionPane.showMessageDialog(frame, "***Error!***");	
+				
 			}
+			
 		});
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
@@ -359,5 +382,12 @@ private JTable table;
 		lblNewLabel_1.setIcon(new ImageIcon(img));
 		lblNewLabel_1.setBounds(0, 0, 702, 411);
 		contentPane.add(lblNewLabel_1); */
+	}
+	
+	private void reset() {
+		textField_Username.setText("");
+		textField_Name.setText("");
+		textField_Email.setText("");
+		textField_Password.setText("");
 	}
 }
