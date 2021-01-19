@@ -221,7 +221,7 @@ public class CustomerMenu_GUI extends JFrame{
 				Reset();
 			}
 		}); */
-		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(saveButton);
 		
 		updateButton = new JButton("Update");
@@ -244,7 +244,7 @@ public class CustomerMenu_GUI extends JFrame{
 				Reset();
 			}
 		}); */
-		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(updateButton);
 		
 		deleteButton = new JButton("Delete");
@@ -269,19 +269,20 @@ public class CustomerMenu_GUI extends JFrame{
 				}
 			}
 		}); */
-		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(deleteButton);
 		
 		JButton newButton = new JButton("New");
+		newButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
 		newButton.setBounds(240, 320, 91, 31);
 		newButton.setForeground(Color.BLUE);
 		newButton.setBackground(UIManager.getColor("Button.background"));
-		/*btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Reset();
-			}
-		}); */
-		newButton.setFont(new Font("Tahoma", Font.PLAIN, 18));
+
+		newButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(newButton);
 		
 		zipcodeText = new JTextField();
@@ -301,7 +302,7 @@ public class CustomerMenu_GUI extends JFrame{
 		cprText.setColumns(10);
 		contentPane.add(cprText);
 		
-		JLabel cprLabel = new JLabel("CPR Numb.");
+		JLabel cprLabel = new JLabel("CPR num.");
 		cprLabel.setBounds(6, 117, 76, 22);
 		cprLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(cprLabel);
@@ -316,7 +317,7 @@ public class CustomerMenu_GUI extends JFrame{
 		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(emailLabel);
 		
-		JLabel phoneLabel = new JLabel("Phone Numb.");
+		JLabel phoneLabel = new JLabel("Phone num.");
 		phoneLabel.setBounds(6, 207, 76, 22);
 		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		contentPane.add(phoneLabel);

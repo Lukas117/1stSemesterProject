@@ -184,16 +184,23 @@ private JTable table;
 						else if (email.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 						
 						else if (password.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						
 				if(username.isEmpty()==false && name.isEmpty()==false && email.isEmpty()==false && password.isEmpty()==false) {
 					Employee employee = new Employee(username, name, email, password, 0);
-					employeeController.createEmployee(employee);
+					if (employeeController.createEmployee(employee)) {
+						JOptionPane.showMessageDialog(frame, "Employee already exists!");
+					}
+					else {
+						employeeController.createEmployee(employee);
 						JOptionPane.showMessageDialog(frame, "Employee is created!");
 						DefaultTableModel model = (DefaultTableModel)table.getModel();
 						String [] row = {username, name, email};
 						model.addRow(row);
 						reset();
-				} else JOptionPane.showMessageDialog(frame, "***Error!***");	
-				
+					}
+						
+				} 
+				else JOptionPane.showMessageDialog(frame, "***Error!***");	
 			}
 			
 		});
