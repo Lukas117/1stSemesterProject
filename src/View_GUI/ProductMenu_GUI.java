@@ -1,14 +1,7 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import java.awt.Font;
 
 import java.awt.EventQueue;
@@ -19,9 +12,7 @@ import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JTable;
+
 //import net.proteanit.sql.DbUtils;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -29,17 +20,25 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 
 import Controller.ProductController;
-import java.awt.SystemColor; 
+import Controller.LocationController;
+import Controller.DepartmentController;
+import Model.Product;
+import Model.Employee;
+import Model.Location;
+import Model.Department;
+
+import java.awt.SystemColor;
+import javax.swing.table.DefaultTableModel; 
 
 public class ProductMenu_GUI extends JFrame{
-
+	protected static final ProductController productController = new ProductController();
+	protected static final LocationController locationController = new LocationController();
+	protected static final DepartmentController departmentController = new DepartmentController();
 	private JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
@@ -58,7 +57,7 @@ public class ProductMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ProductMenu_GUI frame= new ProductMenu_GUI();
+					ProductMenu_GUI frame= new ProductMenu_GUI(productController, locationController, departmentController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,7 +103,7 @@ private JLabel lblMinStock;
 private JTextField textField_Name;
 private JTextField textField_Type;
 private JTextField textField_Price;
-private JTextField textField_Location;
+private JTextField textField_Stock;
 private JButton btnSave;
 private JButton btnUpdate;
 private JButton btnDelete;
@@ -112,18 +111,16 @@ private JLabel lblNewLabel_3;
 private JScrollPane scrollPane;
 private JTextField textFieldSearch;
 private JButton btnSearch;
-private JLabel lblLocation;
-private JTextField textField_Stock;
+private JLabel lblDepartment;
 private JTextField textField_MinimumStock;
 private JLabel lblStock_1;
 private JLabel lblMinimumStock;
 private JLabel Label_nameOfProduct;
-private JLabel lblNewLabel_1;
 
 	/**
 	 * Create the application.
 	 */
-	public ProductMenu_GUI() {
+	public ProductMenu_GUI(ProductController productController, LocationController locationController, DepartmentController departmentController) {
 		/*ProductController productController = new ProductController();
 		initialize(); */
 		frame = new JFrame();
@@ -134,7 +131,7 @@ private JLabel lblNewLabel_1;
 		
 		//connection = sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 524);
+		setBounds(100, 100, 794, 524);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -145,22 +142,25 @@ private JLabel lblNewLabel_1;
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		
 		textFieldSearch = new JTextField();
-		/*textFieldSearch.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				//Search();
-			}
-		}); */
+
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setForeground(new Color(30, 144, 255));
 		btnSearch.setBackground(new Color(30, 144, 255));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		/* btnSearch.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Search();
-			}
-		}); */
+		/*public void actionPerformed(ActionEvent arg0) {
+			String name = textFieldSearch.getText();
+			Product product = productController.findProduct(name);
+			for (int i = 0; i < table.getRowCount(); i++) {
+			      for(int j = 0; j < table.getColumnCount(); j++) {
+			          table.setValueAt("", i, j);
+			      }
+			   }
+			table.setValueAt(employee.getUsername(), 0, 0);
+			table.setValueAt(employee.getName(), 0, 1);
+			table.setValueAt(employee.getEmail(), 0, 2);
+		}
+	}); */
 		
 		lblClock = new JLabel("");
 		lblClock.setBounds(492, 446, 220, 44);
@@ -183,10 +183,17 @@ private JLabel lblNewLabel_1;
 		contentPane.add(btnLoadTable);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(240, 117, 437, 192);
+		scrollPane.setBounds(240, 117, 493, 192);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Name", "Type", "Price", "Stock", "Department", "Aisle", "Shelf", "Min. Stock"
+			}
+		));
 		scrollPane.setViewportView(table);
 		/*table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -212,6 +219,24 @@ private JLabel lblNewLabel_1;
 			}
 		}); */
 		
+		
+		
+		JComboBox comboBox_Aisle = new JComboBox();
+		comboBox_Aisle.setBounds(75, 280, 155, 22);
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			comboBox_Aisle.addItem(location.getAisle());
+		}
+		comboBox_Aisle.setSelectedItem(null);
+		contentPane.add(comboBox_Aisle);
+		
+		JComboBox comboBox_Shelf = new JComboBox();
+		comboBox_Shelf.setBounds(75, 309, 157, 22);
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			comboBox_Shelf.addItem(location.getShelf());
+		}
+		comboBox_Shelf.setSelectedItem(null);
+		contentPane.add(comboBox_Shelf);
+		
 		lblNewLabel = new JLabel("Product Menu");
 		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
@@ -221,27 +246,27 @@ private JLabel lblNewLabel_1;
 		
 		lblName = new JLabel("Name");
 		lblName.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblName.setBounds(10, 149, 65, 31);
+		lblName.setBounds(10, 109, 65, 31);
 		contentPane.add(lblName);
 		
 		lblType = new JLabel("Type");
 		lblType.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblType.setBounds(10, 179, 65, 31);
+		lblType.setBounds(10, 142, 65, 31);
 		contentPane.add(lblType);
 		
 		lblPrice = new JLabel("Price");
 		lblPrice.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblPrice.setBounds(10, 208, 65, 31);
+		lblPrice.setBounds(10, 175, 65, 31);
 		contentPane.add(lblPrice);
 		
 		lblStock_1 = new JLabel("Stock");
 		lblStock_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblStock_1.setBounds(10, 265, 65, 31);
+		lblStock_1.setBounds(10, 208, 65, 31);
 		contentPane.add(lblStock_1);
 		
 		lblMinimumStock = new JLabel("Minimum Stock");
 		lblMinimumStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblMinimumStock.setBounds(10, 310, 102, 31);
+		lblMinimumStock.setBounds(10, 334, 102, 31);
 		contentPane.add(lblMinimumStock);
 		
 		lblStock = new JLabel("Stock");
@@ -252,52 +277,85 @@ private JLabel lblNewLabel_1;
 		
 		textField_Name = new JTextField();
 		textField_Name.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_Name.setBounds(75, 154, 157, 22);
+		textField_Name.setBounds(75, 115, 157, 22);
 		contentPane.add(textField_Name);
 		textField_Name.setColumns(10);
 		
 		textField_Type = new JTextField();
 		textField_Type.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_Type.setBounds(75, 184, 156, 22);
+		textField_Type.setBounds(74, 148, 156, 22);
 		contentPane.add(textField_Type);
 		textField_Type.setColumns(10);
 		
 		textField_Price = new JTextField();
 		textField_Price.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_Price.setBounds(75, 213, 156, 22);
+		textField_Price.setBounds(74, 181, 156, 22);
 		contentPane.add(textField_Price);
 		textField_Price.setColumns(10);
 		
-		textField_Location = new JTextField();
-		textField_Location.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_Location.setBounds(75, 240, 156, 22);
-		contentPane.add(textField_Location);
-		textField_Location.setColumns(10);
+		textField_Stock = new JTextField();
+		textField_Stock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Stock.setBounds(74, 214, 156, 22);
+		contentPane.add(textField_Stock);
+		textField_Stock.setColumns(10);
+		
+		JComboBox comboBox_Department = new JComboBox();
+		comboBox_Department.setBounds(75, 247, 155, 22);
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			comboBox_Department.addItem(location.getDepartment().getName());
+		}
+		comboBox_Department.setSelectedItem(null);
+		contentPane.add(comboBox_Department);
 		
 		btnSave = new JButton("Save");
 		btnSave.setBackground(new Color(255, 255, 255));
-		/*btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
+		btnSave.addActionListener(new ActionListener() {
+		public void actionPerformed(ActionEvent arg0) {
+			String name = textField_Name.getText();
+			String type = textField_Type.getText();
+			String price = textField_Price.getText();
+			double _price = Double.parseDouble(price);
+			String stock = textField_Stock.getText();
+			int _stock = Integer.parseInt(stock);
+			String minStock = textField_MinimumStock.getText();
+			int _minStock = Integer.parseInt(minStock);
+			String department = (String)comboBox_Department.getSelectedItem();
+			Department _department = departmentController.findDepartment(department);
+			int aisle = (Integer)comboBox_Aisle.getSelectedItem();
+		//	int _aisle = Integer.parseInt(aisle);
+			int shelf = (Integer)comboBox_Shelf.getSelectedItem();
+		//	int _shelf = Integer.parseInt(shelf);
+			Location location = locationController.getLocationContainer().findLocation(_department, aisle, shelf);
+				if (textField_Name.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");		
+				else if (textField_Type.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");				
+				else if (textField_Price.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				else if (textField_Stock.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				else if (textField_MinimumStock.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				else if (comboBox_Department.getSelectedItem()==null) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+				else if (comboBox_Aisle.getSelectedItem()==null) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");				
+				else if (comboBox_Shelf.getSelectedItem()==null) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 				
-				try {
-					String query = "insert into Employeeinfo (EID, Name, SurName, Age) values (?, ?, ?, ?) ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					pst.setString(1, textFieldEID.getText());
-					pst.setString(2, textFieldName.getText());
-					pst.setString(3, textFieldSurname.getText());
-					pst.setString(4, textFieldAge.getText());					
-					pst.execute();					
-					JOptionPane.showMessageDialog(null, "Data Saved");					
-					pst.close();					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
+				if(!textField_Name.getText().equals("") && !textField_Type.getText().equals("") && !textField_Price.getText().equals("") && !textField_Stock.getText().equals("") && !textField_MinimumStock.getText().equals("") && comboBox_Department.getSelectedItem()!=null && comboBox_Aisle.getSelectedItem()!=null && comboBox_Shelf.getSelectedItem()!=null) {
+			Product product = new Product(name, type, location, _price, _stock, _minStock);
+			if (productController.createProduct(product)) {
+				JOptionPane.showMessageDialog(frame, "Product already exists!");
 			}
-		}); */
+			else {
+				productController.createProduct(product);
+				JOptionPane.showMessageDialog(frame, "Product is created!");
+				DefaultTableModel model = (DefaultTableModel)table.getModel();
+				Object [] row = {name, type, price, stock, department, aisle, shelf, minStock};
+				model.addRow(row);
+				reset();
+			}
+				
+		} 
+		else JOptionPane.showMessageDialog(frame, "***Error!***");	
+	}
+	
+});
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnSave.setBounds(354, 320, 96, 31);
+		btnSave.setBounds(284, 320, 96, 31);
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
@@ -320,7 +378,7 @@ private JLabel lblNewLabel_1;
 			}
 		}); */
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnUpdate.setBounds(586, 320, 91, 31);
+		btnUpdate.setBounds(537, 320, 91, 31);
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
@@ -345,36 +403,18 @@ private JLabel lblNewLabel_1;
 			}
 		}); */
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnDelete.setBounds(470, 320, 96, 31);
+		btnDelete.setBounds(415, 320, 96, 31);
 		contentPane.add(btnDelete);
 		
-		JButton btnReset = new JButton("New");
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
-		/*btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Reset();
-			}
-		}); */
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnReset.setBounds(248, 320, 96, 31);
-		contentPane.add(btnReset);
-		
-		lblLocation = new JLabel("Location");
-		lblLocation.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		lblLocation.setBounds(6, 235, 65, 31);
-		contentPane.add(lblLocation);
-		
-		textField_Stock = new JTextField();
-		textField_Stock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_Stock.setColumns(10);
-		textField_Stock.setBounds(74, 274, 156, 22);
-		contentPane.add(textField_Stock);
+		lblDepartment = new JLabel("Department");
+		lblDepartment.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblDepartment.setBounds(10, 242, 65, 31);
+		contentPane.add(lblDepartment);
 		
 		textField_MinimumStock = new JTextField();
 		textField_MinimumStock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		textField_MinimumStock.setColumns(10);
-		textField_MinimumStock.setBounds(120, 308, 111, 22);
+		textField_MinimumStock.setBounds(121, 340, 111, 22);
 		contentPane.add(textField_MinimumStock);
 		
 		Label_nameOfProduct = new JLabel("Name of product:");
@@ -382,10 +422,19 @@ private JLabel lblNewLabel_1;
 		Label_nameOfProduct.setBounds(356, 86, 119, 16);
 		contentPane.add(Label_nameOfProduct);
 		
-		lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setIcon(new ImageIcon("/Users/balinttamas/Downloads/industryPic.jpg"));
-		lblNewLabel_1.setBounds(0, 0, 718, 496);
-		contentPane.add(lblNewLabel_1);
+		JList barcodeList = new JList();
+		barcodeList.setBounds(22, 387, 163, 59);
+		contentPane.add(barcodeList);
+		
+		JLabel lblAisle = new JLabel("Aisle");
+		lblAisle.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblAisle.setBounds(10, 273, 65, 31);
+		contentPane.add(lblAisle);
+		
+		JLabel lblShelf = new JLabel("Shelf");
+		lblShelf.setFont(new Font("Times New Roman", Font.BOLD, 14));
+		lblShelf.setBounds(10, 304, 65, 31);
+		contentPane.add(lblShelf);
 		
 		
 		/*lblNewLabel_3 = new JLabel("");
@@ -401,4 +450,32 @@ private JLabel lblNewLabel_1;
 		contentPane.add(lblNewLabel_1); */
 		
 		}
+	
+	private void reset() {
+		textField_Name.setText("");
+		textField_Type.setText("");
+		textField_Price.setText("");
+		textField_Stock.setText("");
+		textField_MinimumStock.setText("");
+		
+	}
+	
+	private void updateTable() {
+		for (int i = 0; i < table.getRowCount(); i++) {
+		      for(int j = 0; j < table.getColumnCount(); j++) {
+		          table.setValueAt("", i, j);
+		      }
+		   }
+		for(int i = 0; i<productController.getProductContainer().getProductList().size(); i++) {
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getName(), i, 0);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getType(), i, 1);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getPrice(), i, 2);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getStock(), i, 3);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment(), i, 4);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getAisle(), i, 5);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getShelf(), i, 6);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
+		}
+	}
+	
 }
