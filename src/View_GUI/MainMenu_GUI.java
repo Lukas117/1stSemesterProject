@@ -102,12 +102,12 @@ public class MainMenu_GUI {
 		frame.getContentPane().add(leaseButton);
 		
 		JButton logoutButton = new JButton("Log out");
-		/*	logoutButton.addActionListener(new ActionListener() {
+			logoutButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				LoginMenu_GUI.LoginMenu(); //dont know better way
 				closeDialog();
 			} 
-		}); */
+		}); 
 		logoutButton.setBounds(246, 232, 85, 21);
 		frame.getContentPane().add(logoutButton);
 		
