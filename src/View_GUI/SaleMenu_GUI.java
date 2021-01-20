@@ -100,7 +100,6 @@ private JLabel lblNewLabel;
 private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 private JLabel lblStock;
 private JLabel lblMinStock;
-private JTextField textField_Name;
 private JButton btnSave;
 private JButton btnUpdate;
 private JButton btnDelete;
@@ -108,15 +107,7 @@ private JLabel lblNewLabel_3;
 private JScrollPane scrollPane;
 private JTextField textFieldSearch;
 private JButton btnSearch;
-private JTextField textField_MinimumStock;
-private JLabel lblMinimumStock;
 private JLabel lblNameOfCustomer;
-private JTextField textField_CPRNumber;
-private JTextField textField_6;
-private JTextField textField_7;
-private JTextField textField_8;
-private JTextField textField_9;
-private JLabel lblName_1_1_4;
 
 	/**
 	 * Create the application.
@@ -137,7 +128,7 @@ private JLabel lblName_1_1_4;
 		setContentPane(contentPane);
 		
 		JButton btnLoadTable = new JButton("Load Data");
-		btnLoadTable.setBounds(240, 84, 104, 24);
+		btnLoadTable.setBounds(30, 86, 104, 22);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		
@@ -151,7 +142,7 @@ private JLabel lblName_1_1_4;
 		}); */
 		
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(592, 85, 84, 23);
+		btnSearch.setBounds(594, 86, 84, 22);
 		btnSearch.setForeground(new Color(30, 144, 255));
 		btnSearch.setBackground(new Color(30, 144, 255));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -174,7 +165,7 @@ private JLabel lblName_1_1_4;
 		contentPane.add(btnLoadTable);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(240, 117, 437, 192);
+		scrollPane.setBounds(30, 117, 648, 192);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -203,8 +194,8 @@ private JLabel lblName_1_1_4;
 			}
 		}); */
 		
-		lblNewLabel = new JLabel("Customer Menu");
-		lblNewLabel.setBounds(246, 23, 383, 38);
+		lblNewLabel = new JLabel("Sale Menu");
+		lblNewLabel.setBounds(169, 24, 380, 38);
 		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,25 +205,14 @@ private JLabel lblName_1_1_4;
 		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblDesignedByMr);
 		
-		lblMinimumStock = new JLabel("ZIP Code");
-		lblMinimumStock.setBounds(6, 297, 76, 22);
-		lblMinimumStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblMinimumStock);
-		
 		lblStock = new JLabel("Stock");
 		
 		lblMinStock = new JLabel("Minimum Stock");
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
-		textField_Name = new JTextField();
-		textField_Name.setBounds(92, 147, 140, 22);
-		textField_Name.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		contentPane.add(textField_Name);
-		textField_Name.setColumns(10);
-		
 		btnSave = new JButton("Save");
-		btnSave.setBounds(354, 320, 96, 31);
+		btnSave.setBounds(206, 320, 120, 31);
 		btnSave.setBackground(Color.YELLOW);
 		/*btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -258,7 +238,7 @@ private JLabel lblName_1_1_4;
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(586, 320, 91, 31);
+		btnUpdate.setBounds(558, 320, 120, 31);
 		btnUpdate.setForeground(Color.BLUE);
 		btnUpdate.setBackground(Color.GREEN);
 		/*btnUpdate.addActionListener(new ActionListener() {
@@ -281,7 +261,7 @@ private JLabel lblName_1_1_4;
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(470, 320, 96, 31);
+		btnDelete.setBounds(382, 320, 120, 31);
 		btnDelete.setBackground(Color.RED);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		/*btnDelete.addActionListener(new ActionListener() {
@@ -306,7 +286,7 @@ private JLabel lblName_1_1_4;
 		contentPane.add(btnDelete);
 		
 		JButton btnReset = new JButton("New");
-		btnReset.setBounds(248, 320, 96, 31);
+		btnReset.setBounds(30, 319, 120, 31);
 		btnReset.setForeground(SystemColor.textHighlight);
 		btnReset.setBackground(Color.BLUE);
 		/*btnReset.addActionListener(new ActionListener() {
@@ -323,76 +303,10 @@ private JLabel lblName_1_1_4;
 		
 		listName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		
-		textField_MinimumStock = new JTextField();
-		textField_MinimumStock.setBounds(92, 297, 139, 22);
-		textField_MinimumStock.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_MinimumStock.setColumns(10);
-		contentPane.add(textField_MinimumStock);
-		
-		lblNameOfCustomer = new JLabel("Name of customer:");
-		lblNameOfCustomer.setBounds(356, 86, 117, 22);
+		lblNameOfCustomer = new JLabel("ID of sale:");
+		lblNameOfCustomer.setBounds(388, 86, 67, 22);
 		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblNameOfCustomer);
-		
-		textField_CPRNumber = new JTextField();
-		textField_CPRNumber.setBounds(92, 117, 140, 22);
-		textField_CPRNumber.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_CPRNumber.setColumns(10);
-		contentPane.add(textField_CPRNumber);
-		
-		JLabel lblCprNumb = new JLabel("CPR Numb.");
-		lblCprNumb.setBounds(6, 117, 76, 22);
-		lblCprNumb.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		contentPane.add(lblCprNumb);
-		
-		JLabel lblName_1_1 = new JLabel("Name");
-		lblName_1_1.setBounds(6, 147, 76, 22);
-		lblName_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1);
-		
-		JLabel lblName_1_1_1 = new JLabel("Email");
-		lblName_1_1_1.setBounds(6, 177, 76, 22);
-		lblName_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1_1);
-		
-		JLabel lblName_1_1_2 = new JLabel("Phone Numb.");
-		lblName_1_1_2.setBounds(6, 207, 76, 22);
-		lblName_1_1_2.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		contentPane.add(lblName_1_1_2);
-		
-		JLabel lblName_1_1_3 = new JLabel("Address");
-		lblName_1_1_3.setBounds(6, 237, 76, 22);
-		lblName_1_1_3.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1_3);
-		
-		textField_6 = new JTextField();
-		textField_6.setBounds(92, 177, 140, 22);
-		textField_6.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_6.setColumns(10);
-		contentPane.add(textField_6);
-		
-		textField_7 = new JTextField();
-		textField_7.setBounds(92, 207, 140, 22);
-		textField_7.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_7.setColumns(10);
-		contentPane.add(textField_7);
-		
-		textField_8 = new JTextField();
-		textField_8.setBounds(92, 237, 140, 22);
-		textField_8.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_8.setColumns(10);
-		contentPane.add(textField_8);
-		
-		textField_9 = new JTextField();
-		textField_9.setBounds(92, 267, 140, 22);
-		textField_9.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_9.setColumns(10);
-		contentPane.add(textField_9);
-		
-		lblName_1_1_4 = new JLabel("City");
-		lblName_1_1_4.setBounds(6, 267, 76, 22);
-		lblName_1_1_4.setFont(new Font("Times New Roman", Font.BOLD, 14));
-		contentPane.add(lblName_1_1_4);
 		
 		/*lblNewLabel_3 = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();

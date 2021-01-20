@@ -1,27 +1,14 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-import java.awt.BorderLayout;
 import java.awt.Font;
-
-import java.awt.EventQueue;
-import java.awt.Image;
-import java.sql.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-//import net.proteanit.sql.DbUtils;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 
 import Controller.DepartmentController;
@@ -29,7 +16,6 @@ import Model.Department;
 import Model.Employee;
 
 import java.awt.SystemColor;
-import java.awt.Dialog.ModalityType;
 import javax.swing.table.DefaultTableModel; 
 
 public class DepartmentMenu_GUI extends JFrame{
@@ -40,7 +26,6 @@ public class DepartmentMenu_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JPanel contentPane;
-	private JLabel lblClock;
 	protected static final DepartmentController departmentController = new DepartmentController();
 
 	/**
@@ -58,35 +43,7 @@ public class DepartmentMenu_GUI extends JFrame{
 			}
 		});
 	}
-	
-public void Clock1(){
-		
-		Thread clock = new Thread()
-		{
-			public void run(){
-				try {
-					while(true){
-					Calendar cal = new GregorianCalendar();
-					int day = cal.get(Calendar.DAY_OF_MONTH);
-					int month = cal.get(Calendar.MONTH);
-					int year = cal.get(Calendar.YEAR);
-					
-					int second = cal.get(Calendar.SECOND);
-					int minute = cal.get(Calendar.MINUTE);
-					int hour = cal.get(Calendar.HOUR);
-					
-					lblClock.setText("Time " + hour +" : "+ minute + " : " + second +" Date " + year + " / " + month + " / " + day );
-					sleep(1000);
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		clock.start();
-	}
 
-Connection connection = null;
 private JLabel lblNewLabel;
 private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 private JTextField textField_Warehouse;
@@ -115,6 +72,15 @@ private JTable table;
 		setContentPane(contentPane);
 		
 		JButton btnLoadTable = new JButton("Load Data");
+		btnLoadTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			DefaultTableModel model = (DefaultTableModel)table.getModel();
+			String [] temp = {"","",""};
+			model.addRow(temp);
+			updateTable();
+				
+			}
+		});
 		btnLoadTable.setBounds(240, 84, 104, 24);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
@@ -127,11 +93,20 @@ private JTable table;
 		btnSearch.setForeground(Color.WHITE);
 		btnSearch.setBackground(new Color(30, 144, 255));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = textFieldSearch.getText();
+				Department department = departmentController.findDepartment(name);
+				for (int i = 0; i < table.getRowCount(); i++) {
+				      for(int j = 0; j < table.getColumnCount(); j++) {
+				          table.setValueAt("", i, j);
+				      }
+				   }
+				table.setValueAt(department.getName(), 0, 0);
+				table.setValueAt(department.getWarehouse(), 0, 1);
+			}
+		});
 		contentPane.setLayout(null);
-		
-		lblClock = new JLabel("");
-		lblClock.setBounds(492, 446, 220, 44);
-		contentPane.add(lblClock);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		textFieldSearch.setBackground(new Color(255, 248, 220));
@@ -226,25 +201,43 @@ private JTable table;
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String name = textField_Name.getText();
-				String warehouse = textField_Warehouse.getText();
-				Department department = new Department(name, warehouse);
-				departmentController.deleteDepartment(department);
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
+				if(action == 0){
+					
+					String nameToDelete = JOptionPane.showInputDialog("Insert the name of the department: "); 
+					Department department = departmentController.findDepartment(nameToDelete);
+					if(department == null) {
+						JOptionPane.showMessageDialog(frame, "***Department is not found!***");
+					} else {
+						departmentController.deleteDepartment(departmentController.findDepartment(nameToDelete));
+						updateTable();
+						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
+					}
+				}
 			}
 		});
 		contentPane.add(btnDelete);
 		
-		JButton btnReset = new JButton("Update");
-		btnReset.setBounds(240, 320, 100, 31);
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnReset.addActionListener(new ActionListener() {
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBounds(240, 320, 100, 31);
+		btnUpdate.setForeground(SystemColor.textHighlight);
+		btnUpdate.setBackground(Color.BLUE);
+		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Reset();
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to update!", "Update", JOptionPane.YES_NO_OPTION);
+				if(action == 0){
+					String nameToupdate = JOptionPane.showInputDialog("Insert the name of the department: "); 
+					departmentController.deleteDepartment(departmentController.findDepartment(nameToupdate));
+					String name = JOptionPane.showInputDialog("Insert the new name of the department: ");
+					String warehouse = JOptionPane.showInputDialog("Insert the new warehouse of the departemnt: "); 
+					Department department = new Department(name, warehouse);
+					departmentController.createDepartment(department);
+					updateTable();	
+				}
 			}
 		});
-		contentPane.add(btnReset);
+		contentPane.add(btnUpdate);
 		
 		lblNameOfCustomer = new JLabel("Name of department:");
 		lblNameOfCustomer.setBounds(354, 85, 117, 22);
@@ -271,5 +264,17 @@ private JTable table;
 	public void Reset(){
 		textField_Name.setText("");
 		textField_Warehouse.setText("");
+	}
+	
+	private void updateTable() {
+		for (int i = 0; i < table.getRowCount(); i++) {
+		      for(int j = 0; j < table.getColumnCount(); j++) {
+		          table.setValueAt("", i, j);
+		      }
+		   }
+		for(int i = 0; i<departmentController.getDepartmentContainer().getDepartmentList().size(); i++) {
+			table.setValueAt(departmentController.getDepartmentContainer().getDepartmentList().get(i).getName(), i, 0);
+			table.setValueAt(departmentController.getDepartmentContainer().getDepartmentList().get(i).getWarehouse(), i, 1);
+		}
 	}
 }
