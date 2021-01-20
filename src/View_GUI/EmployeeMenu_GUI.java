@@ -53,7 +53,7 @@ public class EmployeeMenu_GUI extends JFrame{
 	private JTextField textField_Email;
 	private JTextField textField_Password;
 	private JTable table;
-
+	
 	public EmployeeMenu_GUI(EmployeeController employeeController) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
