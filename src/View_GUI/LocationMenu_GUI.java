@@ -10,6 +10,7 @@ import Controller.LocationController;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Department;
+import Model.Employee;
 import Model.Location;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -202,24 +203,34 @@ private JButton btnBack;
 		btnDelete.setBounds(533, 320, 96, 31);
 		btnDelete.setBackground(SystemColor.activeCaptionBorder);
 		btnDelete.setForeground(Color.DARK_GRAY);
-		/*btnDelete.addActionListener(new ActionListener() {
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int action = JOptionPane.showConfirmDialog(null, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
 				if(action == 0){
-				try {
-					String query = "delete from Employeeinfo where EID = '" + textFieldEID.getText() + "' ";
-					PreparedStatement pst = connection.prepareStatement(query);
-					pst.execute();
-					JOptionPane.showMessageDialog(null, "Data Deleted");
-					pst.close();	
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
+					String departmentToDelete = JOptionPane.showInputDialog("Insert the name of the department where the location is: "); 
+					String aisleToDelete = JOptionPane.showInputDialog("Insert the number of the aisle: ");
+					int aisle = Integer.parseInt(aisleToDelete);
+					String rowToDelete = JOptionPane.showInputDialog("Insert the number of the shelf: ");
+					int shelf = Integer.parseInt(rowToDelete);
+					Location locationToDelete = new Location(null,0,0);
+//					boolean delete = false;
+					for(Location location: locationController.getLocationContainer().getLocationList()) {
+						if(String.valueOf(location.getDepartment()).equals(departmentToDelete) && location.getAisle()==aisle && location.getShelf()==shelf) {
+							locationToDelete=location;
+//							delete = true;
+						}
+					}
+//			if(delete == false) {
+//					JOptionPane.showMessageDialog(frame, "***Location is not found!***");
+//				} else if(delete == true) {
+						locationController.deleteLocation(locationToDelete.getDepartment(), locationToDelete.getAisle(), locationToDelete.getShelf());
+						JOptionPane.showMessageDialog(frame, "***Location is deleted!***");
+						updateTable();
+						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
+//					}
 				}
 			}
-		}); */
+		}); 
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
 		
@@ -263,5 +274,19 @@ private JButton btnBack;
 	public void closeDialog() {
 		setVisible(false);
 		dispose();
+	}
+	
+	private void updateTable() {
+		for (int i = 0; i < table.getRowCount(); i++) {
+		      for(int j = 0; j < table.getColumnCount(); j++) {
+		          table.setValueAt("", i, j);
+		      }
+		   }
+		for(int i = 0; i<locationController.getLocationContainer().getLocationList().size(); i++) {
+			table.setValueAt(locationController.getLocationContainer().getLocationList().get(i).getDepartment().getName(), i, 0);
+			table.setValueAt(locationController.getLocationContainer().getLocationList().get(i).getDepartment().getWarehouse(), i, 1);
+			table.setValueAt(locationController.getLocationContainer().getLocationList().get(i).getAisle(), i, 2);
+			table.setValueAt(locationController.getLocationContainer().getLocationList().get(i).getShelf(), i, 3);
+		}
 	}
 }
