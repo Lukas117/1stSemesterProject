@@ -2,21 +2,23 @@ package View_GUI;
 
 import java.awt.EventQueue;
 
+import javax.swing.*;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
-import java.awt.Font;
-import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel; 
+
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+
 import Controller.EmployeeController;
 import Model.Employee;
 
-import javax.swing.table.DefaultTableModel; 
 
 public class EmployeeMenu_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
@@ -79,7 +81,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		
 		textFieldSearch = new JTextField();
-		textFieldSearch.setBounds(465, 86, 117, 22);
+		textFieldSearch.setBounds(477, 86, 117, 22);
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(592, 85, 84, 23);
@@ -167,15 +169,15 @@ public class EmployeeMenu_GUI extends JFrame{
 					String email = textField_Email.getText();
 					String password = textField_Password.getText();
 		
-						if (username.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						if (textField_Username.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 				
-						else if (name.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						else if (textField_Name.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 						
-						else if (email.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						else if (textField_Name.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 						
-						else if (password.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+						else if (textField_Password.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 						
-				if(username.isEmpty()==false && name.isEmpty()==false && email.isEmpty()==false && password.isEmpty()==false) {
+				if(!textField_Username.getText().equals("") && !textField_Name.getText().equals("") && !textField_Email.getText().equals("") && !textField_Password.getText().equals("")) {
 					Employee employee = new Employee(username, name, email, password, 0);
 					if (employeeController.createEmployee(employee)) {
 						JOptionPane.showMessageDialog(frame, "Employee already exists!");
@@ -219,6 +221,9 @@ public class EmployeeMenu_GUI extends JFrame{
 					else {
 						employeeController.deleteEmployee(employeeController.findEmployee(usernameToupdate));
 						employeeController.createEmployee(employee);
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						String [] temp = {"","",""};
+						model.addRow(temp);
 						updateTable();
 					}
 				}
@@ -252,7 +257,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.add(btnDelete);
 		
 		lblUsernameOfEmployee = new JLabel("Username of employee:");
-		lblUsernameOfEmployee.setBounds(356, 86, 117, 22);
+		lblUsernameOfEmployee.setBounds(342, 85, 131, 22);
 		lblUsernameOfEmployee.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblUsernameOfEmployee);
 		
@@ -294,6 +299,15 @@ public class EmployeeMenu_GUI extends JFrame{
 		textField_Password.setBounds(92, 210, 140, 22);
 		contentPane.add(textField_Password);
 		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainMenu_GUI.MainMenu();
+				closeDialog();
+			}
+		});
+		btnBack.setBounds(605, 453, 89, 23);
+		contentPane.add(btnBack);
 	}
 	
 	private void reset() {
@@ -316,4 +330,8 @@ public class EmployeeMenu_GUI extends JFrame{
 		}
 	}
 	
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
+	}
 }

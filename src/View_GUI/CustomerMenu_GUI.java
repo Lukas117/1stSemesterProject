@@ -3,9 +3,6 @@ package View_GUI;
 import java.awt.EventQueue;
 import java.awt.Font;
 
-import java.sql.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.CustomerController;
 import Model.Customer;
-import Model.Employee;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -250,6 +246,9 @@ public class CustomerMenu_GUI extends JFrame{
 					else {
 						customerController.deleteCustomer(customerController.findCustomer(cprOld));
 						customerController.createCustomer(customer);
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						Object [] temp = {"","","","","","",""};
+						model.addRow(temp);
 						updateTable();
 					}
 				}

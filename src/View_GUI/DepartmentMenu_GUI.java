@@ -55,6 +55,7 @@ private JButton btnSearch;
 private JLabel lblNameOfCustomer;
 private JTextField textField_Name;
 private JTable table;
+private JButton btnBack;
 
 	/**
 	 * Create the application.
@@ -233,6 +234,9 @@ private JTable table;
 					String warehouse = JOptionPane.showInputDialog("Insert the new warehouse of the departemnt: "); 
 					Department department = new Department(name, warehouse);
 					departmentController.createDepartment(department);
+					DefaultTableModel model = (DefaultTableModel)table.getModel();
+					Object [] temp = {"","","","","","",""};
+					model.addRow(temp);
 					updateTable();	
 				}
 			}
@@ -259,6 +263,16 @@ private JTable table;
 		lblWarehouse.setBounds(6, 147, 76, 22);
 		lblWarehouse.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.add(lblWarehouse);
+		
+		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu_GUI.MainMenu();
+				closeDialog();
+			}
+		});
+		btnBack.setBounds(605, 453, 89, 23);
+		contentPane.add(btnBack);
 	}
 	
 	public void Reset(){
@@ -276,5 +290,9 @@ private JTable table;
 			table.setValueAt(departmentController.getDepartmentContainer().getDepartmentList().get(i).getName(), i, 0);
 			table.setValueAt(departmentController.getDepartmentContainer().getDepartmentList().get(i).getWarehouse(), i, 1);
 		}
+	}
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
 	}
 }
