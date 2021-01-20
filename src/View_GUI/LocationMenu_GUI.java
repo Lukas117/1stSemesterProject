@@ -9,13 +9,15 @@ import javax.swing.border.EmptyBorder;
 import Controller.LocationController;
 import javax.swing.table.DefaultTableModel;
 
-import Model.Employee;
+import Model.Department;
 import Model.Location;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import Controller.DepartmentController;
 
 public class LocationMenu_GUI extends JFrame{
 
+	protected static final DepartmentController DepartmentController = new DepartmentController();
 	protected static final LocationController locationController = new LocationController();
 	private JFrame frame;
 	private JPanel contentPane;
@@ -24,7 +26,7 @@ public class LocationMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LocationMenu_GUI frame= new LocationMenu_GUI(locationController);
+					LocationMenu_GUI frame= new LocationMenu_GUI(locationController, DepartmentController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,8 +44,9 @@ private JButton btnDelete;
 private JScrollPane scrollPane;
 private JTextField textField_Shelf;
 private JTable table;
+private JButton btnBack;
 
-	public LocationMenu_GUI(LocationController locationController) {
+	public LocationMenu_GUI(LocationController locationController, DepartmentController departmentController) {
 		/*ProductController productController = new ProductController();
 		initialize(); */
 		frame = new JFrame();
@@ -52,7 +55,7 @@ private JTable table;
 		frame.getContentPane().setLayout(null);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 524);
+		setBounds(100, 100, 724, 530);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -78,11 +81,11 @@ private JTable table;
 			new Object[][] {
 			},
 			new String[] {
-				"Warehouse", "Aisle", "Shelf"
+				"Department", "Warehouse", "Aisle", "Shelf"
 			}
 		) {
 			Class[] columnTypes = new Class[] {
-				String.class, Integer.class, Integer.class
+				String.class, String.class, Integer.class, Integer.class
 			};
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -133,27 +136,35 @@ private JTable table;
 		contentPane.add(textField_Aisle);
 		textField_Aisle.setColumns(10);
 		
+		JComboBox comboBox_Warehouse = new JComboBox();
+		for (Department department: departmentController.getDepartmentContainer().getDepartmentList()) {
+			comboBox_Warehouse.addItem(department.getName());
+		}
+		comboBox_Warehouse.setSelectedItem(null);
+		comboBox_Warehouse.setBounds(92, 114, 143, 23);
+		contentPane.add(comboBox_Warehouse);
+		
 		btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String value = (String)comboBox_Warehouse.getSelectedItem();
 				int aisle = Integer.parseInt(textField_Aisle.getText());
 				int shelf = Integer.parseInt(textField_Shelf.getText());
-				//String warehouse = ;
-	//Check these lines!!!!!
-					if (textField_Aisle.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
-	//Check these lines!!!!!		
+				
+					if(comboBox_Warehouse.getSelectedItem()==null) JOptionPane.showMessageDialog(frame, "***Error! Please select the field!***");
+					else if (textField_Aisle.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					else if (textField_Shelf.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
-			if(textField_Aisle.getText().equals("") && textField_Shelf.getText().equals("")) {
-				Location location = new Location(null, shelf, aisle);
+			if(!textField_Aisle.getText().equals("") && !textField_Shelf.getText().equals("") && comboBox_Warehouse.getSelectedItem()!=null) {
+				Location location = new Location(departmentController.findDepartment(value), shelf, aisle);
 				if (locationController.addLocation(location)) {
-					JOptionPane.showMessageDialog(frame, "Employee already exists!");
+					JOptionPane.showMessageDialog(frame, "Location already exists!");
 				}
 				else {
 					locationController.addLocation(location);
-					JOptionPane.showMessageDialog(frame, "Employee is created!");
+					JOptionPane.showMessageDialog(frame, "Location is created!");
 					DefaultTableModel model = (DefaultTableModel)table.getModel();
-					Object [] row = {String.valueOf(aisle), String.valueOf(shelf)};
+					Object [] row = {value, departmentController.findDepartment(value).getWarehouse(), String.valueOf(aisle), String.valueOf(shelf)};
 					model.addRow(row);
 					reset();
 				}
@@ -212,10 +223,10 @@ private JTable table;
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
 		
-		JLabel lblCprNumb = new JLabel("Warehouse");
-		lblCprNumb.setBounds(6, 117, 76, 22);
-		lblCprNumb.setFont(new Font("Times New Roman", Font.BOLD, 12));
-		contentPane.add(lblCprNumb);
+		JLabel lblDepartment = new JLabel("Department");
+		lblDepartment.setBounds(6, 117, 76, 22);
+		lblDepartment.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		contentPane.add(lblDepartment);
 		
 		JLabel lblName_1_1 = new JLabel("Aisle");
 		lblName_1_1.setBounds(6, 147, 76, 22);
@@ -233,12 +244,24 @@ private JTable table;
 		textField_Shelf.setColumns(10);
 		contentPane.add(textField_Shelf);
 		
-		JComboBox comboBox_Warehouse = new JComboBox();
-		comboBox_Warehouse.setBounds(92, 114, 143, 23);
-		contentPane.add(comboBox_Warehouse);
+		btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu_GUI.MainMenu();
+				closeDialog();
+			}
+		});
+		btnBack.setBounds(611, 459, 89, 23);
+		contentPane.add(btnBack);
+		
 	}
 	private void reset() {
 		textField_Aisle.setText("");
 		textField_Shelf.setText("");
+	}
+	
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
 	}
 }
