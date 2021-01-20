@@ -219,6 +219,9 @@ public class EmployeeMenu_GUI extends JFrame{
 					else {
 						employeeController.deleteEmployee(employeeController.findEmployee(usernameToupdate));
 						employeeController.createEmployee(employee);
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						String [] temp = {"","",""};
+						model.addRow(temp);
 						updateTable();
 					}
 				}
