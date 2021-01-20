@@ -148,7 +148,7 @@ public class EmployeeMenu {
     		
     		employee = new Employee(username, name, email, password, saleCounter);
     		
-    		if (employeeController.getEmployeeContainer().addEmployee(employee)) {
+    		if (employeeController.createEmployee(employee)) {
         		System.out.println("\n User already exists!\n");
         	}
         	else {

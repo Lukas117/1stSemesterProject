@@ -1,61 +1,25 @@
 package View_GUI;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import javax.swing.JButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
+import java.awt.*;
 import java.awt.Font;
-
-import java.awt.EventQueue;
-import java.awt.Image;
-import java.sql.*;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JTable;
-//import net.proteanit.sql.DbUtils;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 
 import Controller.LocationController;
-import java.awt.SystemColor; 
+import javax.swing.table.DefaultTableModel;
+
+import Model.Employee;
+import Model.Location;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LocationMenu_GUI extends JFrame{
 
 	protected static final LocationController locationController = new LocationController();
 	private JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
 	private JPanel contentPane;
-	private JTable table;
-	private JList<String> listName;
-	private JLabel lblClock;
 
-	/**
-	 * Launch the application.
-	 */    
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -69,54 +33,16 @@ public class LocationMenu_GUI extends JFrame{
 		});
 	}
 	
-public void Clock1(){
-		
-		Thread clock = new Thread()
-		{
-			public void run(){
-				try {
-					while(true){
-					Calendar cal = new GregorianCalendar();
-					int day = cal.get(Calendar.DAY_OF_MONTH);
-					int month = cal.get(Calendar.MONTH);
-					int year = cal.get(Calendar.YEAR);
-					
-					int second = cal.get(Calendar.SECOND);
-					int minute = cal.get(Calendar.MINUTE);
-					int hour = cal.get(Calendar.HOUR);
-					
-					lblClock.setText("Time " + hour +" : "+ minute + " : " + second +" Date " + year + " / " + month + " / " + day );
-					sleep(1000);
-					}
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-		};
-		clock.start();
-	}
-
-Connection connection = null;
 private JLabel lblNewLabel;
 private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
-private JLabel lblStock;
 private JLabel lblMinStock;
-private JTextField textField_Name;
+private JTextField textField_Aisle;
 private JButton btnSave;
-private JButton btnUpdate;
 private JButton btnDelete;
-private JLabel lblNewLabel_3;
 private JScrollPane scrollPane;
-private JTextField textFieldSearch;
-private JButton btnSearch;
-private JLabel lblNameOfCustomer;
-private JTextField textField_CPRNumber;
-private JTextField textField_6;
+private JTextField textField_Shelf;
+private JTable table;
 
-	/**
-	 * Create the application.
-	 * @param locationController 
-	 */
 	public LocationMenu_GUI(LocationController locationController) {
 		/*ProductController productController = new ProductController();
 		initialize(); */
@@ -125,7 +51,6 @@ private JTextField textField_6;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//connection = sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 718, 524);
 		contentPane = new JPanel();
@@ -133,40 +58,15 @@ private JTextField textField_6;
 		setContentPane(contentPane);
 		
 		JButton btnLoadTable = new JButton("Load Data");
-		btnLoadTable.setBounds(240, 84, 104, 24);
+		btnLoadTable.setBounds(401, 89, 104, 24);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
-		
-		textFieldSearch = new JTextField();
-		textFieldSearch.setBounds(465, 86, 117, 22);
-		/*textFieldSearch.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyReleased(KeyEvent arg0) {
-				//Search();
-			}
-		}); */
-		
-		btnSearch = new JButton("Search");
-		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(new Color(30, 144, 255));
-		btnSearch.setBackground(new Color(30, 144, 255));
-		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		/* btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				Search();
 			}
 		}); */
 		contentPane.setLayout(null);
-		
-		lblClock = new JLabel("");
-		lblClock.setBounds(492, 446, 220, 44);
-		contentPane.add(lblClock);
-		contentPane.add(btnSearch);
-		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSearch.setBackground(new Color(255, 248, 220));
-		textFieldSearch.setForeground(Color.BLACK);
-		contentPane.add(textFieldSearch);
-		textFieldSearch.setColumns(10);
 		contentPane.add(btnLoadTable);
 		
 		scrollPane = new JScrollPane();
@@ -174,6 +74,20 @@ private JTextField textField_6;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Warehouse", "Aisle", "Shelf"
+			}
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Integer.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
+			}
+		});
 		scrollPane.setViewportView(table);
 		/*table.addMouseListener(new MouseAdapter() {
 			@Override
@@ -208,23 +122,48 @@ private JTextField textField_6;
 		lblDesignedByMr.setBounds(240, 378, 233, 22);
 		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDesignedByMr);
-		
-		lblStock = new JLabel("Stock");
-		
+		contentPane.add(lblDesignedByMr);		
 		lblMinStock = new JLabel("Minimum Stock");
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
-		textField_Name = new JTextField();
-		textField_Name.setBounds(92, 147, 140, 22);
-		textField_Name.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		contentPane.add(textField_Name);
-		textField_Name.setColumns(10);
+		textField_Aisle = new JTextField("0");
+		textField_Aisle.setBounds(92, 147, 140, 22);
+		textField_Aisle.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		contentPane.add(textField_Aisle);
+		textField_Aisle.setColumns(10);
 		
 		btnSave = new JButton("Save");
-		btnSave.setBounds(354, 320, 96, 31);
-		btnSave.setBackground(Color.YELLOW);
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int aisle = Integer.parseInt(textField_Aisle.getText());
+				int shelf = Integer.parseInt(textField_Shelf.getText());
+				//String warehouse = ;
+	//Check these lines!!!!!
+					if (textField_Aisle.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+	//Check these lines!!!!!		
+					else if (textField_Shelf.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					
+			if(textField_Aisle.getText().equals("") && textField_Shelf.getText().equals("")) {
+				Location location = new Location(null, shelf, aisle);
+				if (locationController.addLocation(location)) {
+					JOptionPane.showMessageDialog(frame, "Employee already exists!");
+				}
+				else {
+					locationController.addLocation(location);
+					JOptionPane.showMessageDialog(frame, "Employee is created!");
+					DefaultTableModel model = (DefaultTableModel)table.getModel();
+					Object [] row = {String.valueOf(aisle), String.valueOf(shelf)};
+					model.addRow(row);
+					reset();
+				}
+					
+			} 
+			else JOptionPane.showMessageDialog(frame, "***Error!***");	
+			}
+		});
+		btnSave.setBounds(346, 320, 96, 31);
+		btnSave.setBackground(UIManager.getColor("Button.darkShadow"));
 		/*btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -248,32 +187,9 @@ private JTextField textField_6;
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
-		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(586, 320, 91, 31);
-		btnUpdate.setForeground(Color.BLUE);
-		btnUpdate.setBackground(Color.GREEN);
-		/*btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "update Employeeinfo set EID = '" + textFieldEID.getText() + "', Name = '" + textFieldName.getText() + "', Surname = '" + textFieldSurname.getText() +"', Age = '" + textFieldAge.getText() + "' where EID = '" + textFieldEID.getText() + "'";
-					PreparedStatement pst = connection.prepareStatement(query);									
-					pst.execute();				
-					JOptionPane.showMessageDialog(null, "Data Updated");	
-					pst.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
-			}
-		}); */
-		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnUpdate);
-		
 		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(470, 320, 96, 31);
-		btnDelete.setBackground(Color.RED);
+		btnDelete.setBounds(533, 320, 96, 31);
+		btnDelete.setBackground(SystemColor.activeCaptionBorder);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		/*btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -296,35 +212,6 @@ private JTextField textField_6;
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
 		
-		JButton btnReset = new JButton("New");
-		btnReset.setBounds(248, 320, 96, 31);
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
-		/*btnReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Reset();
-			}
-		}); */
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnReset);
-		
-		listName = new JList<String>();
-		listName.setBounds(14, 412, 216, 65);
-		contentPane.add(listName);
-		
-		listName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		
-		lblNameOfCustomer = new JLabel("Name of customer:");
-		lblNameOfCustomer.setBounds(356, 86, 117, 22);
-		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
-		contentPane.add(lblNameOfCustomer);
-		
-		textField_CPRNumber = new JTextField();
-		textField_CPRNumber.setBounds(92, 117, 140, 22);
-		textField_CPRNumber.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_CPRNumber.setColumns(10);
-		contentPane.add(textField_CPRNumber);
-		
 		JLabel lblCprNumb = new JLabel("Warehouse");
 		lblCprNumb.setBounds(6, 117, 76, 22);
 		lblCprNumb.setFont(new Font("Times New Roman", Font.BOLD, 12));
@@ -340,22 +227,18 @@ private JTextField textField_6;
 		lblName_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.add(lblName_1_1_1);
 		
-		textField_6 = new JTextField();
-		textField_6.setBounds(92, 177, 140, 22);
-		textField_6.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textField_6.setColumns(10);
-		contentPane.add(textField_6);
+		textField_Shelf = new JTextField("0");
+		textField_Shelf.setBounds(92, 177, 140, 22);
+		textField_Shelf.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		textField_Shelf.setColumns(10);
+		contentPane.add(textField_Shelf);
 		
-		/*lblNewLabel_3 = new JLabel("");
-		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
-		lblNewLabel_3.setIcon(new ImageIcon(img2));
-		lblNewLabel_3.setBounds(33, 0, 122, 130);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
-		lblNewLabel_1.setIcon(new ImageIcon(img));
-		lblNewLabel_1.setBounds(0, 0, 702, 411);
-		contentPane.add(lblNewLabel_1); */
+		JComboBox comboBox_Warehouse = new JComboBox();
+		comboBox_Warehouse.setBounds(92, 114, 143, 23);
+		contentPane.add(comboBox_Warehouse);
+	}
+	private void reset() {
+		textField_Aisle.setText("");
+		textField_Shelf.setText("");
 	}
 }
