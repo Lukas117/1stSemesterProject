@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Controller.CustomerController;
 import Model.Customer;
+import Model.Employee;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -72,9 +73,9 @@ public class CustomerMenu_GUI extends JFrame{
 		JButton loadButton = new JButton("Load Data");
 		loadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//DefaultTableModel model = (DefaultTableModel)table.getModel();
-				//String [] temp = {"","","","","","",""};
-				//model.addRow(temp);
+				DefaultTableModel model = (DefaultTableModel)table.getModel();
+				Object [] temp = {"","","","","","",""};
+				model.addRow(temp);
 				updateTable();
 			}
 		});
@@ -88,8 +89,8 @@ public class CustomerMenu_GUI extends JFrame{
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Long cprNumber = Long.parseLong(cprText.getText());
-				Customer customer = customerController.findCustomer(cprNumber);
+				String cpr = searchText.getText();
+				Customer customer = customerController.findCustomer(Long.valueOf(cpr));
 				for (int i = 0; i < table.getRowCount(); i++) {
 				      for(int j = 0; j < table.getColumnCount(); j++) {
 				          table.setValueAt("", i, j);
@@ -185,19 +186,19 @@ public class CustomerMenu_GUI extends JFrame{
 				String city = cityText.getText();
 				int zipCode = Integer.parseInt(zipcodeText.getText());
 	
-					if (cprNumber == 0) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					if (cprText.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 			
-					else if (name.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					else if (nameText.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
-					else if (email.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					else if (emailText.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
-					else if (phoneNumber.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					else if (phoneText.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
-					else if (address.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					else if (addressText.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
-					else if (city.isEmpty()==true) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					else if (cityText.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
-					else if (zipCode == 0) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
+					else if (zipcodeText.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
 			if(cprNumber != 0 && name.isEmpty() == false && email.isEmpty() == false && phoneNumber.isEmpty() == false && address.isEmpty() == false && city.isEmpty() == false && zipCode != 0) {
 				Customer customer = new Customer(cprNumber, name, email, phoneNumber, address, city, zipCode);
@@ -226,6 +227,34 @@ public class CustomerMenu_GUI extends JFrame{
 		updateButton.setBounds(515, 319, 91, 31);
 		updateButton.setForeground(Color.BLACK);
 		updateButton.setBackground(UIManager.getColor("Button.background"));
+		updateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to update!", "Update", JOptionPane.YES_NO_OPTION);
+				if(action == 0){
+					
+					String cprToUpdate = JOptionPane.showInputDialog("Insert the CPR number of the customer: "); 
+					long cprOld = Long.parseLong(cprToUpdate);
+					String cpr = JOptionPane.showInputDialog("Insert the new CPR number of the customer: "); 
+					long cprNew = Long.parseLong(cpr);
+					String name = JOptionPane.showInputDialog("Insert the new name of the customer: "); 
+					String email = JOptionPane.showInputDialog("Insert the new email of the customer: ");
+					String phoneNumber = JOptionPane.showInputDialog("Insert the new phone number of the customer: ");
+					String address = JOptionPane.showInputDialog("Insert the new address of the customer: ");
+					String city = JOptionPane.showInputDialog("Insert the new city of the customer: ");
+					String zip = JOptionPane.showInputDialog("Insert the new zipcode of the customer: ");
+					int zipcode = Integer.parseInt(zip);
+					Customer customer = new Customer(cprNew, name, email, phoneNumber, address, city, zipcode);
+					if (customerController.createCustomer(customer)) {
+						JOptionPane.showMessageDialog(frame, "Customer already exists!");
+					}
+					else {
+						customerController.deleteCustomer(customerController.findCustomer(cprOld));
+						customerController.createCustomer(customer);
+						updateTable();
+					}
+				}
+			}
+		});
 
 		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(updateButton);
@@ -234,11 +263,29 @@ public class CustomerMenu_GUI extends JFrame{
 		deleteButton.setBounds(414, 319, 91, 31);
 		deleteButton.setBackground(UIManager.getColor("Button.background"));
 		deleteButton.setForeground(Color.BLACK);
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
+				if(action == 0){
+					
+					String cprToDelete = JOptionPane.showInputDialog("Insert the CPR number of the customer: "); 
+					long cprDelete = Long.parseLong(cprToDelete);
+					Customer customer = customerController.findCustomer(cprDelete);
+					if(customer == null) {
+						JOptionPane.showMessageDialog(frame, "***Employee is not found!***");
+					} else {
+						customerController.deleteCustomer(customerController.findCustomer(cprDelete));
+						updateTable();
+						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
+					}
+				}
+			}
+		}); 
 
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(deleteButton);
 		
-		zipcodeText = new JTextField();
+		zipcodeText = new JTextField("0");
 		zipcodeText.setBounds(92, 297, 139, 22);
 		zipcodeText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		zipcodeText.setColumns(10);
