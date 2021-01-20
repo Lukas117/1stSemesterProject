@@ -250,6 +250,9 @@ public class CustomerMenu_GUI extends JFrame{
 					else {
 						customerController.deleteCustomer(customerController.findCustomer(cprOld));
 						customerController.createCustomer(customer);
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						Object [] temp = {"","","","","","",""};
+						model.addRow(temp);
 						updateTable();
 					}
 				}

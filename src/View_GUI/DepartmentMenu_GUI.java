@@ -234,6 +234,9 @@ private JButton btnBack;
 					String warehouse = JOptionPane.showInputDialog("Insert the new warehouse of the departemnt: "); 
 					Department department = new Department(name, warehouse);
 					departmentController.createDepartment(department);
+					DefaultTableModel model = (DefaultTableModel)table.getModel();
+					Object [] temp = {"","","","","","",""};
+					model.addRow(temp);
 					updateTable();	
 				}
 			}
