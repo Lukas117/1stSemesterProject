@@ -10,7 +10,6 @@ import Controller.LocationController;
 import javax.swing.table.DefaultTableModel;
 
 import Model.Department;
-import Model.Employee;
 import Model.Location;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -18,6 +17,7 @@ import Controller.DepartmentController;
 
 public class LocationMenu_GUI extends JFrame{
 
+	private static final long serialVersionUID = 1L;
 	protected static final DepartmentController DepartmentController = new DepartmentController();
 	protected static final LocationController locationController = new LocationController();
 	private JFrame frame;
@@ -85,6 +85,10 @@ private JButton btnBack;
 				"Department", "Warehouse", "Aisle", "Shelf"
 			}
 		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 			Class[] columnTypes = new Class[] {
 				String.class, String.class, Integer.class, Integer.class
 			};
@@ -93,29 +97,6 @@ private JButton btnBack;
 			}
 		});
 		scrollPane.setViewportView(table);
-		/*table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				try {
-					int row = table.getSelectedRow();
-					String EID = (table.getModel().getValueAt(row, 0).toString());				
-					String query = "select * from Employeeinfo where EID = '" + EID + "' ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					ResultSet rs = pst.executeQuery();					
-					while(rs.next()){
-						textFieldEID.setText(rs.getString("EID"));
-						textFieldName.setText(rs.getString("Name"));
-						textFieldSurname.setText(rs.getString("Surname"));
-						textFieldAge.setText(rs.getString("Age"));
-					}
-					pst.close();					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}				
-			}
-		}); */
 		
 		lblNewLabel = new JLabel("Location Menu");
 		lblNewLabel.setBounds(246, 23, 383, 38);
@@ -126,7 +107,8 @@ private JButton btnBack;
 		lblDesignedByMr.setBounds(240, 378, 233, 22);
 		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
 		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDesignedByMr);		
+		contentPane.add(lblDesignedByMr);	
+		
 		lblMinStock = new JLabel("Minimum Stock");
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMinStock.setBounds(10, 296, 65, 31);
@@ -176,26 +158,6 @@ private JButton btnBack;
 		});
 		btnSave.setBounds(346, 320, 96, 31);
 		btnSave.setBackground(UIManager.getColor("Button.darkShadow"));
-		/*btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "insert into Employeeinfo (EID, Name, SurName, Age) values (?, ?, ?, ?) ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					pst.setString(1, textFieldEID.getText());
-					pst.setString(2, textFieldName.getText());
-					pst.setString(3, textFieldSurname.getText());
-					pst.setString(4, textFieldAge.getText());					
-					pst.execute();					
-					JOptionPane.showMessageDialog(null, "Data Saved");					
-					pst.close();					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
-			}
-		}); */
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
@@ -220,14 +182,11 @@ private JButton btnBack;
 //							delete = true;
 						}
 					}
-//			if(delete == false) {
-//					JOptionPane.showMessageDialog(frame, "***Location is not found!***");
-//				} else if(delete == true) {
+
 						locationController.deleteLocation(locationToDelete.getDepartment(), locationToDelete.getAisle(), locationToDelete.getShelf());
 						JOptionPane.showMessageDialog(frame, "***Location is deleted!***");
 						updateTable();
 						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
-//					}
 				}
 			}
 		}); 
