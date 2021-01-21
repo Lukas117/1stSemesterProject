@@ -372,26 +372,29 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
+		/*btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int action = JOptionPane.showConfirmDialog(frame, "sth", "Update", JOptionPane.YES_NO_OPTION);
+				if(action == 0) {
+					String nameToupdate = JOptionPane.showInputDialog("Insert the name of the product: "); 	
+					productController.deleteProduct(productController.findProduct(nameToupdate));
+					String name = JOptionPane.showInputDialog("Insert the new name of the product: ");
+					String type = JOptionPane.showInputDialog("Insert the new type of the product: ");
+					String price = JOptionPane.showInputDialog("Insert the new price of the product: ");
+					String stock = JOptionPane.showInputDialog("Insert the new stock of the product: ");
+					int department = JOptionPane.showConfirmDialog(comboBox_Department,"select Department!", "masodik",JOptionPane.QUESTION_MESSAGE);
+					int aisle = JOptionPane.showConfirmDialog(comboBox_Department, "Select the aisle number!");
+					int shelf = JOptionPane.showConfirmDialog(comboBox_Department, "Select the shelf number!");
+					String minStock = JOptionPane.showInputDialog("Insert the new minimum stock of the product: ");
+					Product product = new Product(name, type, Double.parseDouble(price), Integer.parseInt(stock), department, aisle, shelf, Integer.parseInt(minStock));
+					productController.createProduct(product);
+					}
+			}
+		});*/
+		btnUpdate.setBounds(537, 320, 91, 31);
 		btnUpdate.setForeground(new Color(51, 0, 0));
 		btnUpdate.setBackground(new Color(255, 204, 204));
-		/*btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "update Employeeinfo set EID = '" + textFieldEID.getText() + "', Name = '" + textFieldName.getText() + "', Surname = '" + textFieldSurname.getText() +"', Age = '" + textFieldAge.getText() + "' where EID = '" + textFieldEID.getText() + "'";
-					PreparedStatement pst = connection.prepareStatement(query);									
-					pst.execute();				
-					JOptionPane.showMessageDialog(null, "Data Updated");	
-					pst.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
-			}
-		}); */
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnUpdate.setBounds(537, 320, 91, 31);
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
