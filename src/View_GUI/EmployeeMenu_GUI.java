@@ -19,7 +19,6 @@ import java.awt.Color;
 import Controller.EmployeeController;
 import Model.Employee;
 
-
 public class EmployeeMenu_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	protected static final EmployeeController employeeController = new EmployeeController();

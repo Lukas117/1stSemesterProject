@@ -63,6 +63,15 @@ private JButton btnBack;
 		setContentPane(contentPane);
 		
 		JButton btnLoadTable = new JButton("Load Data");
+		btnLoadTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			DefaultTableModel model = (DefaultTableModel)table.getModel();
+			String [] temp = {"","","",""};
+			model.addRow(temp);
+			updateTable();
+				
+			}
+		});
 		btnLoadTable.setBounds(401, 89, 104, 24);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
@@ -143,7 +152,7 @@ private JButton btnBack;
 					else if (textField_Shelf.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
 			if(!textField_Aisle.getText().equals("") && !textField_Shelf.getText().equals("") && comboBox_Warehouse.getSelectedItem()!=null) {
-				Location location = new Location(departmentController.findDepartment(value), shelf, aisle);
+				Location location = new Location(departmentController.findDepartment(value), aisle, shelf);
 				if (locationController.addLocation(location)) {
 					JOptionPane.showMessageDialog(frame, "Location already exists!");
 				}
