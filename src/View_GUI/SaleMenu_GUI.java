@@ -12,6 +12,9 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.JList;
 import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.table.DefaultTableModel; 
 
 public class SaleMenu_GUI extends JFrame{
@@ -169,12 +172,17 @@ private JTable table_1;
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
 		
-		JButton btnReset = new JButton("New");
-		btnReset.setBounds(30, 319, 120, 31);
-		btnReset.setForeground(SystemColor.textHighlight);
-		btnReset.setBackground(Color.BLUE);
-		btnReset.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		contentPane.add(btnReset);
+		JButton btnNew = new JButton("New");
+		btnNew.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				NewSale_GUI.main(null);;
+			}
+		});
+		btnNew.setBounds(30, 319, 120, 31);
+		btnNew.setForeground(SystemColor.textHighlight);
+		btnNew.setBackground(Color.BLUE);
+		btnNew.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		contentPane.add(btnNew);
 		
 		listName = new JList<String>();
 		listName.setBounds(14, 412, 216, 65);

@@ -1,20 +1,18 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Color;
-
-import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.Font;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel; 
+import javax.swing.table.DefaultTableModel;
+import Controller.ProductController;
+import View_GUI.NewSale_GUI;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class AddProduct_GUI extends JFrame{
 
@@ -26,7 +24,7 @@ public class AddProduct_GUI extends JFrame{
 	private JPanel contentPane;
 	private JTable table;
 	private JLabel lblClock;
-
+	protected static final ProductController productController = new ProductController();
 	/**
 	 * Launch the application.
 	 */    
@@ -34,7 +32,7 @@ public class AddProduct_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					AddProduct_GUI frame= new AddProduct_GUI();
+					AddProduct_GUI frame= new AddProduct_GUI(productController);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -47,20 +45,20 @@ private JLabel lblNewLabel;
 private JLabel lblName;
 private JLabel lblPrice;
 private JLabel lblMinStock;
-private JButton btnUpdate;
+private JButton btnAddToCart;
 private JScrollPane scrollPane;
 private JTextField textFieldSearch;
 private JButton btnSearch;
 private JLabel Label_nameOfProduct;
-private JTextField textField;
-private JTextField textField_1;
+private JTextField nameTextField;
+private JTextField priceTextField;
 private JLabel lblQty;
-private JTextField textField_2;
+private JTextField qtyTextField;
 
 	/**
 	 * Create the application.
 	 */
-	public AddProduct_GUI() {
+	public AddProduct_GUI(ProductController productController) {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -75,6 +73,14 @@ private JTextField textField_2;
 		contentPane.setLayout(null);
 		
 		JButton btnLoadTable = new JButton("Load Data");
+		btnLoadTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			DefaultTableModel model = (DefaultTableModel)table.getModel();
+			String [] temp = {"","","","","",""};
+			model.addRow(temp);
+			updateTable();
+			}
+		});
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		
@@ -104,6 +110,16 @@ private JTextField textField_2;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel model = (DefaultTableModel)table.getModel();
+				int selectedRowIndex = table.getSelectedRow();
+				
+				nameTextField.setText(model.getValueAt(selectedRowIndex, 0).toString());
+				priceTextField.setText(model.getValueAt(selectedRowIndex, 3).toString());
+			}
+		});
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -111,6 +127,7 @@ private JTextField textField_2;
 				"Name", "Type", "Location", "Price", "Stock", "Min. Stock"
 			}
 		));
+		//tableMouseClicked(null);
 		scrollPane.setViewportView(table);
 		
 		lblNewLabel = new JLabel("Product Menu");
@@ -134,37 +151,79 @@ private JTextField textField_2;
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
-		btnUpdate = new JButton("Add to Cart");
-		btnUpdate.setForeground(new Color(51, 0, 0));
-		btnUpdate.setBackground(new Color(255, 204, 204));
-		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnUpdate.setBounds(530, 320, 147, 31);
-		contentPane.add(btnUpdate);
+		btnAddToCart = new JButton("Add to Cart");
+		btnAddToCart.setForeground(new Color(51, 0, 0));
+		btnAddToCart.setBackground(new Color(255, 204, 204));
+		btnAddToCart.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		btnAddToCart.setBounds(530, 320, 147, 31);
+		btnAddToCart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = nameTextField.getText();
+				String price = priceTextField.getText();
+				String qty = qtyTextField.getText();
+				double _price = Double.parseDouble(price);
+				int _qty = Integer.parseInt(qty);
+				if (qtyTextField.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out the quantity field!***");
+				else if (nameTextField.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please chose a product from the list!***");				
+				else if (priceTextField.getText().equals("")) JOptionPane.showMessageDialog(frame, "***Error! Please chose a product from the list!***");
+				if(!nameTextField.getText().equals("") && !priceTextField.getText().equals("") && !qtyTextField.getText().equals("")) {
+					DefaultTableModel model = (DefaultTableModel)NewSale_GUI.table.getModel();
+					Object [] row = {name, qty, price, _price*_qty};
+					model.addRow(row);
+					reset();
+				}
+			}
+		});
+		contentPane.add(btnAddToCart);
 		
 		Label_nameOfProduct = new JLabel("Name of product:");
 		Label_nameOfProduct.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		Label_nameOfProduct.setBounds(356, 86, 119, 16);
 		contentPane.add(Label_nameOfProduct);
 		
-		textField = new JTextField();
-		textField.setBounds(79, 117, 125, 20);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nameTextField = new JTextField();
+		nameTextField.setBounds(79, 117, 125, 20);
+		contentPane.add(nameTextField);
+		nameTextField.setColumns(10);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(79, 150, 125, 20);
-		contentPane.add(textField_1);
+		priceTextField = new JTextField();
+		priceTextField.setColumns(10);
+		priceTextField.setBounds(79, 150, 125, 20);
+		contentPane.add(priceTextField);
 		
 		lblQty = new JLabel("Qty.");
 		lblQty.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		lblQty.setBounds(10, 183, 50, 20);
 		contentPane.add(lblQty);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(79, 183, 125, 20);
-		contentPane.add(textField_2);
+		qtyTextField = new JTextField();
+		qtyTextField.setColumns(10);
+		qtyTextField.setBounds(79, 183, 125, 20);
+		contentPane.add(qtyTextField);
 		
 		}
+	
+	private void reset() {
+		nameTextField.setText("");
+		priceTextField.setText("");
+		qtyTextField.setText("");
+	}
+	
+	private void updateTable() {
+		for (int i = 0; i < table.getRowCount(); i++) {
+		      for(int j = 0; j < table.getColumnCount(); j++) {
+		          table.setValueAt("", i, j);
+		      }
+		   }
+		for(int i = 0; i<productController.getProductContainer().getProductList().size(); i++) {
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getName(), i, 0);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getType(), i, 1);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getPrice(), i, 2);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getStock(), i, 3);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment(), i, 4);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getAisle(), i, 5);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getShelf(), i, 6);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
+		}
+	}
 }

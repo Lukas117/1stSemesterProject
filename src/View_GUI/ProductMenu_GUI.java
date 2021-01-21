@@ -436,6 +436,16 @@ private JLabel Label_nameOfProduct;
 		lblShelf.setBounds(10, 304, 65, 31);
 		contentPane.add(lblShelf);
 		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MainMenu_GUI.MainMenu();
+				closeDialog();
+			}
+		});
+		btnBack.setBounds(655, 446, 89, 23);
+		contentPane.add(btnBack);
+		
 		
 		/*lblNewLabel_3 = new JLabel("");
 		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
@@ -460,6 +470,11 @@ private JLabel Label_nameOfProduct;
 		
 	}
 	
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
+	}
+	
 	private void updateTable() {
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
@@ -477,5 +492,4 @@ private JLabel Label_nameOfProduct;
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
 		}
 	}
-	
 }

@@ -18,8 +18,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class NewSale_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
-	private JFrame frame;
-	private JPanel contentPane;
+	public JFrame frame;
+	public JPanel contentPane;
  
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -40,12 +40,12 @@ public class NewSale_GUI extends JFrame{
 	private JButton btnSave;
 	private JButton btnUpdate;
 	private JButton btnDelete;
-	private JScrollPane scrollPane;
+	public JScrollPane scrollPane;
 	private JLabel lblUsernameOfEmployee;
 	private JTextField textField_Username;
 	private JTextField textField_Email;
 	private JTextField textField_Password;
-	private JTable table;
+	public static JTable table;
 
 	public NewSale_GUI() {
 		frame = new JFrame();
@@ -115,6 +115,11 @@ public class NewSale_GUI extends JFrame{
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Add product");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AddProduct_GUI.main(null);
+			}
+		});
 		btnUpdate.setBounds(550, 319, 128, 31);
 		btnUpdate.setForeground(Color.BLUE);
 		btnUpdate.setBackground(Color.LIGHT_GRAY);
