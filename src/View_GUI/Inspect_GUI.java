@@ -6,11 +6,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import javax.swing.JButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+//import Controller.SaleController;
 
 public class Inspect_GUI {
 
 	private JFrame frame;
+	private JTable productTable;
 
 	/**
 	 * Launch the application.
@@ -43,75 +52,87 @@ public class Inspect_GUI {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		int x = 0;
-		JLabel lblNewLabel = new JLabel("Sale: " + x);
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(150, 10, 150, 50);
-		frame.getContentPane().add(lblNewLabel);
+		JLabel lblSaleTitle = new JLabel("Sale: ");
+				//SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getId());
+		lblSaleTitle.setBounds(150, 10, 150, 50);
+		lblSaleTitle.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		lblSaleTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		frame.getContentPane().add(lblSaleTitle);
 		
-		JLabel lblNewLabel_1 = new JLabel("Customer:");
-		lblNewLabel_1.setBounds(10, 70, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1);
+		JLabel lblCustomer = new JLabel("Customer:");
+		lblCustomer.setBounds(10, 70, 50, 20);
+		frame.getContentPane().add(lblCustomer);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("Customer:");
-		lblNewLabel_1_1.setBounds(10, 100, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_1);
+		JLabel lblPrice = new JLabel("Price:");
+		lblPrice.setBounds(10, 111, 50, 20);
+		frame.getContentPane().add(lblPrice);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Customer:");
-		lblNewLabel_1_2.setBounds(10, 130, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_2);
+		JLabel lblPurchaseDate = new JLabel("Purchase date:");
+		lblPurchaseDate.setBounds(10, 152, 50, 20);
+		frame.getContentPane().add(lblPurchaseDate);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("Customer:");
-		lblNewLabel_1_3.setBounds(10, 160, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_3);
+		JLabel lblDelivery = new JLabel("Delivery:");
+		lblDelivery.setBounds(10, 193, 50, 20);
+		frame.getContentPane().add(lblDelivery);
 		
-		JLabel lblNewLabel_1_4 = new JLabel("Customer:");
-		lblNewLabel_1_4.setBounds(230, 70, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_4);
+		JLabel lblProducts = new JLabel("Products:");
+		lblProducts.setBounds(180, 70, 50, 20);
+		frame.getContentPane().add(lblProducts);
 		
-		JLabel lblNewLabel_1_5 = new JLabel("Customer:");
-		lblNewLabel_1_5.setBounds(230, 100, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_5);
+		JLabel lblchangeCustomer = new JLabel(SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getCustomer().getName());
+		lblchangeCustomer.setBounds(70, 70, 50, 20);
+		frame.getContentPane().add(lblchangeCustomer);
 		
-		JLabel lblNewLabel_1_6 = new JLabel("Customer:");
-		lblNewLabel_1_6.setBounds(230, 130, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_6);
+		JLabel lblChangePrice = new JLabel(Double.toString(SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getPrice()) + " DKK");
+		lblChangePrice.setBounds(70, 111, 50, 20);
+		frame.getContentPane().add(lblChangePrice);
 		
-		JLabel lblNewLabel_1_7 = new JLabel("Customer:");
-		lblNewLabel_1_7.setBounds(70, 70, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_7);
+		LocalDateTime time = SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getPurchaseDate();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+		String formattedString = time.format(formatter);
 		
-		JLabel lblNewLabel_1_8 = new JLabel("Customer:");
-		lblNewLabel_1_8.setBounds(70, 100, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_8);
+		JLabel lblChangePurchaseDate = new JLabel(formattedString);
+		lblChangePurchaseDate.setBounds(70, 152, 50, 20);
+		frame.getContentPane().add(lblChangePurchaseDate);
 		
-		JLabel lblNewLabel_1_9 = new JLabel("Customer:");
-		lblNewLabel_1_9.setBounds(70, 160, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_9);
-		
-		JLabel lblNewLabel_1_10 = new JLabel("Customer:");
-		lblNewLabel_1_10.setBounds(70, 130, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_10);
-		
-		JLabel lblNewLabel_1_11 = new JLabel("Customer:");
-		lblNewLabel_1_11.setBounds(290, 70, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_11);
-		
-		JLabel lblNewLabel_1_12 = new JLabel("Customer:");
-		lblNewLabel_1_12.setBounds(290, 100, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_12);
-		
-		JLabel lblNewLabel_1_13 = new JLabel("Customer:");
-		lblNewLabel_1_13.setBounds(290, 130, 50, 20);
-		frame.getContentPane().add(lblNewLabel_1_13);
+		boolean delivery = true;
+		String yesOrNo = null;
+		if(SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).isDelivery() == true) {
+			delivery = true;
+		}
+		else {
+			delivery = false;
+		}
+		if(delivery = true) {
+			yesOrNo = "yes";
+		}
+		else {
+			yesOrNo = "no";
+		}
+		JLabel lblChangeDelivery = new JLabel(yesOrNo);
+		lblChangeDelivery.setBounds(70, 193, 50, 20);
+		frame.getContentPane().add(lblChangeDelivery);
 		
 		JButton btnNewButton = new JButton("Create Invoice");
-		btnNewButton.setBounds(316, 232, 110, 21);
+		btnNewButton.setBounds(300, 232, 110, 21);
 		frame.getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Send in Email");
 		btnNewButton_1.setBounds(10, 232, 110, 21);
 		frame.getContentPane().add(btnNewButton_1);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(180, 90, 230, 132);
+		frame.getContentPane().add(scrollPane);
+		
+		productTable = new JTable();
+		productTable.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"Product", "Quantity"
+			}
+		));
+		scrollPane.setViewportView(productTable);
 	}
 }

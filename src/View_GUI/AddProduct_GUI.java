@@ -10,7 +10,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import Controller.ProductController;
-import View_GUI.NewSale_GUI;
+import Model.Product;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -87,6 +87,26 @@ private JTextField qtyTextField;
 		textFieldSearch = new JTextField();
 
 		btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String productName = textFieldSearch.getText();
+				Product product = productController.findProduct(productName);
+				for (int i = 0; i < table.getRowCount(); i++) {
+				for(int j = 0; j < table.getColumnCount(); j++) {
+					table.setValueAt("", i, j);
+					}
+				}
+				table.setValueAt(product.getName(), 0, 0);
+				table.setValueAt(product.getType(), 0, 1);
+				table.setValueAt(product.getLocation().getDepartment().getName(), 0, 2);
+				table.setValueAt(product.getLocation().getAisle(), 0, 3);
+				table.setValueAt(product.getLocation().getShelf(), 0, 4);
+				table.setValueAt(product.getPrice(), 0, 5);
+				table.setValueAt(product.getStock(), 0, 6);
+				table.setValueAt(product.getMinStock(), 0, 7);
+			}
+		});
 		btnSearch.setForeground(new Color(30, 144, 255));
 		btnSearch.setBackground(new Color(30, 144, 255));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -117,7 +137,7 @@ private JTextField qtyTextField;
 				int selectedRowIndex = table.getSelectedRow();
 				
 				nameTextField.setText(model.getValueAt(selectedRowIndex, 0).toString());
-				priceTextField.setText(model.getValueAt(selectedRowIndex, 3).toString());
+				priceTextField.setText(model.getValueAt(selectedRowIndex, 5).toString());
 			}
 		});
 		table.setModel(new DefaultTableModel(
@@ -126,8 +146,19 @@ private JTextField qtyTextField;
 			new String[] {
 				"Name", "Type", "Department", "Aisle", "Shelf", "Price", "Stock", "Min. Stock"
 			}
-		));
-		//tableMouseClicked(null);
+		) {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, false, false, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		
 		scrollPane.setViewportView(table);
 		
 		lblNewLabel = new JLabel("Product Menu");
@@ -170,6 +201,7 @@ private JTextField qtyTextField;
 					DefaultTableModel model = (DefaultTableModel)NewSale_GUI.table.getModel();
 					Object [] row = {name, qty, price, _price*_qty};
 					model.addRow(row);
+					NewSale_GUI.totPrice += _price*_qty;
 					reset();
 				}
 			}
