@@ -124,7 +124,7 @@ private JTextField qtyTextField;
 			new Object[][] {
 			},
 			new String[] {
-				"Name", "Type", "Location", "Price", "Stock", "Min. Stock"
+				"Name", "Type", "Department", "Aisle", "Shelf", "Price", "Stock", "Min. Stock"
 			}
 		));
 		//tableMouseClicked(null);
@@ -218,11 +218,11 @@ private JTextField qtyTextField;
 		for(int i = 0; i<productController.getProductContainer().getProductList().size(); i++) {
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getName(), i, 0);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getType(), i, 1);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getPrice(), i, 2);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getStock(), i, 3);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment(), i, 4);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getAisle(), i, 5);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getShelf(), i, 6);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getPrice(), i, 5);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getStock(), i, 6);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment().getName(), i, 2);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getAisle(), i, 3);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getShelf(), i, 4);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
 		}
 	}
