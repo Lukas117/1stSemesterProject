@@ -1,21 +1,22 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
 import java.awt.Font;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTable;
+
 import java.awt.Color;
-import javax.swing.JList;
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.table.DefaultTableModel; 
+import javax.swing.table.DefaultTableModel;
+
+import Model.Employee;
+import Model.Sale; 
+import Controller.SaleController;
 
 public class SaleMenu_GUI extends JFrame{
 
@@ -23,11 +24,14 @@ public class SaleMenu_GUI extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JFrame frame;
-	private JPanel contentPane;
-	private JTable table;
+	public JFrame frame;
+	public JPanel contentPane;
+	public static JTable table_1;
 	private JList<String> listName;
 	private JLabel lblClock;
+	protected static final SaleController saleController = new SaleController();
+	private int infoID1;
+	public static int infoID;
 
 	/**
 	 * Launch the application.
@@ -36,7 +40,7 @@ public class SaleMenu_GUI extends JFrame{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					SaleMenu_GUI frame= new SaleMenu_GUI();
+					SaleMenu_GUI frame= new SaleMenu_GUI(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,12 +59,11 @@ private JScrollPane scrollPane;
 private JTextField textFieldSearch;
 private JButton btnSearch;
 private JLabel lblNameOfCustomer;
-private JTable table_1;
 
 	/**
 	 * Create the application.
 	 */
-	public SaleMenu_GUI() {
+	public SaleMenu_GUI(SaleController saleController) {
 		/*ProductController productController = new ProductController();
 		initialize(); */
 		frame = new JFrame();
@@ -68,7 +71,6 @@ private JTable table_1;
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
-		//connection = sqliteConnection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 718, 524);
 		contentPane = new JPanel();
@@ -106,21 +108,19 @@ private JTable table_1;
 		contentPane.add(scrollPane);
 		
 		table_1 = new JTable();
+		table_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				DefaultTableModel model = (DefaultTableModel)table_1.getModel();
+				int selectedRowIndex = table_1.getSelectedRow();
+				infoID1 = (int) model.getValueAt(selectedRowIndex, 0);
+			}
+		});
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
 				"ID", "Customer", "Price", "Purchase date"
-			}
-		));
-		scrollPane.setViewportView(table_1);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-			},
-			new String[] {
-				"ID", "Customer", "Purchase date", "Price", "Delivery"
 			}
 		) {
 			/**
@@ -128,14 +128,14 @@ private JTable table_1;
 			 */
 			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
-				false, false, false, false, false
+				false, false, false, false
 			};
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
 		});
-		table.getColumnModel().getColumn(0).setResizable(false);
-		table.getColumnModel().getColumn(1).setResizable(false);
+		scrollPane.setViewportView(table_1);
+		infoID = infoID1;
 		
 		lblNewLabel = new JLabel("Sale Menu");
 		lblNewLabel.setBounds(169, 24, 380, 38);
@@ -153,12 +153,21 @@ private JTable table_1;
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
 		btnSave = new JButton("Update");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnSave.setBounds(218, 320, 120, 31);
 		btnSave.setBackground(Color.YELLOW);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Inspect");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Inspect_GUI.main(null);
+			}
+		});
 		btnUpdate.setBounds(570, 320, 120, 31);
 		btnUpdate.setForeground(Color.BLUE);
 		btnUpdate.setBackground(Color.GREEN);
@@ -166,6 +175,23 @@ private JTable table_1;
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
+				if(action == 0){
+					
+					String saleIdToDelete = JOptionPane.showInputDialog("Insert the ID of the sale: "); 
+					Sale sale = saleController.findSale(Integer.parseInt(saleIdToDelete));
+					if(sale == null) {
+						JOptionPane.showMessageDialog(frame, "***Sale is not found!***");
+					} else {
+						saleController.deleteSale(saleController.findSale(Integer.parseInt(saleIdToDelete)));
+						updateTable();
+						((DefaultTableModel)table_1.getModel()).removeRow(table_1.getRowCount()-1);
+					}
+				}
+			}
+		});
 		btnDelete.setBounds(394, 320, 120, 31);
 		btnDelete.setBackground(Color.RED);
 		btnDelete.setForeground(Color.DARK_GRAY);
@@ -194,5 +220,19 @@ private JTable table_1;
 		lblNameOfCustomer.setBounds(388, 86, 67, 22);
 		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblNameOfCustomer);
+	}
+	
+	private void updateTable() {
+		for (int i = 0; i < table_1.getRowCount(); i++) {
+		      for(int j = 0; j < table_1.getColumnCount(); j++) {
+		    	  table_1.setValueAt("", i, j);
+		      }
+		   }
+		for(int i = 0; i<saleController.getSaleContainer().getSales().size(); i++) {
+			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getId(), i, 0);
+			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getCustomer(), i, 1);
+			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getPrice(), i, 2);
+			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getPurchaseDate(), i, 3);
+		}
 	}
 }
