@@ -69,9 +69,6 @@ public class CustomerMenu_GUI extends JFrame{
 		JButton loadButton = new JButton("Load Data");
 		loadButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				DefaultTableModel model = (DefaultTableModel)table.getModel();
-				Object [] temp = {"","","","","","",""};
-				model.addRow(temp);
 				updateTable();
 			}
 		});
@@ -379,6 +376,9 @@ public class CustomerMenu_GUI extends JFrame{
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<customerController.getCustomerContainer().getCustomerList().size(); i++) model.addRow(temp);
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);

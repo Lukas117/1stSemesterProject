@@ -65,9 +65,7 @@ private JButton btnBack;
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			DefaultTableModel model = (DefaultTableModel)table.getModel();
-			String [] temp = {"","","",""};
-			model.addRow(temp);
+			
 			updateTable();
 				
 			}
@@ -249,6 +247,9 @@ private JButton btnBack;
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<locationController.getLocationContainer().getLocationList().size(); i++) model.addRow(temp);
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);

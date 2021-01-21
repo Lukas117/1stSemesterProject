@@ -143,7 +143,13 @@ private JLabel Label_nameOfProduct;
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
-		
+		btnLoadTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			updateTable();
+				
+			}
+		});
 		textFieldSearch = new JTextField();
 
 		
@@ -290,11 +296,6 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(comboBox_Shelf);
 		
 		JComboBox comboBox_Aisle = new JComboBox();
-		comboBox_Aisle.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent e) {
-				updateComboBox_Shelf(comboBox_Aisle, comboBox_Shelf);
-			}
-		});
 		comboBox_Aisle.setBounds(75, 280, 155, 22);
 		comboBox_Aisle.setSelectedItem("0");
 		contentPane.add(comboBox_Aisle);
@@ -305,6 +306,12 @@ private JLabel Label_nameOfProduct;
 				updateComboBox_Aisle(comboBox_Department, comboBox_Aisle);
 			}
 			
+		});
+		
+		comboBox_Aisle.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateComboBox_Shelf(comboBox_Department, comboBox_Aisle, comboBox_Shelf);
+			}
 		});
 		comboBox_Department.setBounds(75, 247, 155, 22);
 		updateComboBox_Dep(comboBox_Department);
@@ -482,6 +489,10 @@ private JLabel Label_nameOfProduct;
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<productController.getProductContainer().getProductList().size(); i++) model.addRow(temp);
+		
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);
@@ -525,16 +536,17 @@ private JLabel Label_nameOfProduct;
 		for(int i = 0; i<finalList1.size(); i++) comboBox_Aisle.addItem(aisles.get(i));
 	}
 	
-	private void updateComboBox_Shelf(JComboBox comboBox_Aisle, JComboBox comboBox_Shelf) {
+	private void updateComboBox_Shelf(JComboBox comboBox_Department, JComboBox comboBox_Aisle, JComboBox comboBox_Shelf) {
 		comboBox_Shelf.removeAllItems();
 		if(comboBox_Aisle.getSelectedItem()==null) comboBox_Shelf.addItem("");
 		else {
 			ArrayList<Integer> shelves = new ArrayList<>();
 			ArrayList <Integer> finalList2 = new ArrayList<>();
 			Object aisleName = comboBox_Aisle.getSelectedItem();
+			String depName = (String) comboBox_Department.getSelectedItem();
 			int aisle = (Integer) aisleName;
 			for(Location location: locationController.getLocationContainer().getLocationList()) {
-				if(location.getAisle()== aisle)
+				if(location.getAisle()== aisle && location.getDepartment().getName().equals(depName))
 				shelves.add(location.getShelf());
 			}
 			for( int i = 0; i<shelves.size(); i++ ) {

@@ -68,9 +68,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			DefaultTableModel model = (DefaultTableModel)table.getModel();
-			String [] temp = {"","",""};
-			model.addRow(temp);
+			
 			updateTable();
 				
 			}
@@ -318,6 +316,9 @@ public class EmployeeMenu_GUI extends JFrame{
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<employeeController.getEmployeeContainer().getEmployees().size(); i++) model.addRow(temp);
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);
