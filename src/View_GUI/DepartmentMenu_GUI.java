@@ -75,9 +75,7 @@ private JButton btnBack;
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			DefaultTableModel model = (DefaultTableModel)table.getModel();
-			String [] temp = {"","",""};
-			model.addRow(temp);
+			
 			updateTable();
 				
 			}
@@ -91,8 +89,8 @@ private JButton btnBack;
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(Color.WHITE);
-		btnSearch.setBackground(new Color(30, 144, 255));
+		btnSearch.setForeground(new Color(0, 0, 0));
+		btnSearch.setBackground(new Color(255, 255, 240));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -110,7 +108,7 @@ private JButton btnBack;
 		contentPane.setLayout(null);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSearch.setBackground(new Color(255, 248, 220));
+		textFieldSearch.setBackground(new Color(192, 192, 192));
 		textFieldSearch.setForeground(Color.BLACK);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
@@ -121,6 +119,7 @@ private JButton btnBack;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setAutoCreateRowSorter(true);
 		table.setEnabled(false);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
@@ -170,7 +169,7 @@ private JButton btnBack;
 		
 		btnSave = new JButton("Save");
 		btnSave.setBounds(408, 320, 100, 31);
-		btnSave.setBackground(Color.YELLOW);
+		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -197,7 +196,7 @@ private JButton btnBack;
 		
 		btnDelete = new JButton("Delete");
 		btnDelete.setBounds(576, 320, 100, 31);
-		btnDelete.setBackground(Color.RED);
+		btnDelete.setBackground(Color.LIGHT_GRAY);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnDelete.addActionListener(new ActionListener() {
@@ -221,8 +220,8 @@ private JButton btnBack;
 		
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(240, 320, 100, 31);
-		btnUpdate.setForeground(SystemColor.textHighlight);
-		btnUpdate.setBackground(Color.BLUE);
+		btnUpdate.setForeground(Color.BLACK);
+		btnUpdate.setBackground(Color.LIGHT_GRAY);
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -281,6 +280,9 @@ private JButton btnBack;
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<departmentController.getDepartmentContainer().getDepartmentList().size(); i++) model.addRow(temp);
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);

@@ -19,7 +19,6 @@ import java.awt.Color;
 import Controller.EmployeeController;
 import Model.Employee;
 
-
 public class EmployeeMenu_GUI extends JFrame{
 	private static final long serialVersionUID = 1L;
 	protected static final EmployeeController employeeController = new EmployeeController();
@@ -69,9 +68,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			DefaultTableModel model = (DefaultTableModel)table.getModel();
-			String [] temp = {"","",""};
-			model.addRow(temp);
+			
 			updateTable();
 				
 			}
@@ -85,7 +82,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(new Color(30, 144, 255));
+		btnSearch.setForeground(new Color(0, 0, 0));
 		btnSearch.setBackground(Color.LIGHT_GRAY);
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		btnSearch.addActionListener(new ActionListener() {
@@ -105,7 +102,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.setLayout(null);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSearch.setBackground(new Color(255, 248, 220));
+		textFieldSearch.setBackground(new Color(255, 250, 250));
 		textFieldSearch.setForeground(Color.BLACK);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
@@ -116,6 +113,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setAutoCreateRowSorter(true);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -201,7 +199,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		
 		btnUpdate = new JButton("Update");
 		btnUpdate.setBounds(549, 320, 91, 31);
-		btnUpdate.setForeground(Color.BLUE);
+		btnUpdate.setForeground(new Color(0, 0, 0));
 		btnUpdate.setBackground(Color.LIGHT_GRAY);
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -318,6 +316,9 @@ public class EmployeeMenu_GUI extends JFrame{
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<employeeController.getEmployeeContainer().getEmployees().size(); i++) model.addRow(temp);
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);

@@ -9,6 +9,7 @@ import java.awt.Image;
 import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,7 +34,9 @@ import Model.Location;
 import Model.Department;
 
 import java.awt.SystemColor;
-import javax.swing.table.DefaultTableModel; 
+import javax.swing.table.DefaultTableModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent; 
 
 public class ProductMenu_GUI extends JFrame{
 	protected static final ProductController productController = new ProductController();
@@ -140,7 +143,13 @@ private JLabel Label_nameOfProduct;
 		JButton btnLoadTable = new JButton("Load Data");
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
-		
+		btnLoadTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			updateTable();
+				
+			}
+		});
 		textFieldSearch = new JTextField();
 
 		
@@ -219,24 +228,6 @@ private JLabel Label_nameOfProduct;
 			}
 		}); */
 		
-		
-		
-		JComboBox comboBox_Aisle = new JComboBox();
-		comboBox_Aisle.setBounds(75, 280, 155, 22);
-		for(Location location: locationController.getLocationContainer().getLocationList()) {
-			comboBox_Aisle.addItem(location.getAisle());
-		}
-		comboBox_Aisle.setSelectedItem(null);
-		contentPane.add(comboBox_Aisle);
-		
-		JComboBox comboBox_Shelf = new JComboBox();
-		comboBox_Shelf.setBounds(75, 309, 157, 22);
-		for(Location location: locationController.getLocationContainer().getLocationList()) {
-			comboBox_Shelf.addItem(location.getShelf());
-		}
-		comboBox_Shelf.setSelectedItem(null);
-		contentPane.add(comboBox_Shelf);
-		
 		lblNewLabel = new JLabel("Product Menu");
 		lblNewLabel.setForeground(new Color(255, 0, 0));
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
@@ -299,13 +290,35 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(textField_Stock);
 		textField_Stock.setColumns(10);
 		
+		JComboBox comboBox_Shelf = new JComboBox();
+		comboBox_Shelf.setBounds(75, 309, 157, 22);
+		comboBox_Shelf.setSelectedItem("0");
+		contentPane.add(comboBox_Shelf);
+		
+		JComboBox comboBox_Aisle = new JComboBox();
+		comboBox_Aisle.setBounds(75, 280, 155, 22);
+		comboBox_Aisle.setSelectedItem("0");
+		contentPane.add(comboBox_Aisle);
+		
 		JComboBox comboBox_Department = new JComboBox();
 		comboBox_Department.setBounds(75, 247, 155, 22);
-		for(Location location: locationController.getLocationContainer().getLocationList()) {
-			comboBox_Department.addItem(location.getDepartment().getName());
-		}
-		comboBox_Department.setSelectedItem(null);
+		comboBox_Department.setSelectedItem("");
 		contentPane.add(comboBox_Department);
+		
+		updateComboBox_Dep(comboBox_Department);
+		
+		comboBox_Department.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateComboBox_Aisle(comboBox_Department, comboBox_Aisle);
+			}
+			
+		});
+		
+		comboBox_Aisle.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateComboBox_Shelf(comboBox_Department, comboBox_Aisle, comboBox_Shelf);
+			}
+		});
 		
 		btnSave = new JButton("Save");
 		btnSave.setBackground(new Color(255, 255, 255));
@@ -384,24 +397,24 @@ private JLabel Label_nameOfProduct;
 		btnDelete = new JButton("Delete");
 		btnDelete.setBackground(new Color(255, 255, 255));
 		btnDelete.setForeground(Color.DARK_GRAY);
-		/*btnDelete.addActionListener(new ActionListener() {
+		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				int action = JOptionPane.showConfirmDialog(null, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
 				if(action == 0){
-				try {
-					String query = "delete from Employeeinfo where EID = '" + textFieldEID.getText() + "' ";
-					PreparedStatement pst = connection.prepareStatement(query);
-					pst.execute();
-					JOptionPane.showMessageDialog(null, "Data Deleted");
-					pst.close();	
-				} catch (Exception e) {
-					e.printStackTrace();
+					
+					String usernameToDelete = JOptionPane.showInputDialog("Insert the name of the product: "); 
+					Product product = productController.findProduct(usernameToDelete);
+					if(product == null) {
+						JOptionPane.showMessageDialog(frame, "***Product is not found!***");
+					} else {
+						productController.deleteProduct(productController.findProduct(usernameToDelete));
+						updateTable();
+						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
+					}
 				}
-				refreshTable();
-				Reset();
-				}
+				
 			}
-		}); */
+		}); 
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnDelete.setBounds(415, 320, 96, 31);
 		contentPane.add(btnDelete);
@@ -458,7 +471,6 @@ private JLabel Label_nameOfProduct;
 		lblNewLabel_1.setIcon(new ImageIcon(img));
 		lblNewLabel_1.setBounds(0, 0, 702, 411);
 		contentPane.add(lblNewLabel_1); */
-		
 		}
 	
 	private void reset() {
@@ -476,6 +488,10 @@ private JLabel Label_nameOfProduct;
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<productController.getProductContainer().getProductList().size(); i++) model.addRow(temp);
+		
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);
@@ -492,4 +508,52 @@ private JLabel Label_nameOfProduct;
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
 		}
 	}
+	
+	private void updateComboBox_Dep(JComboBox comboBox_Department) {
+		ArrayList <String> departments = new ArrayList<>();
+		ArrayList <String> finalList = new ArrayList<>();
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			departments.add(location.getDepartment().getName());
+		}
+		for(int i = 0; i<departments.size(); i++ ) {
+			if(!finalList.contains(departments.get(i))) finalList.add(departments.get(i));
+		}
+		for(int i = 0; i<finalList.size(); i++) comboBox_Department.addItem(finalList.get(i));
+	}	
+	
+	private void updateComboBox_Aisle(JComboBox comboBox_Department, JComboBox comboBox_Aisle) {
+		comboBox_Aisle.removeAllItems();
+		ArrayList <Integer> aisles = new ArrayList<>();
+		ArrayList <Integer> finalList1 = new ArrayList<>();
+		String depName = (String) comboBox_Department.getSelectedItem();
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			if(location.getDepartment().getName().equals(depName)) aisles.add(location.getAisle());
+		}
+		for( int i = 0; i<aisles.size(); i++ ) {
+			if(!finalList1.contains(aisles.get(i))) finalList1.add(aisles.get(i));
+		}
+		for(int i = 0; i<finalList1.size(); i++) comboBox_Aisle.addItem(finalList1.get(i));
+	}
+	
+	private void updateComboBox_Shelf(JComboBox comboBox_Department, JComboBox comboBox_Aisle, JComboBox comboBox_Shelf) {
+		comboBox_Shelf.removeAllItems();
+		if(comboBox_Aisle.getSelectedItem()==null) comboBox_Shelf.addItem("");
+		else {
+			ArrayList<Integer> shelves = new ArrayList<>();
+			ArrayList <Integer> finalList2 = new ArrayList<>();
+			Object aisleName = comboBox_Aisle.getSelectedItem();
+			String depName = (String) comboBox_Department.getSelectedItem();
+			int aisle = (Integer) aisleName;
+			for(Location location: locationController.getLocationContainer().getLocationList()) {
+				if(location.getAisle()== aisle && location.getDepartment().getName().equals(depName))
+				shelves.add(location.getShelf());
+			}
+			for( int i = 0; i<shelves.size(); i++ ) {
+				if(!finalList2.contains(shelves.get(i))) finalList2.add(shelves.get(i));
+			}
+			for(int i = 0; i<finalList2.size(); i++) comboBox_Shelf.addItem(finalList2.get(i));
+			
+		}
+	}
+
 }

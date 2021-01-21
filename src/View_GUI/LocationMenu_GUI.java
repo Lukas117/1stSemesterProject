@@ -12,6 +12,7 @@ import javax.swing.table.DefaultTableModel;
 import Model.Department;
 import Model.Location;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import Controller.DepartmentController;
 
@@ -62,6 +63,13 @@ private JButton btnBack;
 		setContentPane(contentPane);
 		
 		JButton btnLoadTable = new JButton("Load Data");
+		btnLoadTable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+			updateTable();
+				
+			}
+		});
 		btnLoadTable.setBounds(401, 89, 104, 24);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
@@ -78,6 +86,7 @@ private JButton btnBack;
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setAutoCreateRowSorter(true);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -120,6 +129,8 @@ private JButton btnBack;
 		textField_Aisle.setColumns(10);
 		
 		JComboBox comboBox_Warehouse = new JComboBox();
+		//JComboBox.setAutoCreateRowSorter(true);
+		
 		for (Department department: departmentController.getDepartmentContainer().getDepartmentList()) {
 			comboBox_Warehouse.addItem(department.getName());
 		}
@@ -139,7 +150,7 @@ private JButton btnBack;
 					else if (textField_Shelf.getText().equals("0")) JOptionPane.showMessageDialog(frame, "***Error! Please fill out all the fields!***");
 					
 			if(!textField_Aisle.getText().equals("") && !textField_Shelf.getText().equals("") && comboBox_Warehouse.getSelectedItem()!=null) {
-				Location location = new Location(departmentController.findDepartment(value), shelf, aisle);
+				Location location = new Location(departmentController.findDepartment(value), aisle, shelf);
 				if (locationController.addLocation(location)) {
 					JOptionPane.showMessageDialog(frame, "Location already exists!");
 				}
@@ -157,13 +168,13 @@ private JButton btnBack;
 			}
 		});
 		btnSave.setBounds(346, 320, 96, 31);
-		btnSave.setBackground(UIManager.getColor("Button.darkShadow"));
+		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
 		btnDelete = new JButton("Delete");
 		btnDelete.setBounds(533, 320, 96, 31);
-		btnDelete.setBackground(SystemColor.activeCaptionBorder);
+		btnDelete.setBackground(Color.LIGHT_GRAY);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -236,6 +247,9 @@ private JButton btnBack;
 	}
 	
 	private void updateTable() {
+		DefaultTableModel model = (DefaultTableModel)table.getModel();
+		String [] temp = {"","",""};
+		for(int i = 0; i<locationController.getLocationContainer().getLocationList().size(); i++) model.addRow(temp);
 		for (int i = 0; i < table.getRowCount(); i++) {
 		      for(int j = 0; j < table.getColumnCount(); j++) {
 		          table.setValueAt("", i, j);
