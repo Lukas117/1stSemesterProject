@@ -119,6 +119,7 @@ public class CustomerMenu_GUI extends JFrame{
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.setAutoCreateRowSorter(true);
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
@@ -284,7 +285,7 @@ public class CustomerMenu_GUI extends JFrame{
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
 		contentPane.add(deleteButton);
 		
-		zipcodeText = new JTextField("0");
+		zipcodeText = new JTextField("");
 		zipcodeText.setBounds(92, 297, 139, 22);
 		zipcodeText.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		zipcodeText.setColumns(10);
@@ -363,7 +364,7 @@ public class CustomerMenu_GUI extends JFrame{
 				closeDialog();
 			}
 		});
-		backButton.setBounds(592, 379, 84, 23);
+		backButton.setBounds(628, 467, 84, 23);
 		contentPane.add(backButton);
 	}
 	
