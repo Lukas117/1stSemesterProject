@@ -301,6 +301,12 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(comboBox_Aisle);
 		
 		JComboBox comboBox_Department = new JComboBox();
+		comboBox_Department.setBounds(75, 247, 155, 22);
+		comboBox_Department.setSelectedItem("");
+		contentPane.add(comboBox_Department);
+		
+		updateComboBox_Dep(comboBox_Department);
+		
 		comboBox_Department.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				updateComboBox_Aisle(comboBox_Department, comboBox_Aisle);
@@ -313,13 +319,6 @@ private JLabel Label_nameOfProduct;
 				updateComboBox_Shelf(comboBox_Department, comboBox_Aisle, comboBox_Shelf);
 			}
 		});
-		comboBox_Department.setBounds(75, 247, 155, 22);
-		updateComboBox_Dep(comboBox_Department);
-		comboBox_Department.setSelectedItem("");
-		contentPane.add(comboBox_Department);
-		
-		
-		
 		
 		btnSave = new JButton("Save");
 		btnSave.setBackground(new Color(255, 255, 255));
@@ -533,7 +532,7 @@ private JLabel Label_nameOfProduct;
 		for( int i = 0; i<aisles.size(); i++ ) {
 			if(!finalList1.contains(aisles.get(i))) finalList1.add(aisles.get(i));
 		}
-		for(int i = 0; i<finalList1.size(); i++) comboBox_Aisle.addItem(aisles.get(i));
+		for(int i = 0; i<finalList1.size(); i++) comboBox_Aisle.addItem(finalList1.get(i));
 	}
 	
 	private void updateComboBox_Shelf(JComboBox comboBox_Department, JComboBox comboBox_Aisle, JComboBox comboBox_Shelf) {
@@ -552,7 +551,7 @@ private JLabel Label_nameOfProduct;
 			for( int i = 0; i<shelves.size(); i++ ) {
 				if(!finalList2.contains(shelves.get(i))) finalList2.add(shelves.get(i));
 			}
-			for(int i = 0; i<finalList2.size(); i++) comboBox_Shelf.addItem(shelves.get(i));
+			for(int i = 0; i<finalList2.size(); i++) comboBox_Shelf.addItem(finalList2.get(i));
 			
 		}
 	}
