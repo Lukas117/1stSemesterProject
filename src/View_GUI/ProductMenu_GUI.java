@@ -1,12 +1,10 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.*;
+import java.awt.Component;
 
-import java.awt.EventQueue;
-import java.awt.Image;
-import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
@@ -18,12 +16,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 
 import Controller.ProductController;
 import Controller.LocationController;
@@ -33,7 +25,6 @@ import Model.Employee;
 import Model.Location;
 import Model.Department;
 
-import java.awt.SystemColor;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent; 
@@ -96,7 +87,6 @@ public void Clock1(){
 		clock.start();
 	}
 
-Connection connection = null;
 private JLabel lblNewLabel;
 private JLabel lblName;
 private JLabel lblType;
@@ -374,19 +364,49 @@ private JLabel Label_nameOfProduct;
 		btnUpdate = new JButton("Update");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int action = JOptionPane.showConfirmDialog(frame, "sth", "Update", JOptionPane.YES_NO_OPTION);
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to update?", "Update", JOptionPane.YES_NO_OPTION);
 				if(action == 0) {
 					String nameToUpdate = JOptionPane.showInputDialog("Insert the name of the product: ");
 					String name = JOptionPane.showInputDialog("Insert the new name of the product: ");
 					String type = JOptionPane.showInputDialog("Insert the new type of the product: ");
 					String price = JOptionPane.showInputDialog("Insert the new price of the product: ");
 					String stock = JOptionPane.showInputDialog("Insert the new stock of the product: ");
-					String department = JOptionPane.showInputDialog("Insert the new name of the department: ");
-					String aisle = JOptionPane.showInputDialog("Insert the new aisle of the product: ");
-					String shelf = JOptionPane.showInputDialog("Insert the new shelf of the product: ");
+					int depSize = getListComboBox_Dep(comboBox_Department).size();
+					 String [] dep = new String [depSize];
+					 for(int i =0; i<depSize; i++) {
+						 dep[i] = getListComboBox_Dep(comboBox_Department).get(i);
+					 }
+					 Component source = (Component) e.getSource();
+				        Object response = JOptionPane.showInputDialog(source,
+				            "Please choose the new name of the department!",
+				            "Select a department", JOptionPane.QUESTION_MESSAGE,
+				            null, dep, "B");
+					
+				        int aisleSize = getListComboBox_Aisle(comboBox_Aisle,(String)response).size();
+						 String [] aisle = new String [aisleSize];
+						 for(int i =0; i<aisleSize; i++) {
+							 aisle[i] = String.valueOf(getListComboBox_Aisle(comboBox_Aisle, (String)response).get(i)); 
+						 }
+						 Component source1 = (Component) e.getSource();
+					        Object response1 = JOptionPane.showInputDialog(source,
+					            "Please choose the number of the new aisle!",
+					            "Select the aisle", JOptionPane.QUESTION_MESSAGE,
+					            null, aisle, "B");
+					        
+					int shelfSize = getListComboBox_Shelf(comboBox_Shelf, (String)response, (String)response1).size();
+							 String [] shelf = new String [shelfSize];
+							 for(int i =0; i<shelfSize; i++) {
+								 shelf[i] = String.valueOf(getListComboBox_Shelf(comboBox_Shelf, (String)response, (String)response1).get(i));
+							 }
+							 Component source2 = (Component) e.getSource();
+						        Object response2 = JOptionPane.showInputDialog(source,
+						            "Please choose the number of the new shelf!",
+						            "Select the shelf", JOptionPane.QUESTION_MESSAGE,
+						            null, shelf, "B");
+				        
 					String minStock = JOptionPane.showInputDialog("Insert the minimum stock of the product: ");
-					Department dep = departmentController.findDepartment(department);
-					Location loc = locationController.getLocationContainer().findLocation(dep, Integer.parseInt(aisle), Integer.parseInt(shelf));
+					Department department = departmentController.findDepartment(String.valueOf(response));
+					Location loc = locationController.getLocationContainer().findLocation(department, Integer.valueOf((String) response1), Integer.valueOf((String) response2));
 					Product product = new Product(name, type, loc, Double.parseDouble(price), Integer.parseInt(stock), Integer.parseInt(minStock));
 					if (productController.createProduct(product)) {
 						JOptionPane.showMessageDialog(frame, "Product already exists!");
@@ -449,6 +469,7 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(Label_nameOfProduct);
 		
 		JList barcodeList = new JList();
+		
 		barcodeList.setBounds(22, 387, 163, 59);
 		contentPane.add(barcodeList);
 		
@@ -502,7 +523,7 @@ private JLabel Label_nameOfProduct;
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getType(), i, 1);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getPrice(), i, 2);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getStock(), i, 3);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment(), i, 4);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment().getName(), i, 4);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getAisle(), i, 5);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getShelf(), i, 6);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
@@ -520,6 +541,37 @@ private JLabel Label_nameOfProduct;
 		}
 		for(int i = 0; i<finalList.size(); i++) comboBox_Department.addItem(finalList.get(i));
 	}	
+	
+	private ArrayList<String> getListComboBox_Dep(JComboBox comboBox_Department) {
+		ArrayList <String> departments = new ArrayList<>();
+		ArrayList <String> finalList = new ArrayList<>();
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			departments.add(location.getDepartment().getName());
+		}
+		for(int i = 0; i<departments.size(); i++ ) {
+			if(!finalList.contains(departments.get(i))) finalList.add(departments.get(i));
+		}
+		for(int i = 0; i<finalList.size(); i++) comboBox_Department.addItem(finalList.get(i));
+		
+		return finalList;
+	}	
+	
+	private ArrayList<Integer> getListComboBox_Aisle(JComboBox comboBox_Aisle, String departmentName) {
+		comboBox_Aisle.removeAllItems();
+		ArrayList <Integer> aisles = new ArrayList<>();
+		ArrayList <Integer> finalList1 = new ArrayList<>();
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			if(location.getDepartment().getName().equals(departmentName)) aisles.add(location.getAisle());
+		}
+		for( int i = 0; i<aisles.size(); i++ ) {
+			if(!finalList1.contains(aisles.get(i))) finalList1.add(aisles.get(i));
+		}
+		for(int i = 0; i<finalList1.size(); i++) comboBox_Aisle.addItem(finalList1.get(i));
+		
+		return finalList1;
+	}
+	
+	
 	
 	private void updateComboBox_Aisle(JComboBox comboBox_Department, JComboBox comboBox_Aisle) {
 		comboBox_Aisle.removeAllItems();
@@ -554,5 +606,24 @@ private JLabel Label_nameOfProduct;
 			for(int i = 0; i<finalList2.size(); i++) comboBox_Shelf.addItem(finalList2.get(i));
 			
 		}
+	}
+	
+	private ArrayList<Integer> getListComboBox_Shelf(JComboBox comboBox_Shelf, String depName, String aisleName) {
+		comboBox_Shelf.removeAllItems();
+		ArrayList <Integer> finalList2 = new ArrayList<>();
+			ArrayList<Integer> shelves = new ArrayList<>();
+			int aisle = Integer.parseInt(aisleName);
+			for(Location location: locationController.getLocationContainer().getLocationList()) {
+				if(location.getAisle()== aisle && location.getDepartment().getName().equals(depName))
+				shelves.add(location.getShelf());
+			}
+			for( int i = 0; i<shelves.size(); i++ ) {
+				if(!finalList2.contains(shelves.get(i))) finalList2.add(shelves.get(i));
+			}
+			for(int i = 0; i<finalList2.size(); i++) comboBox_Shelf.addItem(finalList2.get(i));
+			
+			
+		return finalList2;
+		
 	}
 }
