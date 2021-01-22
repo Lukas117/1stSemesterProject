@@ -14,12 +14,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-//import Controller.SaleController;
+import Controller.SaleController;
 
 public class Inspect_GUI {
 
 	private JFrame frame;
 	private JTable productTable;
+	protected static final SaleController saleController = new SaleController();
 
 	/**
 	 * Launch the application.
@@ -28,7 +29,7 @@ public class Inspect_GUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Inspect_GUI window = new Inspect_GUI();
+					Inspect_GUI window = new Inspect_GUI(saleController);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +41,7 @@ public class Inspect_GUI {
 	/**
 	 * Create the application.
 	 */
-	public Inspect_GUI() {
+	public Inspect_GUI(SaleController saleController) {
 		initialize();
 	}
 
@@ -79,15 +80,15 @@ public class Inspect_GUI {
 		lblProducts.setBounds(180, 70, 50, 20);
 		frame.getContentPane().add(lblProducts);
 		
-		JLabel lblchangeCustomer = new JLabel(SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getCustomer().getName());
+		JLabel lblchangeCustomer = new JLabel(saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getCustomer().getName());
 		lblchangeCustomer.setBounds(70, 70, 50, 20);
 		frame.getContentPane().add(lblchangeCustomer);
 		
-		JLabel lblChangePrice = new JLabel(Double.toString(SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getPrice()) + " DKK");
+		JLabel lblChangePrice = new JLabel(Double.toString(saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getPrice()) + " DKK");
 		lblChangePrice.setBounds(70, 111, 50, 20);
 		frame.getContentPane().add(lblChangePrice);
 		
-		LocalDateTime time = SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getPurchaseDate();
+		LocalDateTime time = saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).getPurchaseDate();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
 		String formattedString = time.format(formatter);
 		
@@ -97,7 +98,7 @@ public class Inspect_GUI {
 		
 		boolean delivery = true;
 		String yesOrNo = null;
-		if(SaleMenu_GUI.saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).isDelivery() == true) {
+		if(saleController.getSaleContainer().getSales().get(SaleMenu_GUI.infoID).isDelivery() == true) {
 			delivery = true;
 		}
 		else {

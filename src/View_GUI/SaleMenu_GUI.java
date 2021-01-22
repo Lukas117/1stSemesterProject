@@ -113,27 +113,16 @@ private JLabel lblNameOfCustomer;
 			public void mouseClicked(MouseEvent e) {
 				DefaultTableModel model = (DefaultTableModel)table_1.getModel();
 				int selectedRowIndex = table_1.getSelectedRow();
-				infoID1 = (int) model.getValueAt(selectedRowIndex, 0);
+				infoID1 = (Integer) model.getValueAt(selectedRowIndex, 0);
 			}
 		});
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"ID", "Customer", "Price", "Purchase date"
+				"ID", "Customer's CPR", "Price", "Purchase date"
 			}
-		) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] {
-				false, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		scrollPane.setViewportView(table_1);
 		infoID = infoID1;
 		
@@ -230,7 +219,7 @@ private JLabel lblNameOfCustomer;
 		   }
 		for(int i = 0; i<saleController.getSaleContainer().getSales().size(); i++) {
 			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getId(), i, 0);
-			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getCustomer(), i, 1);
+			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getCustomer().getCprNumber(), i, 1);
 			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getPrice(), i, 2);
 			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getPurchaseDate(), i, 3);
 		}

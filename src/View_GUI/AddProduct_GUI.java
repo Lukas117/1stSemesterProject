@@ -13,6 +13,9 @@ import Controller.ProductController;
 import Model.Product;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import View_GUI.NewSale_GUI;
 
 public class AddProduct_GUI extends JFrame{
 
@@ -25,6 +28,9 @@ public class AddProduct_GUI extends JFrame{
 	private JTable table;
 	private JLabel lblClock;
 	protected static final ProductController productController = new ProductController();
+	ArrayList<Product> shoppingCart = new ArrayList<>();
+	
+	
 	/**
 	 * Launch the application.
 	 */    
@@ -54,6 +60,7 @@ private JTextField nameTextField;
 private JTextField priceTextField;
 private JLabel lblQty;
 private JTextField qtyTextField;
+private double totPrice = 0;
 
 	/**
 	 * Create the application.
@@ -201,7 +208,10 @@ private JTextField qtyTextField;
 					DefaultTableModel model = (DefaultTableModel)NewSale_GUI.table.getModel();
 					Object [] row = {name, qty, price, _price*_qty};
 					model.addRow(row);
-					NewSale_GUI.totPrice += _price*_qty;
+					totPrice = totPrice +_price*_qty;
+					NewSale_GUI.lbltotalPrice.setText(String.valueOf(totPrice));
+					Product product = productController.findProduct(name);
+					shoppingCart.add(product);
 					reset();
 				}
 			}
@@ -233,7 +243,18 @@ private JTextField qtyTextField;
 		qtyTextField.setBounds(79, 183, 125, 20);
 		contentPane.add(qtyTextField);
 		
-		}
+		JButton btnBack = new JButton("Back");
+		/*		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				NewSale_GUI.main(null);
+				closeDialog();
+			}
+		}); */
+		btnBack.setBounds(605, 453, 89, 23);
+		contentPane.add(btnBack);
+	}
+		
+		
 	
 	private void reset() {
 		nameTextField.setText("");
@@ -258,4 +279,19 @@ private JTextField qtyTextField;
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
 		}
 	}
+	
+	public ArrayList<Product> getShoppingcart() {
+		return shoppingCart;
+	}
+	
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
+	}
+	
+	public String getTotalPrice() {
+	
+		return String.valueOf(totPrice);
+	} 
+	
 }
