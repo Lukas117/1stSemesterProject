@@ -25,11 +25,6 @@ public class Product {
         barcodes= new ArrayList<>();
     }
 
-    public Product(String name2, String type2, double parseDouble, int parseInt, int department, int aisle, int shelf,
-			int parseInt2) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public Location getLocation() {
 		return location;
 	}

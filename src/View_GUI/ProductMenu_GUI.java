@@ -372,25 +372,36 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
-		/*btnUpdate.addActionListener(new ActionListener() {
+		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int action = JOptionPane.showConfirmDialog(frame, "sth", "Update", JOptionPane.YES_NO_OPTION);
 				if(action == 0) {
-					String nameToupdate = JOptionPane.showInputDialog("Insert the name of the product: "); 	
-					productController.deleteProduct(productController.findProduct(nameToupdate));
+					String nameToUpdate = JOptionPane.showInputDialog("Insert the name of the product: ");
 					String name = JOptionPane.showInputDialog("Insert the new name of the product: ");
 					String type = JOptionPane.showInputDialog("Insert the new type of the product: ");
 					String price = JOptionPane.showInputDialog("Insert the new price of the product: ");
 					String stock = JOptionPane.showInputDialog("Insert the new stock of the product: ");
-					int department = JOptionPane.showConfirmDialog(comboBox_Department,"select Department!", "masodik",JOptionPane.QUESTION_MESSAGE);
-					int aisle = JOptionPane.showConfirmDialog(comboBox_Department, "Select the aisle number!");
-					int shelf = JOptionPane.showConfirmDialog(comboBox_Department, "Select the shelf number!");
-					String minStock = JOptionPane.showInputDialog("Insert the new minimum stock of the product: ");
-					Product product = new Product(name, type, Double.parseDouble(price), Integer.parseInt(stock), department, aisle, shelf, Integer.parseInt(minStock));
-					productController.createProduct(product);
+					String department = JOptionPane.showInputDialog("Insert the new name of the department: ");
+					String aisle = JOptionPane.showInputDialog("Insert the new aisle of the product: ");
+					String shelf = JOptionPane.showInputDialog("Insert the new shelf of the product: ");
+					String minStock = JOptionPane.showInputDialog("Insert the minimum stock of the product: ");
+					Department dep = departmentController.findDepartment(department);
+					Location loc = locationController.getLocationContainer().findLocation(dep, Integer.parseInt(aisle), Integer.parseInt(shelf));
+					Product product = new Product(name, type, loc, Double.parseDouble(price), Integer.parseInt(stock), Integer.parseInt(minStock));
+					if (productController.createProduct(product)) {
+						JOptionPane.showMessageDialog(frame, "Product already exists!");
 					}
+					else {
+						productController.deleteProduct(productController.findProduct(nameToUpdate));
+						productController.createProduct(product);
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						Object [] temp = {"","","","","","","",""};
+						model.addRow(temp);
+						updateTable();
+					}
+				}
 			}
-		});*/
+		});
 		btnUpdate.setBounds(537, 320, 91, 31);
 		btnUpdate.setForeground(new Color(51, 0, 0));
 		btnUpdate.setBackground(new Color(255, 204, 204));
@@ -415,7 +426,6 @@ private JLabel Label_nameOfProduct;
 						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
 					}
 				}
-				
 			}
 		}); 
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -461,19 +471,6 @@ private JLabel Label_nameOfProduct;
 		});
 		btnBack.setBounds(655, 446, 89, 23);
 		contentPane.add(btnBack);
-		
-		
-		/*lblNewLabel_3 = new JLabel("");
-		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
-		lblNewLabel_3.setIcon(new ImageIcon(img2));
-		lblNewLabel_3.setBounds(33, 0, 122, 130);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
-		lblNewLabel_1.setIcon(new ImageIcon(img));
-		lblNewLabel_1.setBounds(0, 0, 702, 411);
-		contentPane.add(lblNewLabel_1); */
 		}
 	
 	private void reset() {
@@ -558,5 +555,4 @@ private JLabel Label_nameOfProduct;
 			
 		}
 	}
-
 }
