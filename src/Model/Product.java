@@ -25,7 +25,7 @@ public class Product {
         barcodes= new ArrayList<>();
     }
 
-    public Location getLocation() {
+	public Location getLocation() {
 		return location;
 	}
 

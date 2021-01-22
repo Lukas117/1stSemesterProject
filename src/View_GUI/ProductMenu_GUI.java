@@ -1,12 +1,10 @@
 package View_GUI;
 
 import java.awt.EventQueue;
-import java.awt.BorderLayout;
 import java.awt.Font;
+import java.awt.*;
+import java.awt.Component;
 
-import java.awt.EventQueue;
-import java.awt.Image;
-import java.sql.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.ArrayList;
@@ -18,12 +16,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-
 
 import Controller.ProductController;
 import Controller.LocationController;
@@ -33,7 +25,6 @@ import Model.Employee;
 import Model.Location;
 import Model.Department;
 
-import java.awt.SystemColor;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent; 
@@ -96,7 +87,6 @@ public void Clock1(){
 		clock.start();
 	}
 
-Connection connection = null;
 private JLabel lblNewLabel;
 private JLabel lblName;
 private JLabel lblType;
@@ -372,26 +362,70 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int action = JOptionPane.showConfirmDialog(frame, "Do you want to update?", "Update", JOptionPane.YES_NO_OPTION);
+				if(action == 0) {
+					String nameToUpdate = JOptionPane.showInputDialog("Insert the name of the product: ");
+					String name = JOptionPane.showInputDialog("Insert the new name of the product: ");
+					String type = JOptionPane.showInputDialog("Insert the new type of the product: ");
+					String price = JOptionPane.showInputDialog("Insert the new price of the product: ");
+					String stock = JOptionPane.showInputDialog("Insert the new stock of the product: ");
+					int depSize = getListComboBox_Dep(comboBox_Department).size();
+					 String [] dep = new String [depSize];
+					 for(int i =0; i<depSize; i++) {
+						 dep[i] = getListComboBox_Dep(comboBox_Department).get(i);
+					 }
+					 Component source = (Component) e.getSource();
+				        Object response = JOptionPane.showInputDialog(source,
+				            "Please choose the new name of the department!",
+				            "Select a department", JOptionPane.QUESTION_MESSAGE,
+				            null, dep, "B");
+					
+				        int aisleSize = getListComboBox_Aisle(comboBox_Aisle,(String)response).size();
+						 String [] aisle = new String [aisleSize];
+						 for(int i =0; i<aisleSize; i++) {
+							 aisle[i] = String.valueOf(getListComboBox_Aisle(comboBox_Aisle, (String)response).get(i)); 
+						 }
+						 Component source1 = (Component) e.getSource();
+					        Object response1 = JOptionPane.showInputDialog(source,
+					            "Please choose the number of the new aisle!",
+					            "Select the aisle", JOptionPane.QUESTION_MESSAGE,
+					            null, aisle, "B");
+					        
+					int shelfSize = getListComboBox_Shelf(comboBox_Shelf, (String)response, (String)response1).size();
+							 String [] shelf = new String [shelfSize];
+							 for(int i =0; i<shelfSize; i++) {
+								 shelf[i] = String.valueOf(getListComboBox_Shelf(comboBox_Shelf, (String)response, (String)response1).get(i));
+							 }
+							 Component source2 = (Component) e.getSource();
+						        Object response2 = JOptionPane.showInputDialog(source,
+						            "Please choose the number of the new shelf!",
+						            "Select the shelf", JOptionPane.QUESTION_MESSAGE,
+						            null, shelf, "B");
+				        
+					String minStock = JOptionPane.showInputDialog("Insert the minimum stock of the product: ");
+					Department department = departmentController.findDepartment(String.valueOf(response));
+					Location loc = locationController.getLocationContainer().findLocation(department, Integer.valueOf((String) response1), Integer.valueOf((String) response2));
+					Product product = new Product(name, type, loc, Double.parseDouble(price), Integer.parseInt(stock), Integer.parseInt(minStock));
+					if (productController.createProduct(product)) {
+						JOptionPane.showMessageDialog(frame, "Product already exists!");
+					}
+					else {
+						productController.deleteProduct(productController.findProduct(nameToUpdate));
+						productController.createProduct(product);
+						DefaultTableModel model = (DefaultTableModel)table.getModel();
+						Object [] temp = {"","","","","","","",""};
+						model.addRow(temp);
+						updateTable();
+					}
+				}
+			}
+		});
+		btnUpdate.setBounds(537, 320, 91, 31);
 		btnUpdate.setForeground(new Color(51, 0, 0));
 		btnUpdate.setBackground(new Color(255, 204, 204));
-		/*btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				try {
-					String query = "update Employeeinfo set EID = '" + textFieldEID.getText() + "', Name = '" + textFieldName.getText() + "', Surname = '" + textFieldSurname.getText() +"', Age = '" + textFieldAge.getText() + "' where EID = '" + textFieldEID.getText() + "'";
-					PreparedStatement pst = connection.prepareStatement(query);									
-					pst.execute();				
-					JOptionPane.showMessageDialog(null, "Data Updated");	
-					pst.close();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-				refreshTable();
-				Reset();
-			}
-		}); */
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnUpdate.setBounds(537, 320, 91, 31);
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
@@ -412,7 +446,6 @@ private JLabel Label_nameOfProduct;
 						((DefaultTableModel)table.getModel()).removeRow(table.getRowCount()-1);
 					}
 				}
-				
 			}
 		}); 
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -436,6 +469,7 @@ private JLabel Label_nameOfProduct;
 		contentPane.add(Label_nameOfProduct);
 		
 		JList barcodeList = new JList();
+		
 		barcodeList.setBounds(22, 387, 163, 59);
 		contentPane.add(barcodeList);
 		
@@ -458,19 +492,6 @@ private JLabel Label_nameOfProduct;
 		});
 		btnBack.setBounds(655, 446, 89, 23);
 		contentPane.add(btnBack);
-		
-		
-		/*lblNewLabel_3 = new JLabel("");
-		Image img2 = new ImageIcon(this.getClass().getResource("/admin.png")).getImage();
-		lblNewLabel_3.setIcon(new ImageIcon(img2));
-		lblNewLabel_3.setBounds(33, 0, 122, 130);
-		contentPane.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_1 = new JLabel("");
-		Image img = new ImageIcon(this.getClass().getResource("/background.jpg")).getImage();
-		lblNewLabel_1.setIcon(new ImageIcon(img));
-		lblNewLabel_1.setBounds(0, 0, 702, 411);
-		contentPane.add(lblNewLabel_1); */
 		}
 	
 	private void reset() {
@@ -502,7 +523,7 @@ private JLabel Label_nameOfProduct;
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getType(), i, 1);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getPrice(), i, 2);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getStock(), i, 3);
-			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment(), i, 4);
+			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getDepartment().getName(), i, 4);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getAisle(), i, 5);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getLocation().getShelf(), i, 6);
 			table.setValueAt(productController.getProductContainer().getProductList().get(i).getMinStock(), i, 7);
@@ -520,6 +541,37 @@ private JLabel Label_nameOfProduct;
 		}
 		for(int i = 0; i<finalList.size(); i++) comboBox_Department.addItem(finalList.get(i));
 	}	
+	
+	private ArrayList<String> getListComboBox_Dep(JComboBox comboBox_Department) {
+		ArrayList <String> departments = new ArrayList<>();
+		ArrayList <String> finalList = new ArrayList<>();
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			departments.add(location.getDepartment().getName());
+		}
+		for(int i = 0; i<departments.size(); i++ ) {
+			if(!finalList.contains(departments.get(i))) finalList.add(departments.get(i));
+		}
+		for(int i = 0; i<finalList.size(); i++) comboBox_Department.addItem(finalList.get(i));
+		
+		return finalList;
+	}	
+	
+	private ArrayList<Integer> getListComboBox_Aisle(JComboBox comboBox_Aisle, String departmentName) {
+		comboBox_Aisle.removeAllItems();
+		ArrayList <Integer> aisles = new ArrayList<>();
+		ArrayList <Integer> finalList1 = new ArrayList<>();
+		for(Location location: locationController.getLocationContainer().getLocationList()) {
+			if(location.getDepartment().getName().equals(departmentName)) aisles.add(location.getAisle());
+		}
+		for( int i = 0; i<aisles.size(); i++ ) {
+			if(!finalList1.contains(aisles.get(i))) finalList1.add(aisles.get(i));
+		}
+		for(int i = 0; i<finalList1.size(); i++) comboBox_Aisle.addItem(finalList1.get(i));
+		
+		return finalList1;
+	}
+	
+	
 	
 	private void updateComboBox_Aisle(JComboBox comboBox_Department, JComboBox comboBox_Aisle) {
 		comboBox_Aisle.removeAllItems();
@@ -555,5 +607,23 @@ private JLabel Label_nameOfProduct;
 			
 		}
 	}
-
+	
+	private ArrayList<Integer> getListComboBox_Shelf(JComboBox comboBox_Shelf, String depName, String aisleName) {
+		comboBox_Shelf.removeAllItems();
+		ArrayList <Integer> finalList2 = new ArrayList<>();
+			ArrayList<Integer> shelves = new ArrayList<>();
+			int aisle = Integer.parseInt(aisleName);
+			for(Location location: locationController.getLocationContainer().getLocationList()) {
+				if(location.getAisle()== aisle && location.getDepartment().getName().equals(depName))
+				shelves.add(location.getShelf());
+			}
+			for( int i = 0; i<shelves.size(); i++ ) {
+				if(!finalList2.contains(shelves.get(i))) finalList2.add(shelves.get(i));
+			}
+			for(int i = 0; i<finalList2.size(); i++) comboBox_Shelf.addItem(finalList2.get(i));
+			
+			
+		return finalList2;
+		
+	}
 }
