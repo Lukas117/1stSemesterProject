@@ -45,7 +45,6 @@ public class DepartmentMenu_GUI extends JFrame{
 	}
 
 private JLabel lblNewLabel;
-private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 private JTextField textField_Warehouse;
 private JButton btnSave;
 private JButton btnDelete;
@@ -67,7 +66,7 @@ private JButton btnBack;
 		frame.getContentPane().setLayout(null);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 524);
+		setBounds(100, 100, 700, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -89,9 +88,9 @@ private JButton btnBack;
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(new Color(0, 0, 0));
+		btnSearch.setForeground(new Color(30, 144, 255));
 		btnSearch.setBackground(new Color(255, 255, 240));
-		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		btnSearch.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String name = textFieldSearch.getText();
@@ -156,11 +155,6 @@ private JButton btnBack;
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel);
 		
-		lblDesignedByMr.setBounds(240, 378, 233, 22);
-		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDesignedByMr);
-		
 		textField_Warehouse = new JTextField();
 		textField_Warehouse.setBounds(92, 147, 140, 22);
 		textField_Warehouse.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -168,6 +162,7 @@ private JButton btnBack;
 		textField_Warehouse.setColumns(10);
 		
 		btnSave = new JButton("Save");
+		btnSave.setForeground(Color.BLACK);
 		btnSave.setBounds(408, 320, 100, 31);
 		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -197,7 +192,7 @@ private JButton btnBack;
 		btnDelete = new JButton("Delete");
 		btnDelete.setBounds(576, 320, 100, 31);
 		btnDelete.setBackground(Color.LIGHT_GRAY);
-		btnDelete.setForeground(Color.DARK_GRAY);
+		btnDelete.setForeground(Color.BLACK);
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -270,7 +265,7 @@ private JButton btnBack;
 				closeDialog();
 			}
 		});
-		btnBack.setBounds(605, 453, 89, 23);
+		btnBack.setBounds(586, 400, 90, 23);
 		contentPane.add(btnBack);
 	}
 	

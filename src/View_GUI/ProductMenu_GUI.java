@@ -109,6 +109,7 @@ private JTextField textField_MinimumStock;
 private JLabel lblStock_1;
 private JLabel lblMinimumStock;
 private JLabel Label_nameOfProduct;
+private JScrollPane scrollPane_1;
 
 	/**
 	 * Create the application.
@@ -147,37 +148,45 @@ private JLabel Label_nameOfProduct;
 		btnSearch.setForeground(new Color(30, 144, 255));
 		btnSearch.setBackground(new Color(30, 144, 255));
 		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		/*public void actionPerformed(ActionEvent arg0) {
-			String name = textFieldSearch.getText();
-			Product product = productController.findProduct(name);
-			for (int i = 0; i < table.getRowCount(); i++) {
-			      for(int j = 0; j < table.getColumnCount(); j++) {
-			          table.setValueAt("", i, j);
-			      }
-			   }
-			table.setValueAt(employee.getUsername(), 0, 0);
-			table.setValueAt(employee.getName(), 0, 1);
-			table.setValueAt(employee.getEmail(), 0, 2);
-		}
-	}); */
 		
-		lblClock = new JLabel("");
-		lblClock.setBounds(492, 446, 220, 44);
-		contentPane.add(lblClock);
+		DefaultListModel listModel = new DefaultListModel();
+		
+		
 		btnSearch.setBounds(592, 85, 84, 23);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		textFieldSearch.setBackground(new Color(255, 248, 220));
 		textFieldSearch.setForeground(Color.BLACK);
 		textFieldSearch.setBounds(465, 86, 117, 22);
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String name = textFieldSearch.getText();
+				Product product = productController.findProduct(name);
+				for (int i = 0; i < table.getRowCount(); i++) {
+				      for(int j = 0; j < table.getColumnCount(); j++) {
+				          table.setValueAt("", i, j);
+				      }
+				   }
+				table.setValueAt(product.getName(), 0, 0);
+				table.setValueAt(product.getType(), 0, 1);
+				table.setValueAt(product.getPrice(), 0, 2);
+				table.setValueAt(product.getStock(), 0, 3);
+				table.setValueAt(product.getLocation().getDepartment().getName(), 0, 4);
+				table.setValueAt(product.getLocation().getAisle(), 0, 5);
+				table.setValueAt(product.getLocation().getShelf(), 0, 6);
+				table.setValueAt(product.getMinStock(), 0, 7);
+				for(int j = 0; j<product.getStock(); j++) {
+					listModel.addElement(product.getBarcodeList().get(j));
+				}
+			}
+		});
+		
+		JList barcodeList = new JList(listModel);
+		barcodeList.setBounds(22, 387, 163, 59);
+		contentPane.add(barcodeList);
+		
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
-		/*listName.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				refreshTable();
-			}
-		}); */
 		btnLoadTable.setBounds(240, 84, 104, 24);
 		contentPane.add(btnLoadTable);
 		
@@ -194,29 +203,6 @@ private JLabel Label_nameOfProduct;
 			}
 		));
 		scrollPane.setViewportView(table);
-		/*table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				
-				try {
-					int row = table.getSelectedRow();
-					String EID = (table.getModel().getValueAt(row, 0).toString());				
-					String query = "select * from Employeeinfo where EID = '" + EID + "' ";
-					PreparedStatement pst = connection.prepareStatement(query);					
-					ResultSet rs = pst.executeQuery();					
-					while(rs.next()){
-						textFieldEID.setText(rs.getString("EID"));
-						textFieldName.setText(rs.getString("Name"));
-						textFieldSurname.setText(rs.getString("Surname"));
-						textFieldAge.setText(rs.getString("Age"));
-					}
-					pst.close();					
-					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}				
-			}
-		}); */
 		
 		lblNewLabel = new JLabel("Product Menu");
 		lblNewLabel.setForeground(new Color(255, 0, 0));
@@ -345,6 +331,9 @@ private JLabel Label_nameOfProduct;
 			}
 			else {
 				productController.createProduct(product);
+				for (int i=0; i<product.getStock(); i++) {
+			 		productController.addToStock(product.getName());
+				}
 				JOptionPane.showMessageDialog(frame, "Product is created!");
 				DefaultTableModel model = (DefaultTableModel)table.getModel();
 				Object [] row = {name, type, price, stock, department, aisle, shelf, minStock};
@@ -358,7 +347,7 @@ private JLabel Label_nameOfProduct;
 	
 });
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnSave.setBounds(284, 320, 96, 31);
+		btnSave.setBounds(295, 320, 96, 31);
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
@@ -422,7 +411,7 @@ private JLabel Label_nameOfProduct;
 				}
 			}
 		});
-		btnUpdate.setBounds(537, 320, 91, 31);
+		btnUpdate.setBounds(585, 320, 91, 31);
 		btnUpdate.setForeground(new Color(51, 0, 0));
 		btnUpdate.setBackground(new Color(255, 204, 204));
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
@@ -449,7 +438,7 @@ private JLabel Label_nameOfProduct;
 			}
 		}); 
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
-		btnDelete.setBounds(415, 320, 96, 31);
+		btnDelete.setBounds(443, 320, 96, 31);
 		contentPane.add(btnDelete);
 		
 		lblDepartment = new JLabel("Department");
@@ -468,10 +457,6 @@ private JLabel Label_nameOfProduct;
 		Label_nameOfProduct.setBounds(356, 86, 119, 16);
 		contentPane.add(Label_nameOfProduct);
 		
-		JList barcodeList = new JList();
-		
-		barcodeList.setBounds(22, 387, 163, 59);
-		contentPane.add(barcodeList);
 		
 		JLabel lblAisle = new JLabel("Aisle");
 		lblAisle.setFont(new Font("Times New Roman", Font.BOLD, 14));
@@ -492,6 +477,19 @@ private JLabel Label_nameOfProduct;
 		});
 		btnBack.setBounds(655, 446, 89, 23);
 		contentPane.add(btnBack);
+		
+		JButton btnStatistics = new JButton("Show statistics");
+		btnStatistics.setForeground(new Color(51, 0, 0));
+		btnStatistics.setFont(new Font("Times New Roman", Font.BOLD, 18));
+		btnStatistics.setBackground(new Color(255, 204, 204));
+		btnStatistics.setBounds(424, 378, 145, 31);
+		contentPane.add(btnStatistics);
+		
+//		scrollPane_1 = new JScrollPane();
+//		scrollPane_1.setBounds(169, 387, 18, 59);
+//		scrollPane_1.setViewportView(barcodeList);
+//		barcodeList.setLayoutOrientation(JList.VERTICAL);
+//		contentPane.add(scrollPane_1);
 		}
 	
 	private void reset() {
@@ -540,6 +538,8 @@ private JLabel Label_nameOfProduct;
 			if(!finalList.contains(departments.get(i))) finalList.add(departments.get(i));
 		}
 		for(int i = 0; i<finalList.size(); i++) comboBox_Department.addItem(finalList.get(i));
+		
+		comboBox_Department.setSelectedItem(null);
 	}	
 	
 	private ArrayList<String> getListComboBox_Dep(JComboBox comboBox_Department) {

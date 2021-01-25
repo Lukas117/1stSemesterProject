@@ -26,7 +26,6 @@ public class AddProduct_GUI extends JFrame{
 	private JFrame frame;
 	private JPanel contentPane;
 	private JTable table;
-	private JLabel lblClock;
 	protected static final ProductController productController = new ProductController();
 	ArrayList<Product> shoppingCart = new ArrayList<>();
 	
@@ -73,7 +72,7 @@ private double totPrice = 0;
 		frame.setBackground(getBackground());
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 524);
+		setBounds(100, 100, 700, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -115,16 +114,12 @@ private double totPrice = 0;
 			}
 		});
 		btnSearch.setForeground(new Color(30, 144, 255));
-		btnSearch.setBackground(new Color(30, 144, 255));
-		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		
-		lblClock = new JLabel("");
-		lblClock.setBounds(492, 446, 220, 44);
-		contentPane.add(lblClock);
+		btnSearch.setBackground(new Color(240, 240, 240));
+		btnSearch.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnSearch.setBounds(592, 85, 84, 23);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSearch.setBackground(new Color(255, 248, 220));
+		textFieldSearch.setBackground(Color.WHITE);
 		textFieldSearch.setForeground(Color.BLACK);
 		textFieldSearch.setBounds(465, 86, 117, 22);
 		contentPane.add(textFieldSearch);
@@ -169,7 +164,7 @@ private double totPrice = 0;
 		scrollPane.setViewportView(table);
 		
 		lblNewLabel = new JLabel("Product Menu");
-		lblNewLabel.setForeground(new Color(255, 0, 0));
+		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel.setBounds(246, 23, 383, 38);
@@ -191,7 +186,7 @@ private double totPrice = 0;
 		
 		btnAddToCart = new JButton("Add to Cart");
 		btnAddToCart.setForeground(new Color(51, 0, 0));
-		btnAddToCart.setBackground(new Color(255, 204, 204));
+		btnAddToCart.setBackground(Color.WHITE);
 		btnAddToCart.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		btnAddToCart.setBounds(530, 320, 147, 31);
 		btnAddToCart.addActionListener(new ActionListener() {
@@ -250,7 +245,7 @@ private double totPrice = 0;
 				closeDialog();
 			}
 		}); */
-		btnBack.setBounds(605, 453, 89, 23);
+		btnBack.setBounds(587, 400, 90, 23);
 		contentPane.add(btnBack);
 	}
 		

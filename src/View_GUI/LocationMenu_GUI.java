@@ -38,7 +38,6 @@ public class LocationMenu_GUI extends JFrame{
 	}
 	
 private JLabel lblNewLabel;
-private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 private JLabel lblMinStock;
 private JTextField textField_Aisle;
 private JButton btnSave;
@@ -57,7 +56,7 @@ private JButton btnBack;
 		frame.getContentPane().setLayout(null);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 724, 530);
+		setBounds(100, 100, 700, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -70,7 +69,7 @@ private JButton btnBack;
 				
 			}
 		});
-		btnLoadTable.setBounds(401, 89, 104, 24);
+		btnLoadTable.setBounds(240, 89, 104, 24);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		/* btnSearch.addActionListener(new ActionListener() {
@@ -113,10 +112,6 @@ private JButton btnBack;
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel);
-		lblDesignedByMr.setBounds(240, 378, 233, 22);
-		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDesignedByMr);	
 		
 		lblMinStock = new JLabel("Minimum Stock");
 		lblMinStock.setFont(new Font("Times New Roman", Font.BOLD, 14));
@@ -135,7 +130,7 @@ private JButton btnBack;
 			comboBox_Warehouse.addItem(department.getName());
 		}
 		comboBox_Warehouse.setSelectedItem(null);
-		comboBox_Warehouse.setBounds(92, 114, 143, 23);
+		comboBox_Warehouse.setBounds(92, 117, 140, 23);
 		contentPane.add(comboBox_Warehouse);
 		
 		btnSave = new JButton("Save");
@@ -167,13 +162,13 @@ private JButton btnBack;
 			else JOptionPane.showMessageDialog(frame, "***Error!***");	
 			}
 		});
-		btnSave.setBounds(346, 320, 96, 31);
+		btnSave.setBounds(240, 320, 100, 31);
 		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
 		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(533, 320, 96, 31);
+		btnDelete.setBounds(577, 320, 100, 31);
 		btnDelete.setBackground(Color.LIGHT_GRAY);
 		btnDelete.setForeground(Color.DARK_GRAY);
 		btnDelete.addActionListener(new ActionListener() {
@@ -232,7 +227,7 @@ private JButton btnBack;
 				closeDialog();
 			}
 		});
-		btnBack.setBounds(611, 459, 89, 23);
+		btnBack.setBounds(587, 400, 90, 23);
 		contentPane.add(btnBack);
 		
 	}
