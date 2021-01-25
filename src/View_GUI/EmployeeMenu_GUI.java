@@ -39,7 +39,6 @@ public class EmployeeMenu_GUI extends JFrame{
 	}
 
 	private JLabel lblNewLabel;
-	private final JLabel lblDesignedByMr = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 	private JTextField textField_Name;
 	private JButton btnSave;
 	private JButton btnUpdate;
@@ -60,7 +59,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		frame.getContentPane().setLayout(null);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 524);
+		setBounds(100, 100, 700, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -73,18 +72,18 @@ public class EmployeeMenu_GUI extends JFrame{
 				
 			}
 		});
-		btnLoadTable.setBounds(240, 84, 104, 24);
+		btnLoadTable.setBounds(240, 85, 104, 24);
 		btnLoadTable.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		
 		textFieldSearch = new JTextField();
-		textFieldSearch.setBounds(477, 86, 117, 22);
+		textFieldSearch.setBounds(477, 85, 110, 22);
 		
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(592, 85, 84, 23);
-		btnSearch.setForeground(new Color(0, 0, 0));
+		btnSearch.setBounds(594, 85, 84, 23);
+		btnSearch.setForeground(new Color(30, 144, 255));
 		btnSearch.setBackground(Color.LIGHT_GRAY);
-		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		btnSearch.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String username = textFieldSearch.getText();
@@ -109,7 +108,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.add(btnLoadTable);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(240, 117, 437, 192);
+		scrollPane.setBounds(240, 117, 438, 192);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -146,10 +145,6 @@ public class EmployeeMenu_GUI extends JFrame{
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel);
-		lblDesignedByMr.setBounds(240, 378, 233, 22);
-		lblDesignedByMr.setFont(new Font("Times New Roman", Font.BOLD | Font.ITALIC, 12));
-		lblDesignedByMr.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(lblDesignedByMr);
 		
 		textField_Name = new JTextField();
 		textField_Name.setBounds(92, 147, 140, 22);
@@ -158,7 +153,8 @@ public class EmployeeMenu_GUI extends JFrame{
 		textField_Name.setColumns(10);
 		
 		btnSave = new JButton("Save");
-		btnSave.setBounds(292, 320, 96, 31);
+		btnSave.setForeground(Color.BLACK);
+		btnSave.setBounds(240, 320, 100, 30);
 		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -198,8 +194,8 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.add(btnSave);
 		
 		btnUpdate = new JButton("Update");
-		btnUpdate.setBounds(549, 320, 91, 31);
-		btnUpdate.setForeground(new Color(0, 0, 0));
+		btnUpdate.setBounds(578, 320, 100, 30);
+		btnUpdate.setForeground(Color.BLACK);
 		btnUpdate.setBackground(Color.LIGHT_GRAY);
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -231,9 +227,9 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.add(btnUpdate);
 		
 		btnDelete = new JButton("Delete");
-		btnDelete.setBounds(424, 320, 96, 31);
+		btnDelete.setBounds(409, 320, 100, 30);
 		btnDelete.setBackground(Color.LIGHT_GRAY);
-		btnDelete.setForeground(Color.DARK_GRAY);
+		btnDelete.setForeground(Color.BLACK);
 		btnDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int action = JOptionPane.showConfirmDialog(frame, "Do you want to delete!", "Delete", JOptionPane.YES_NO_OPTION);
@@ -255,7 +251,7 @@ public class EmployeeMenu_GUI extends JFrame{
 		contentPane.add(btnDelete);
 		
 		lblUsernameOfEmployee = new JLabel("Username of employee:");
-		lblUsernameOfEmployee.setBounds(342, 85, 131, 22);
+		lblUsernameOfEmployee.setBounds(349, 85, 123, 22);
 		lblUsernameOfEmployee.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblUsernameOfEmployee);
 		
@@ -304,7 +300,7 @@ public class EmployeeMenu_GUI extends JFrame{
 				closeDialog();
 			}
 		});
-		btnBack.setBounds(605, 453, 89, 23);
+		btnBack.setBounds(588, 400, 90, 23);
 		contentPane.add(btnBack);
 	}
 	

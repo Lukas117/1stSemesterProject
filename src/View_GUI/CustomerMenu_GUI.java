@@ -22,7 +22,6 @@ public class CustomerMenu_GUI extends JFrame{
 	private JPanel contentPane;
 	private JTable table;
 	private JLabel customerLabel;
-	private final JLabel designLabel = new JLabel("Designed By: Mate, Lukas, Marci, Balint");
 	private JLabel lblMinStock;
 	private JTextField nameText;
 	private JButton saveButton;
@@ -61,7 +60,7 @@ public class CustomerMenu_GUI extends JFrame{
 		frame.getContentPane().setLayout(null);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 718, 524);
+		setBounds(100, 100, 700, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -73,11 +72,11 @@ public class CustomerMenu_GUI extends JFrame{
 			}
 		});
 		loadButton.setBounds(240, 85, 104, 23);
-		loadButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		loadButton.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		loadButton.setForeground(Color.BLACK);
 		
 		searchText = new JTextField();
-		searchText.setBounds(465, 86, 117, 22);
+		searchText.setBounds(466, 86, 117, 22);
 		
 		searchButton = new JButton("Search");
 		searchButton.addActionListener(new ActionListener() {
@@ -98,10 +97,10 @@ public class CustomerMenu_GUI extends JFrame{
 				table.setValueAt(customer.getZipcode(), 0, 6);
 			}
 		});
-		searchButton.setBounds(593, 86, 84, 22);
+		searchButton.setBounds(594, 86, 84, 22);
 		searchButton.setForeground(Color.BLACK);
 		searchButton.setBackground(UIManager.getColor("Button.background"));
-		searchButton.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		searchButton.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.setLayout(null);
 		contentPane.add(searchButton);
 		searchText.setFont(new Font("Times New Roman", Font.PLAIN, 12));
@@ -112,7 +111,7 @@ public class CustomerMenu_GUI extends JFrame{
 		contentPane.add(loadButton);
 		
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(240, 117, 437, 192);
+		scrollPane.setBounds(240, 117, 438, 192);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -147,14 +146,10 @@ public class CustomerMenu_GUI extends JFrame{
 		customerLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
 		customerLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(customerLabel);
-		designLabel.setBounds(10, 455, 233, 22);
-		designLabel.setFont(new Font("Tahoma", Font.ITALIC, 12));
-		designLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPane.add(designLabel);
 		
 		zipcodeLabel = new JLabel("ZIP Code");
 		zipcodeLabel.setBounds(6, 297, 76, 22);
-		zipcodeLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		zipcodeLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(zipcodeLabel);
 		
 		new JLabel("Stock");
@@ -212,13 +207,13 @@ public class CustomerMenu_GUI extends JFrame{
 			}
 		});
 		saveButton.setForeground(Color.BLACK);
-		saveButton.setBounds(313, 319, 91, 31);
+		saveButton.setBounds(240, 319, 100, 31);
 		saveButton.setBackground(UIManager.getColor("Button.background"));
-		saveButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		saveButton.setFont(new Font("Times New Roman", Font.BOLD, 17));
 		contentPane.add(saveButton);
 		
 		updateButton = new JButton("Update");
-		updateButton.setBounds(515, 319, 91, 31);
+		updateButton.setBounds(578, 319, 100, 30);
 		updateButton.setForeground(Color.BLACK);
 		updateButton.setBackground(UIManager.getColor("Button.background"));
 		updateButton.addActionListener(new ActionListener() {
@@ -253,11 +248,11 @@ public class CustomerMenu_GUI extends JFrame{
 			}
 		});
 
-		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		updateButton.setFont(new Font("Times New Roman", Font.BOLD, 17));
 		contentPane.add(updateButton);
 		
 		deleteButton = new JButton("Delete");
-		deleteButton.setBounds(414, 319, 91, 31);
+		deleteButton.setBounds(409, 319, 100, 30);
 		deleteButton.setBackground(UIManager.getColor("Button.background"));
 		deleteButton.setForeground(Color.BLACK);
 		deleteButton.addActionListener(new ActionListener() {
@@ -279,7 +274,7 @@ public class CustomerMenu_GUI extends JFrame{
 			}
 		}); 
 
-		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 17));
+		deleteButton.setFont(new Font("Times New Roman", Font.BOLD, 17));
 		contentPane.add(deleteButton);
 		
 		zipcodeText = new JTextField("");
@@ -301,27 +296,27 @@ public class CustomerMenu_GUI extends JFrame{
 		
 		JLabel cprLabel = new JLabel("CPR num.");
 		cprLabel.setBounds(6, 117, 76, 22);
-		cprLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cprLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(cprLabel);
 		
 		JLabel nameLabel = new JLabel("Name");
 		nameLabel.setBounds(6, 147, 76, 22);
-		nameLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		nameLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(nameLabel);
 		
 		JLabel emailLabel = new JLabel("Email");
 		emailLabel.setBounds(6, 177, 76, 22);
-		emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		emailLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(emailLabel);
 		
 		JLabel phoneLabel = new JLabel("Phone num.");
 		phoneLabel.setBounds(6, 207, 76, 22);
-		phoneLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		phoneLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(phoneLabel);
 		
 		JLabel addressLabel = new JLabel("Address");
 		addressLabel.setBounds(6, 237, 76, 22);
-		addressLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		addressLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(addressLabel);
 		
 		emailText = new JTextField();
@@ -350,7 +345,7 @@ public class CustomerMenu_GUI extends JFrame{
 		
 		cityLabel = new JLabel("City");
 		cityLabel.setBounds(6, 267, 76, 22);
-		cityLabel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		cityLabel.setFont(new Font("Times New Roman", Font.BOLD, 12));
 		contentPane.add(cityLabel);
 		
 		JButton backButton = new JButton("Back");
@@ -361,7 +356,7 @@ public class CustomerMenu_GUI extends JFrame{
 				closeDialog();
 			}
 		});
-		backButton.setBounds(628, 467, 84, 23);
+		backButton.setBounds(588, 400, 90, 23);
 		contentPane.add(backButton);
 	}
 	

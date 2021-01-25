@@ -83,13 +83,17 @@ private JLabel lblNameOfCustomer;
 		btnLoadTable.setForeground(new Color(30, 144, 255));
 		
 		textFieldSearch = new JTextField();
-		textFieldSearch.setBounds(465, 86, 117, 22);
+		textFieldSearch.setBounds(470, 86, 117, 22);
 		
 		btnSearch = new JButton("Search");
-		btnSearch.setBounds(594, 86, 84, 22);
-		btnSearch.setForeground(Color.WHITE);
-		btnSearch.setBackground(new Color(30, 144, 255));
-		btnSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnSearch.setBounds(600, 86, 90, 22);
+		btnSearch.setForeground(new Color(30, 144, 255));
+		btnSearch.setBackground(Color.WHITE);
+		btnSearch.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.setLayout(null);
 		
 		lblClock = new JLabel("");
@@ -97,7 +101,7 @@ private JLabel lblNameOfCustomer;
 		contentPane.add(lblClock);
 		contentPane.add(btnSearch);
 		textFieldSearch.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		textFieldSearch.setBackground(new Color(255, 248, 220));
+		textFieldSearch.setBackground(Color.WHITE);
 		textFieldSearch.setForeground(Color.BLACK);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
@@ -142,12 +146,13 @@ private JLabel lblNameOfCustomer;
 		lblMinStock.setBounds(10, 296, 65, 31);
 		
 		btnSave = new JButton("Update");
+		btnSave.setForeground(Color.BLACK);
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnSave.setBounds(218, 320, 120, 31);
-		btnSave.setBackground(Color.YELLOW);
+		btnSave.setBackground(Color.LIGHT_GRAY);
 		btnSave.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnSave);
 		
@@ -158,8 +163,8 @@ private JLabel lblNameOfCustomer;
 			}
 		});
 		btnUpdate.setBounds(570, 320, 120, 31);
-		btnUpdate.setForeground(Color.BLUE);
-		btnUpdate.setBackground(Color.GREEN);
+		btnUpdate.setForeground(Color.BLACK);
+		btnUpdate.setBackground(Color.LIGHT_GRAY);
 		btnUpdate.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnUpdate);
 		
@@ -182,8 +187,8 @@ private JLabel lblNameOfCustomer;
 			}
 		});
 		btnDelete.setBounds(394, 320, 120, 31);
-		btnDelete.setBackground(Color.RED);
-		btnDelete.setForeground(Color.DARK_GRAY);
+		btnDelete.setBackground(Color.LIGHT_GRAY);
+		btnDelete.setForeground(Color.BLACK);
 		btnDelete.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnDelete);
 		
@@ -194,8 +199,8 @@ private JLabel lblNameOfCustomer;
 			}
 		});
 		btnNew.setBounds(30, 319, 120, 31);
-		btnNew.setForeground(SystemColor.textHighlight);
-		btnNew.setBackground(Color.BLUE);
+		btnNew.setForeground(Color.BLACK);
+		btnNew.setBackground(Color.LIGHT_GRAY);
 		btnNew.setFont(new Font("Times New Roman", Font.BOLD, 18));
 		contentPane.add(btnNew);
 		
@@ -206,7 +211,7 @@ private JLabel lblNameOfCustomer;
 		listName.setFont(new Font("Times New Roman", Font.PLAIN, 12));
 		
 		lblNameOfCustomer = new JLabel("ID of sale:");
-		lblNameOfCustomer.setBounds(388, 86, 67, 22);
+		lblNameOfCustomer.setBounds(400, 86, 67, 22);
 		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblNameOfCustomer);
 	}
