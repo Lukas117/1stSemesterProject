@@ -164,6 +164,12 @@ public class NewSale_GUI extends JFrame{
 					Customer customer = customerController.findCustomer(cpr);
 					Sale sale = new Sale(id ,_subtotal, purchaseDate, paymentDate, delivery, customer, addProduct.getShoppingcart());
 					saleController.createSale(sale);
+					
+				/*	for(int i = 0; i<sale.getShoppingCart().size(); i++) {
+						int oldStock = productController.findProduct(sale.getShoppingCart().get(i).getName()).getStock();
+						int q = sale.getShoppingCart().get(i).getStock();
+						productController.findProduct(sale.getShoppingCart().get(i).getName()).setStock(9);
+					} */
 					DefaultTableModel model = (DefaultTableModel)SaleMenu_GUI.table_1.getModel();
 					Object [] row = {ID, customer, _subtotal, formatDateTime};
 					model.addRow(row);
