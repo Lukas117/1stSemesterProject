@@ -60,6 +60,7 @@ private JTextField priceTextField;
 private JLabel lblQty;
 private JTextField qtyTextField;
 private double totPrice = 0;
+public ArrayList<Integer> quantityList = new ArrayList<>();
 
 	/**
 	 * Create the application.
@@ -205,8 +206,15 @@ private double totPrice = 0;
 					model.addRow(row);
 					totPrice = totPrice +_price*_qty;
 					NewSale_GUI.lbltotalPrice.setText(String.valueOf(totPrice));
-					Product product = productController.findProduct(name);
+					Product product = new Product("", "", null, 0, 0, 0);
+					product.setName(name);
+					product.setPrice(_price);
+					product.setStock(_qty);
+					for(Product p: productController.getProductContainer().getProductList()) {
+						if(p.getName().equals(name)) p.setStock(p.getStock()-_qty);
+					}
 					shoppingCart.add(product);
+					//quantityList.add(_qty);
 					reset();
 				}
 			}

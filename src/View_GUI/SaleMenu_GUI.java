@@ -214,6 +214,17 @@ private JLabel lblNameOfCustomer;
 		lblNameOfCustomer.setBounds(400, 86, 67, 22);
 		lblNameOfCustomer.setFont(new Font("Times New Roman", Font.PLAIN, 13));
 		contentPane.add(lblNameOfCustomer);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MainMenu_GUI.MainMenu();
+				closeDialog();
+			}
+		});
+		btnBack.setBounds(588, 400, 90, 23);
+		contentPane.add(btnBack);
+	
 	}
 	
 	private void updateTable() {
@@ -228,5 +239,10 @@ private JLabel lblNameOfCustomer;
 			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getPrice(), i, 2);
 			table_1.setValueAt(saleController.getSaleContainer().getSales().get(i).getPurchaseDate(), i, 3);
 		}
+	}
+	
+	public void closeDialog() {
+		setVisible(false);
+		dispose();
 	}
 }
