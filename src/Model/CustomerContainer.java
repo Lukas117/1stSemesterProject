@@ -5,9 +5,11 @@ import java.util.ArrayList;
 public class CustomerContainer {
 	private static CustomerContainer instance;
 	private ArrayList<Customer> customerList;
-
+	private Customer cust = new Customer(123, "Example", "xyz@xyz.com", "50111111", "X street 5", "Aalborg", 9000); 
+	
     private CustomerContainer() {
     	customerList = new ArrayList<>();
+    	addCustomer(cust);
     }
     
     public ArrayList<Customer> getCustomerList() {

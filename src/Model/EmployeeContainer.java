@@ -5,11 +5,15 @@ import java.util.ArrayList;
 public class EmployeeContainer {
 	private static EmployeeContainer instance;
 	private ArrayList<Employee> employeeList;
-	private Employee example = new Employee("Balint", "Balint Tamas", "balint.tamas@gmail.com", "123", 0);
+	private Employee example = new Employee("anders.o", "Anders Oleson", "a.oleson@gmail.com", "123", 0);
+	private Employee example1 = new Employee("thomas.o", "Thomas Oleson", "t.oleson@gmail.com", "123", 0);
+	private Employee example2 = new Employee("casper.o", "Casper Oleson", "c.oleson@gmail.com", "123", 0);
 	
 	private EmployeeContainer() {
 		employeeList = new ArrayList<>();
 		addEmployee(example);
+		addEmployee(example1);
+		addEmployee(example2);
 	}
 		
 	public ArrayList<Employee> getEmployees() {

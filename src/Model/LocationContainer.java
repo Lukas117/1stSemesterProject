@@ -1,11 +1,37 @@
 package Model;
 
 import java.util.*;
+import Controller.DepartmentController;
 
 public class LocationContainer {
 	
 	private ArrayList<Location> locationList = new ArrayList<> ();
 	private static LocationContainer instance;
+	private DepartmentController depCont = new DepartmentController();
+	private Location loc1;
+	private Location loc2;
+	private Location loc3;
+	private Location loc4;
+	private Location loc5;
+	private Location loc6;
+	
+	private LocationContainer() {
+		loc1 = new Location(depCont.findDepartment("Kitchen and Bathroom department"),1,1);
+		loc2 = new Location(depCont.findDepartment("Kitchen and Bathroom department"),1,2);
+		loc3 = new Location(depCont.findDepartment("Kitchen and Bathroom department"),2,1);
+		loc4 = new Location(depCont.findDepartment("Timber department"),1,1);
+		loc5 = new Location(depCont.findDepartment("Timber department"),1,2);
+		loc6 = new Location(depCont.findDepartment("Timber department"),2,1);
+		
+		
+		addLocation(loc1);
+		addLocation(loc2);
+		addLocation(loc3);
+		addLocation(loc4);
+		addLocation(loc5);
+		addLocation(loc6);
+	}
+	
 	
 	public ArrayList<Location> getLocationList() {
 		return locationList;

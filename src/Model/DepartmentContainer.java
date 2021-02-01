@@ -3,9 +3,19 @@ package Model;
 import java.util.*;
 
 public class DepartmentContainer {
-	private ArrayList<Department> departmentList = new ArrayList<> ();
+	private ArrayList<Department> departmentList;
 	private static DepartmentContainer instance;
+	private Department dep = new Department("Kitchen and Bathroom department", "DIY Center");
+	private Department dep1 = new Department("Fireplace and Woodburning department", "DIY Center");
+	private Department dep2 = new Department("Timber department", "Timber merchant warehouse");
 	
+	
+	private DepartmentContainer() {
+		departmentList = new ArrayList<>();
+		addDepartment(dep);
+		addDepartment(dep1);
+		addDepartment(dep2);
+	}
 	
 	public ArrayList<Department> getDepartmentList() {
 		return departmentList;
