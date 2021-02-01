@@ -125,29 +125,12 @@ public class LeaseMenu_GUI extends JFrame{
 			new Object[][] {
 			},
 			new String[] {
-				"Username", "Name", "Email"
+				"ID", "Price", "Purchase Date", "Payment Deadline", "Delivery", "Customer", "Start Date", "Duration"
 			}
-		) {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-			Class[] columnTypes = new Class[] {
-				String.class, String.class, String.class
-			};
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-			boolean[] columnEditables = new boolean[] {
-				false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		scrollPane.setViewportView(table);
 		
-		lblNewLabel = new JLabel("Employee Menu");
+		lblNewLabel = new JLabel("Lease Menu");
 		lblNewLabel.setBounds(246, 23, 383, 38);
 		lblNewLabel.setForeground(Color.BLACK);
 		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 24));
@@ -280,7 +263,7 @@ public class LeaseMenu_GUI extends JFrame{
 		contentPane.add(lblName_1_1);
 		
 		JLabel lblName_1_1_1 = new JLabel("Purchase Date");
-		lblName_1_1_1.setBounds(6, 177, 76, 22);
+		lblName_1_1_1.setBounds(6, 177, 100, 22);
 		lblName_1_1_1.setFont(new Font("Times New Roman", Font.BOLD, 14));
 		contentPane.add(lblName_1_1_1);
 		
